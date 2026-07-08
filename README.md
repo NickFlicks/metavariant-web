@@ -101,8 +101,8 @@ change.
 
 ## A note on this build
 
-This project was generated in a sandboxed environment without registry access, so
-`npm install` / `npm run build` haven't been run here — the code was written and manually
-reviewed for correctness (import paths, JSX structure, bracket balance) but not compiled.
-Run `npm install && npm run build` as your first step to confirm everything compiles cleanly
-in your own environment.
+Most of this project was generated in a sandboxed environment without registry access, so the
+code was written and manually reviewed for correctness (import paths, JSX structure, bracket
+balance) rather than compiled there. `npm install` and a full `npm run build` have since been
+run successfully on a real machine — if you hit anything odd, it's worth a fresh
+`npm run build` to confirm.
