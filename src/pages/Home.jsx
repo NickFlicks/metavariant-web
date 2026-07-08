@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Sparkles, Check, Tag, CheckCircle2, AlertCircle, Search, MousePointerClick, ListChecks } from "lucide-react";
 import CodeBlock from "../components/CodeBlock.jsx";
 import Reveal from "../components/Reveal.jsx";
 import CountUp from "../components/CountUp.jsx";
@@ -11,7 +12,7 @@ const STEPS = [
   {
     n: "01",
     title: "Create a metafield definition",
-    body: "Add a variant metafield definition — e.g. “Variant subtitle” or “Care instructions” — from the Metafields page, or in Shopify Admin under Settings → Custom data → Variants.",
+    body: "Add a variant metafield definition, like “Variant subtitle” or “Care instructions”, from the Metafields page, or in Shopify Admin under Settings → Custom data → Variants.",
   },
   {
     n: "02",
@@ -75,10 +76,12 @@ export default function Home() {
           style={{ top: "6rem", right: "-4rem" }}
           aria-hidden="true"
         />
+        <div className="grain-overlay" aria-hidden="true" />
 
         <div className="relative mx-auto grid max-w-content items-center gap-12 px-6 pb-20 pt-20 sm:pb-28 sm:pt-28 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
           <div className="text-center lg:text-left">
-            <span className="animate-fadeUp inline-flex items-center gap-2 rounded-full border border-brand-100 bg-brand-50 px-3.5 py-1.5 text-xs font-semibold text-brand-700">
+            <span className="animate-fadeUp inline-flex items-center gap-1.5 rounded-full border border-brand-100 bg-brand-50 px-3.5 py-1.5 text-xs font-semibold text-brand-700">
+              <Sparkles className="h-3.5 w-3.5" strokeWidth={2} />
               Storefront metafields, per variant
             </span>
             <h1 className="animate-fadeUp mt-6 font-serif text-4xl leading-[1.08] tracking-tight text-ink sm:text-6xl">
@@ -87,7 +90,7 @@ export default function Home() {
             </h1>
             <p className="animate-fadeUp mx-auto mt-6 max-w-xl text-lg leading-relaxed text-ink-secondary lg:mx-0">
               MetaVariant connects your product metafields to the exact variant a shopper has
-              selected — descriptions, specs, badges, and media stay accurate with zero extra
+              selected, so descriptions, specs, badges, and media stay accurate with zero extra
               page loads.
             </p>
             <div className="animate-fadeUp mt-9 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start">
@@ -117,7 +120,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Core features — interactive tabs */}
+      {/* Core features: interactive tabs */}
       <section id="features" className="mx-auto max-w-content px-6 py-20 sm:py-24">
         <Reveal>
           <div className="mx-auto max-w-2xl text-center">
@@ -125,7 +128,7 @@ export default function Home() {
               Built for <em className="italic text-brand-600">modern</em> Shopify themes
             </h2>
             <p className="mt-4 text-base leading-relaxed text-ink-secondary">
-              Everything routes through variant metafields you already control — MetaVariant just
+              Everything routes through variant metafields you already control. MetaVariant just
               makes them show up in the right place, at the right moment. Click a feature to see
               it in action.
             </p>
@@ -168,7 +171,7 @@ export default function Home() {
 
       <WaveDivider fillClassName="text-white" flip />
 
-      {/* Block reference — accordion */}
+      {/* Block reference: accordion */}
       <section id="blocks" className="mx-auto max-w-content px-6 pb-20 pt-4 sm:pb-24">
         <Reveal>
           <div className="mx-auto max-w-2xl text-center">
@@ -192,7 +195,7 @@ export default function Home() {
             Theme doesn&apos;t support app blocks where you need one?
           </p>
           <p className="mt-1 text-sm text-ink-secondary">
-            Paste a shortcode directly into any text field instead — it&apos;s detected and
+            Paste a shortcode directly into any text field instead. It&apos;s detected and
             swapped for the live value the same way a block would be.
           </p>
           <CodeBlock className="mt-4">
@@ -214,15 +217,15 @@ export default function Home() {
             </p>
             <ul className="mt-6 space-y-3 text-sm text-ink-secondary">
               <li className="flex items-start gap-2.5">
-                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500" />
+                <Search className="mt-0.5 h-4 w-4 shrink-0 text-brand-500" strokeWidth={1.8} />
                 Search and filter every product with its connection status
               </li>
               <li className="flex items-start gap-2.5">
-                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500" />
+                <MousePointerClick className="mt-0.5 h-4 w-4 shrink-0 text-brand-500" strokeWidth={1.8} />
                 Jump straight from a row to the Add Content editor for that product
               </li>
               <li className="flex items-start gap-2.5">
-                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500" />
+                <ListChecks className="mt-0.5 h-4 w-4 shrink-0 text-brand-500" strokeWidth={1.8} />
                 Guided 3-step onboarding the first time your shop has no definitions yet
               </li>
             </ul>
@@ -231,22 +234,25 @@ export default function Home() {
           <Reveal delay={120} className="rounded-xl2 border border-slate-200 bg-white p-6 shadow-card">
             <div className="grid grid-cols-3 gap-3">
               <div className="rounded-xl border border-slate-200 bg-white p-4">
-                <p className="text-xs font-medium text-ink-muted">Metafield types</p>
-                <p className="mt-2 text-2xl font-bold text-ink">
+                <Tag className="h-4 w-4 text-brand-500" strokeWidth={1.8} />
+                <p className="mt-2 text-xs font-medium text-ink-muted">Metafield types</p>
+                <p className="mt-1 text-2xl font-bold text-ink">
                   <CountUp value={4} />
                 </p>
                 <p className="mt-1 text-[11px] text-ink-muted">Kinds of content you can add</p>
               </div>
               <div className="rounded-xl border border-slate-200 bg-white p-4">
-                <p className="text-xs font-medium text-ink-muted">With content</p>
-                <p className="mt-2 text-2xl font-bold text-emerald-600">
+                <CheckCircle2 className="h-4 w-4 text-emerald-600" strokeWidth={1.8} />
+                <p className="mt-2 text-xs font-medium text-ink-muted">With content</p>
+                <p className="mt-1 text-2xl font-bold text-emerald-600">
                   <CountUp value={128} />
                 </p>
                 <p className="mt-1 text-[11px] text-ink-muted">Ready on the storefront</p>
               </div>
               <div className="rounded-xl border border-slate-200 bg-white p-4">
-                <p className="text-xs font-medium text-ink-muted">Need content</p>
-                <p className="mt-2 text-2xl font-bold text-amber-600">
+                <AlertCircle className="h-4 w-4 text-amber-600" strokeWidth={1.8} />
+                <p className="mt-2 text-xs font-medium text-ink-muted">Need content</p>
+                <p className="mt-1 text-2xl font-bold text-amber-600">
                   <CountUp value={17} />
                 </p>
                 <p className="mt-1 text-[11px] text-ink-muted">Quick win</p>
@@ -317,13 +323,7 @@ export default function Home() {
                 <ul className="mt-6 flex-1 space-y-3 text-sm text-ink-secondary">
                   {p.features.map((feat) => (
                     <li key={feat} className="flex items-start gap-2.5">
-                      <svg
-                        viewBox="0 0 20 20"
-                        className="mt-0.5 h-4 w-4 shrink-0 text-brand-500"
-                        fill="currentColor"
-                      >
-                        <path d="M16.7 5.3a1 1 0 010 1.4l-7.4 7.4a1 1 0 01-1.4 0L3.3 9.5a1 1 0 111.4-1.4l3.6 3.6 6.7-6.7a1 1 0 011.4 0z" />
-                      </svg>
+                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-brand-500" strokeWidth={2.5} />
                       {feat}
                     </li>
                   ))}
@@ -353,6 +353,7 @@ export default function Home() {
           style={{ bottom: "-6rem", left: "10%" }}
           aria-hidden="true"
         />
+        <div className="grain-overlay" aria-hidden="true" />
         <Reveal className="relative mx-auto max-w-content px-6 py-20 text-center sm:py-24">
           <h2 className="font-serif text-3xl tracking-tight text-white sm:text-4xl">
             Start showing the <em className="italic text-brand-300">right</em> content,

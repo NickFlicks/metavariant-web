@@ -1,23 +1,27 @@
 import { useState } from "react";
+import { Zap, LayoutTemplate, Shapes } from "lucide-react";
 
 const FEATURES = [
   {
     id: "instant",
     title: "Instant updates",
     teaser: "No full page reload",
-    body: "Metafield values refresh the moment a shopper picks a new variant. Most themes fire a variant-change event automatically; if yours doesn't, MetaVariant falls back to a short polling window.",
+    icon: Zap,
+    body: "Metafield values refresh the moment a shopper picks a new variant. Most themes fire a variant-change event automatically. If yours doesn't, MetaVariant falls back to a short polling window.",
   },
   {
     id: "placement",
     title: "Flexible placement",
     teaser: "Blocks or shortcodes",
+    icon: LayoutTemplate,
     body: "Drop a theme editor block wherever your content already lives, or paste a shortcode like [variant_metafield] directly into freeform text such as a product description.",
   },
   {
     id: "types",
     title: "Rich metafield types",
     teaser: "Text, media, JSON & more",
-    body: "Single line text, rich text, multi-line, image/video, URL, and JSON — every block maps cleanly to the variant a customer currently has selected.",
+    icon: Shapes,
+    body: "Single line text, rich text, multi-line, image/video, URL, and JSON: every block maps cleanly to the variant a customer currently has selected.",
   },
 ];
 
@@ -67,7 +71,7 @@ function PlacementPreview() {
             <span className="rounded bg-brand-500 px-1.5 py-0.5 text-[10px] font-bold text-white">
               +
             </span>
-            Add block &rarr; MetaVariant &mdash; Rich Text
+            Add block &rarr; MetaVariant Rich Text
           </div>
         ) : (
           <code className="block rounded-md bg-ink px-3 py-2 text-[11px] text-slate-100">
@@ -109,27 +113,33 @@ export default function FeatureShowcase() {
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,280px)_1fr]">
       <div className="flex gap-2 overflow-x-auto lg:flex-col lg:overflow-visible">
-        {FEATURES.map((f) => (
-          <button
-            key={f.id}
-            type="button"
-            onClick={() => setActiveId(f.id)}
-            className={`shrink-0 rounded-xl2 border p-4 text-left transition-all ${
-              activeId === f.id
-                ? "border-brand-300 bg-brand-50/70 shadow-soft"
-                : "border-slate-200 bg-white hover:border-slate-300"
-            }`}
-          >
-            <p
-              className={`text-sm font-semibold ${
-                activeId === f.id ? "text-brand-700" : "text-ink"
+        {FEATURES.map((f) => {
+          const Icon = f.icon;
+          const isActive = activeId === f.id;
+          return (
+            <button
+              key={f.id}
+              type="button"
+              onClick={() => setActiveId(f.id)}
+              className={`flex shrink-0 items-start gap-3 rounded-xl2 border p-4 text-left transition-all ${
+                isActive
+                  ? "border-brand-300 bg-brand-50/70 shadow-soft"
+                  : "border-slate-200 bg-white hover:border-slate-300"
               }`}
             >
-              {f.title}
-            </p>
-            <p className="mt-1 text-xs text-ink-muted">{f.teaser}</p>
-          </button>
-        ))}
+              <Icon
+                className={`mt-0.5 h-5 w-5 shrink-0 ${isActive ? "text-brand-600" : "text-ink-muted"}`}
+                strokeWidth={1.8}
+              />
+              <span>
+                <p className={`text-sm font-semibold ${isActive ? "text-brand-700" : "text-ink"}`}>
+                  {f.title}
+                </p>
+                <p className="mt-1 text-xs text-ink-muted">{f.teaser}</p>
+              </span>
+            </button>
+          );
+        })}
       </div>
 
       <div

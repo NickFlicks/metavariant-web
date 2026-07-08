@@ -22,30 +22,30 @@ const BLOCK_REFERENCE = [
   {
     name: "MetaVariant Single Line",
     description:
-      "Renders single line text as a styled label/badge — pill, rounded, price-tag, bubble, or wave shapes, with configurable colors, padding, font size/weight, and alignment. Ideal for things like “New”, “Limited Stock”, or a variant-specific callout.",
+      "Renders single line text as a styled label/badge: pill, rounded, price-tag, bubble, or wave shapes, with configurable colors, padding, font size/weight, and alignment. Ideal for things like “New”, “Limited Stock”, or a variant-specific callout.",
   },
   {
     name: "MetaVariant Multiline",
     description: "Plain multi-line text, whitespace preserved (line breaks kept as typed).",
   },
   {
-    name: "MetaVariant — Rich Text",
+    name: "MetaVariant: Rich Text",
     description:
       "Renders a Rich Text metafield's formatting (paragraphs, bold/italic, links, lists) as real HTML.",
   },
   {
-    name: "MetaVariant — Image/Video",
+    name: "MetaVariant: Image/Video",
     description:
       "Renders an image or file-reference metafield with a configurable aspect ratio and max width.",
   },
   {
-    name: "MetaVariant — URL",
+    name: "MetaVariant: URL",
     description: "Renders a URL metafield as a clickable link.",
   },
   {
-    name: "MetaVariant — JSON",
+    name: "MetaVariant: JSON",
     description:
-      "Renders a JSON metafield formatted and monospaced — useful for debugging or structured data.",
+      "Renders a JSON metafield formatted and monospaced, useful for debugging or structured data.",
   },
 ];
 
@@ -208,7 +208,7 @@ export default function Docs() {
             <p>
               Each block needs a <strong className="text-ink">Namespace</strong> and{" "}
               <strong className="text-ink">Key</strong> matching a definition from the Metafields
-              page &mdash; the shortcode shown there (e.g.{" "}
+              page. The shortcode shown there (e.g.{" "}
               <code className="rounded bg-slate-100 px-1.5 py-0.5 text-[13px] text-ink">
                 custom.variant_subtitle
               </code>
@@ -227,13 +227,13 @@ export default function Docs() {
           <DocSection
             id="shortcodes"
             title="Shortcodes (alternative to blocks)"
-            subtitle="If your theme doesn't support app blocks in a particular spot — e.g. inside a product description — paste a shortcode directly into that text instead."
+            subtitle="If your theme doesn't support app blocks in a particular spot, for example inside a product description, paste a shortcode directly into that text instead."
           >
             <CodeBlock>{'[variant_metafield namespace="custom" key="variant_subtitle"]'}</CodeBlock>
             <p>
               Copy the exact shortcode for each definition from the Metafields page. Shortcodes
               are detected anywhere in the page content and swapped for the live value when the
-              customer changes variants &mdash; same behavior as the blocks, just usable in
+              customer changes variants: the same behavior as the blocks, just usable in
               freeform text.
             </p>
           </DocSection>
@@ -304,7 +304,7 @@ export default function Docs() {
                 <code className="rounded bg-slate-100 px-1.5 py-0.5 text-[13px] text-ink">
                   yourstore.com/products/example?mv_debug=1
                 </code>
-                ) to see verbose fetch/render logs &mdash; see the Developer &amp; API reference
+                ) to see verbose fetch/render logs. See the Developer &amp; API reference
                 below.
               </li>
             </ul>
@@ -351,9 +351,9 @@ export default function Docs() {
                 <p className="mt-2">
                   Note: this endpoint doesn&apos;t verify the Shopify app-proxy signature, so it
                   will answer for any shop domain that has the app installed. Since these values
-                  are meant to be rendered publicly on your storefront anyway, this is low-risk
-                  &mdash; just don&apos;t store anything sensitive in a variant metafield
-                  you&apos;re exposing this way.
+                  are meant to be rendered publicly on your storefront anyway, this is low risk.
+                  Just don&apos;t store anything sensitive in a variant metafield you&apos;re
+                  exposing this way.
                 </p>
               </div>
 
@@ -391,7 +391,7 @@ export default function Docs() {
           <DocSection id="changelog" title="Changelog">
             <div className="rounded-lg border border-slate-200 bg-white p-4">
               <p className="text-xs font-semibold uppercase tracking-wide text-brand-600">
-                v1.0 &mdash; Initial release
+                v1.0: Initial release
               </p>
               <ul className="mt-2 list-disc space-y-1.5 pl-5">
                 <li>Merchant dashboard with per-product connection status</li>
@@ -409,9 +409,9 @@ export default function Docs() {
             <p>
               A published Shopify app listing requires a publicly accessible privacy policy, and
               Shopify recommends terms of service covering usage. Replace this placeholder with
-              your finalized policy text &mdash; it should explain what data MetaVariant
-              collects (shop domain, session data for authentication, and the metafield values
-              you choose to expose on the storefront) and how it&apos;s used.
+              your finalized policy text. It should explain what data MetaVariant collects
+              (shop domain, session data for authentication, and the metafield values you
+              choose to expose on the storefront) and how it&apos;s used.
             </p>
             <p>
               Until that's published, direct support questions to{" "}

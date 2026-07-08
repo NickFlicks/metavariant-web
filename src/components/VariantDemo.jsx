@@ -15,13 +15,13 @@ const VARIANTS = [
     swatch: "#20242E",
     badge: "Back in stock",
     tone: "emerald",
-    note: "Machine wash cold on a gentle cycle — the water-resistant coating is restored after every wash.",
+    note: "Machine wash cold on a gentle cycle. The water-resistant coating is restored after every wash.",
   },
   {
     id: "moss",
     name: "Moss",
     swatch: "#5B6B4F",
-    badge: "3 left — low stock",
+    badge: "3 left, low stock",
     tone: "rose",
     note: "Spot clean only. Keep the moss-dyed canvas panel away from direct heat sources.",
   },
@@ -100,7 +100,7 @@ export default function VariantDemo({ className = "" }) {
       </div>
 
       <p className="mt-3 text-center text-[11px] text-ink-muted">
-        No page reload &mdash; try another color.
+        No page reload. Try another color.
       </p>
     </div>
   );

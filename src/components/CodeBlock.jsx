@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Copy, Check } from "lucide-react";
 
 export default function CodeBlock({ children, className = "" }) {
   const [copied, setCopied] = useState(false);
@@ -14,8 +15,8 @@ export default function CodeBlock({ children, className = "" }) {
       setCopied(true);
       window.setTimeout(() => setCopied(false), 1600);
     } catch {
-      // Clipboard access can be blocked (permissions, insecure context); fail silently —
-      // the code is still fully selectable/copyable by hand.
+      // Clipboard access can be blocked in some browser contexts. That's fine, the
+      // code is still fully selectable and copyable by hand.
     }
   };
 
@@ -27,12 +28,13 @@ export default function CodeBlock({ children, className = "" }) {
       <button
         type="button"
         onClick={handleCopy}
-        className={`absolute right-2.5 top-2.5 inline-flex h-7 items-center rounded-md border px-2.5 text-[11px] font-semibold transition-colors ${
+        className={`absolute right-2.5 top-2.5 inline-flex h-7 items-center gap-1.5 rounded-md border px-2.5 text-[11px] font-semibold transition-colors ${
           copied
             ? "border-emerald-400/40 bg-emerald-400/10 text-emerald-300"
             : "border-white/10 bg-white/5 text-slate-300 opacity-0 hover:bg-white/10 hover:text-white group-hover:opacity-100 focus-visible:opacity-100"
         }`}
       >
+        {copied ? <Check className="h-3.5 w-3.5" strokeWidth={2.5} /> : <Copy className="h-3.5 w-3.5" strokeWidth={2} />}
         {copied ? "Copied" : "Copy"}
       </button>
     </div>

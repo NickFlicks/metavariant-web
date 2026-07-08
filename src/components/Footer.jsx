@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Store } from "lucide-react";
 import { assetUrl } from "../lib/assets.js";
 
 const FOOTER_LINKS = [
@@ -41,10 +42,11 @@ export default function Footer() {
               <span className="text-[17px] font-bold tracking-tight text-ink">MetaVariant</span>
             </Link>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-ink-muted">
-              Variant-aware metafield content for Shopify storefronts — theme blocks and
+              Variant-aware metafield content for Shopify storefronts: theme blocks and
               shortcodes that update the instant a shopper picks a new variant.
             </p>
-            <span className="mt-4 inline-flex items-center rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-ink-secondary">
+            <span className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-ink-secondary">
+              <Store className="h-3.5 w-3.5" strokeWidth={1.8} />
               Built for Shopify
             </span>
           </div>

@@ -1,40 +1,41 @@
 import { useState } from "react";
+import { Layers, Tag, AlignLeft, PenLine, Image as ImageIcon, Link2, Braces, Plus } from "lucide-react";
 
 const BLOCKS = [
   {
     name: "MetaVariant",
-    icon: "M4 5h16v3H4V5zm0 5h10v3H4v-3zm0 5h16v3H4v-3z",
-    desc: "The flexible, all-in-one block. Pick a render type — Plain Text, HTML, Rich Text, JSON, URL, or Image — to match your metafield's data type.",
+    icon: Layers,
+    desc: "The flexible, all-in-one block. Pick a render type (Plain Text, HTML, Rich Text, JSON, URL, or Image) to match your metafield's data type.",
   },
   {
     name: "Single Line",
-    icon: "M5 12h14M5 12a2 2 0 100-4 2 2 0 000 4zM19 12a2 2 0 100 4 2 2 0 000-4z",
-    desc: "Renders text as a styled label — pill, rounded, price-tag, bubble, or wave — with configurable colors, padding, and alignment. Great for “New” or “Limited Stock” callouts.",
+    icon: Tag,
+    desc: "Renders text as a styled label: pill, rounded, price-tag, bubble, or wave shapes, with configurable colors, padding, and alignment. Great for a “New” or “Limited Stock” callout.",
   },
   {
     name: "Multiline",
-    icon: "M4 6h16M4 12h16M4 18h10",
+    icon: AlignLeft,
     desc: "Plain multi-line text with whitespace preserved, so line breaks render exactly as typed.",
   },
   {
     name: "Rich Text",
-    icon: "M6 4h9a4 4 0 010 8H6V4zm0 8h10a4 4 0 010 8H6v-8z",
-    desc: "Renders a Rich Text metafield's formatting — paragraphs, bold/italic, links, lists — as real HTML.",
+    icon: PenLine,
+    desc: "Renders a Rich Text metafield's formatting, including paragraphs, bold and italic text, links, and lists, as real HTML.",
   },
   {
     name: "Image / Video",
-    icon: "M4 5h16v14H4V5zm4 10l3-4 3 3 2-2 4 3H8z",
+    icon: ImageIcon,
     desc: "Renders an image or file-reference metafield with a configurable aspect ratio and max width.",
   },
   {
     name: "URL",
-    icon: "M10 13a5 5 0 007 0l3-3a5 5 0 00-7-7l-1.5 1.5M14 11a5 5 0 00-7 0l-3 3a5 5 0 007 7l1.5-1.5",
+    icon: Link2,
     desc: "Renders a URL metafield as a clickable link.",
   },
   {
     name: "JSON",
-    icon: "M8 4a2 2 0 00-2 2v3a2 2 0 01-2 2 2 2 0 012 2v3a2 2 0 002 2M16 4a2 2 0 012 2v3a2 2 0 002 2 2 2 0 00-2 2v3a2 2 0 01-2 2",
-    desc: "Renders a JSON metafield formatted and monospaced — handy for debugging or structured data.",
+    icon: Braces,
+    desc: "Renders a JSON metafield formatted and monospaced, handy for debugging or structured data.",
   },
 ];
 
@@ -45,6 +46,7 @@ export default function BlockAccordion() {
     <div className="divide-y divide-slate-200 rounded-xl2 border border-slate-200 bg-white">
       {BLOCKS.map((b, i) => {
         const open = openIndex === i;
+        const Icon = b.icon;
         return (
           <div key={b.name}>
             <button
@@ -53,28 +55,16 @@ export default function BlockAccordion() {
               aria-expanded={open}
               className="flex w-full items-center gap-4 px-5 py-4 text-left transition-colors hover:bg-slate-50"
             >
-              <svg
-                viewBox="0 0 24 24"
-                className="h-5 w-5 shrink-0 text-brand-500"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d={b.icon} />
-              </svg>
+              <Icon className="h-5 w-5 shrink-0 text-brand-500" strokeWidth={1.8} />
               <span className="flex-1 text-sm font-semibold text-ink">
-                MetaVariant &mdash; {b.name}
+                MetaVariant &middot; {b.name}
               </span>
               <span
                 className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-slate-300 text-ink-muted transition-transform duration-300 ${
                   open ? "rotate-45 border-brand-300 text-brand-600" : ""
                 }`}
               >
-                <svg viewBox="0 0 12 12" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="1.6">
-                  <path d="M6 1v10M1 6h10" strokeLinecap="round" />
-                </svg>
+                <Plus className="h-3 w-3" strokeWidth={2} />
               </span>
             </button>
             <div
