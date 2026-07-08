@@ -1,0 +1,6 @@
+name = "metavariant-website"
+compatibility_date = "2024-09-23"
+
+# Cloudflare Pages project settings. Used by `wrangler pages dev` / `wrangler pages deploy`
+# and mirrored in the Pages dashboard if you connect this repo there instead.
+pages_build_output_dir = "dist"

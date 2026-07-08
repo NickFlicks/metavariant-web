@@ -1,0 +1,4 @@
+# Cloudflare Pages SPA fallback — client-side routing (React Router) means every path
+# needs to resolve to index.html and let the router take over. Vite copies this file
+# from resources/ (publicDir) straight into dist/ on build.
+/*    /index.html   200

@@ -34,6 +34,8 @@ src/
                            shortcodes, plan limits, troubleshooting, CSS reference,
                            developer/API reference, changelog, privacy placeholder)
 resources/                Standalone static-asset folder — see below
+  _redirects              Cloudflare Pages SPA fallback rule
+wrangler.toml             Cloudflare Pages config (output dir, project name)
 ```
 
 ## Static assets & Cloudflare
@@ -52,6 +54,33 @@ the app:
    `src/lib/assets.js`) will now point at Cloudflare instead of this app's own origin.
 
 Leave `VITE_ASSETS_BASE_URL` unset to keep serving assets from this site itself.
+
+## Deploying to Cloudflare Pages
+
+This project is set up to deploy as-is — `wrangler.toml` points at `dist/`, and
+`resources/_redirects` (copied into every build) tells Pages to serve `index.html` for any
+path so React Router's client-side routes (like `/docs`) work on a hard refresh or direct
+link, not just in-app navigation.
+
+**Option A — Cloudflare dashboard (Git integration, recommended for ongoing updates)**
+
+1. Push this repo to GitHub/GitLab.
+2. In the Cloudflare dashboard: Workers & Pages → Create → Pages → Connect to Git → pick this
+   repo.
+3. Build settings: framework preset "Vite" (or set manually) — build command `npm run build`,
+   output directory `dist`.
+4. Deploy. Every push to your default branch redeploys automatically.
+
+**Option B — Wrangler CLI (one-off or scripted deploys)**
+
+```bash
+npm install                # installs wrangler as a dev dependency
+npx wrangler login          # one-time auth
+npm run deploy               # builds, then `wrangler pages deploy dist`
+```
+
+The first deploy will prompt you to create the `metavariant-website` Pages project if it
+doesn't exist yet; subsequent runs deploy straight to it.
 
 ## Content source
 
