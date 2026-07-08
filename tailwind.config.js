@@ -31,6 +31,7 @@ export default {
           "Segoe UI",
           "sans-serif",
         ],
+        serif: ["Fraunces", "ui-serif", "Georgia", "serif"],
       },
       boxShadow: {
         soft: "0 1px 2px rgba(16, 24, 40, 0.06)",
@@ -48,9 +49,31 @@ export default {
           "0%": { opacity: "0", transform: "translateY(12px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
+        pop: {
+          "0%": { opacity: "0.4", transform: "scale(0.97) translateY(4px)" },
+          "60%": { opacity: "1", transform: "scale(1.01) translateY(0)" },
+          "100%": { opacity: "1", transform: "scale(1) translateY(0)" },
+        },
+        float: {
+          "0%, 100%": { transform: "translate(0, 0) rotate(0deg)" },
+          "33%": { transform: "translate(18px, -22px) rotate(6deg)" },
+          "66%": { transform: "translate(-14px, 14px) rotate(-4deg)" },
+        },
+        floatSlow: {
+          "0%, 100%": { transform: "translate(0, 0) scale(1)" },
+          "50%": { transform: "translate(-20px, 20px) scale(1.05)" },
+        },
+        pulseDot: {
+          "0%, 100%": { opacity: "1", transform: "scale(1)" },
+          "50%": { opacity: "0.5", transform: "scale(1.3)" },
+        },
       },
       animation: {
         fadeUp: "fadeUp 0.6s ease-out both",
+        pop: "pop 0.5s cubic-bezier(0.16, 1, 0.3, 1) both",
+        float: "float 9s ease-in-out infinite",
+        floatSlow: "floatSlow 14s ease-in-out infinite",
+        pulseDot: "pulseDot 1.8s ease-in-out infinite",
       },
     },
   },

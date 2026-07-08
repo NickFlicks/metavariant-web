@@ -148,8 +148,8 @@ export default function Docs() {
         <span className="inline-flex items-center gap-2 rounded-full border border-brand-100 bg-brand-50 px-3.5 py-1.5 text-xs font-semibold text-brand-700">
           Documentation
         </span>
-        <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
-          Everything you need to run MetaVariant
+        <h1 className="mt-4 font-serif text-3xl tracking-tight text-ink sm:text-4xl">
+          Everything you need to run <em className="italic text-brand-600">MetaVariant</em>
         </h1>
         <p className="mt-3 max-w-2xl text-base leading-relaxed text-ink-secondary">
           Setup, theme blocks, shortcodes, plan limits, troubleshooting, and the API reference
