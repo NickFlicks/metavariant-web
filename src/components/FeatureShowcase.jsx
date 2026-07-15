@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Zap, LayoutTemplate, Shapes } from "lucide-react";
+import { popVariant, EASE_OUT } from "../lib/motion.js";
 
 const FEATURES = [
   {
@@ -117,11 +119,14 @@ export default function FeatureShowcase() {
           const Icon = f.icon;
           const isActive = activeId === f.id;
           return (
-            <button
+            <motion.button
               key={f.id}
               type="button"
               onClick={() => setActiveId(f.id)}
-              className={`flex shrink-0 items-start gap-3 rounded-xl2 border p-4 text-left transition-all ${
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.2, ease: EASE_OUT }}
+              className={`flex shrink-0 items-start gap-3 rounded-xl2 border p-4 text-left transition-colors ${
                 isActive
                   ? "border-brand-300 bg-brand-50/70 shadow-soft"
                   : "border-slate-200 bg-white hover:border-slate-300"
@@ -137,21 +142,27 @@ export default function FeatureShowcase() {
                 </p>
                 <p className="mt-1 text-xs text-ink-muted">{f.teaser}</p>
               </span>
-            </button>
+            </motion.button>
           );
         })}
       </div>
 
-      <div
-        key={active.id}
-        className="glass animate-pop rounded-xl2 p-6"
-      >
-        <h3 className="text-lg font-semibold text-ink">{active.title}</h3>
-        <p className="mt-2 text-sm leading-relaxed text-ink-secondary">{active.body}</p>
-        <div className="mt-5">
-          <ActivePreview />
-        </div>
-      </div>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={active.id}
+          variants={popVariant}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          className="glass rounded-xl2 p-6"
+        >
+          <h3 className="text-lg font-semibold text-ink">{active.title}</h3>
+          <p className="mt-2 text-sm leading-relaxed text-ink-secondary">{active.body}</p>
+          <div className="mt-5">
+            <ActivePreview />
+          </div>
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 }

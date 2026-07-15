@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Tag, AlertTriangle, PackageSearch, ListChecks, Palette, FileDown, Check, Lock } from "lucide-react";
+import { staggerContainer, staggerItem, EASE_OUT } from "../lib/motion.js";
 
 const FIELDS = [
   {
@@ -75,38 +77,56 @@ export default function StandardFieldsDemo({ className = "" }) {
             Click Create, drag the matching block into your theme, and you&apos;re live.
           </p>
         </div>
-        <div className="inline-flex items-center rounded-full border border-white/60 bg-white/50 p-0.5 text-xs font-semibold backdrop-blur">
+        <div className="relative inline-flex items-center rounded-full border border-white/60 bg-white/50 p-0.5 text-xs font-semibold backdrop-blur">
           {["free", "unlimited"].map((p) => (
             <button
               key={p}
               type="button"
               onClick={() => setPlan(p)}
-              className={`rounded-full px-3 py-1.5 capitalize transition-colors ${
-                plan === p ? "bg-ink text-white shadow-soft" : "text-ink-muted"
+              className={`relative rounded-full px-3 py-1.5 capitalize transition-colors ${
+                plan === p ? "text-white" : "text-ink-muted"
               }`}
             >
-              {p}
+              {plan === p ? (
+                <motion.span
+                  layoutId="standard-fields-plan-pill"
+                  className="absolute inset-0 rounded-full bg-ink shadow-soft"
+                  transition={{ duration: 0.3, ease: EASE_OUT }}
+                />
+              ) : null}
+              <span className="relative">{p}</span>
             </button>
           ))}
         </div>
       </div>
 
-      <div className="mt-5 grid gap-3 sm:grid-cols-2">
+      <motion.div
+        key={plan}
+        className="mt-5 grid gap-3 sm:grid-cols-2"
+        variants={staggerContainer(0.05)}
+        initial="hidden"
+        animate="visible"
+      >
         {FIELDS.map((field) => {
           const Icon = field.icon;
           const allowed = isAllowed(field);
           const isCreated = created.has(field.key);
           return (
-            <button
+            <motion.button
               key={field.key}
               type="button"
               onClick={() => toggle(field)}
               disabled={!allowed || isCreated}
-              className={`group flex flex-col justify-between gap-3 rounded-xl border p-4 text-left transition-all duration-300 ${
+              layout
+              variants={staggerItem}
+              whileHover={allowed && !isCreated ? { y: -3 } : undefined}
+              whileTap={allowed && !isCreated ? { scale: 0.98 } : undefined}
+              transition={{ duration: 0.25, ease: EASE_OUT }}
+              className={`group flex flex-col justify-between gap-3 rounded-xl border p-4 text-left transition-colors duration-300 ${
                 isCreated
                   ? "border-emerald-200 bg-emerald-50/70"
                   : allowed
-                    ? "border-white/60 bg-white/60 hover:-translate-y-0.5 hover:border-brand-200 hover:bg-white/80"
+                    ? "border-white/60 bg-white/60 hover:border-brand-200 hover:bg-white/80"
                     : "cursor-not-allowed border-white/40 bg-white/30 opacity-70"
               }`}
             >
@@ -126,25 +146,43 @@ export default function StandardFieldsDemo({ className = "" }) {
                 </p>
               </div>
 
-              {isCreated ? (
-                <span className="animate-pop inline-flex w-fit items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-1 text-[11px] font-semibold text-emerald-700">
-                  <Check className="h-3 w-3" strokeWidth={2.5} />
-                  Created
-                </span>
-              ) : allowed ? (
-                <span className="inline-flex w-fit items-center rounded-lg bg-ink px-3 py-1.5 text-[11px] font-semibold text-white transition-colors group-hover:bg-brand-700">
-                  Create field
-                </span>
-              ) : (
-                <span className="inline-flex w-fit items-center gap-1 rounded-lg border border-slate-300/70 px-3 py-1.5 text-[11px] font-semibold text-ink-muted">
-                  <Lock className="h-3 w-3" strokeWidth={2} />
-                  Requires Unlimited
-                </span>
-              )}
-            </button>
+              <AnimatePresence mode="wait" initial={false}>
+                {isCreated ? (
+                  <motion.span
+                    key="created"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.3, ease: EASE_OUT }}
+                    className="inline-flex w-fit items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-1 text-[11px] font-semibold text-emerald-700"
+                  >
+                    <Check className="h-3 w-3" strokeWidth={2.5} />
+                    Created
+                  </motion.span>
+                ) : allowed ? (
+                  <motion.span
+                    key="create"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="inline-flex w-fit items-center rounded-lg bg-ink px-3 py-1.5 text-[11px] font-semibold text-white transition-colors group-hover:bg-brand-700"
+                  >
+                    Create field
+                  </motion.span>
+                ) : (
+                  <motion.span
+                    key="locked"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="inline-flex w-fit items-center gap-1 rounded-lg border border-slate-300/70 px-3 py-1.5 text-[11px] font-semibold text-ink-muted"
+                  >
+                    <Lock className="h-3 w-3" strokeWidth={2} />
+                    Requires Unlimited
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </motion.button>
           );
         })}
-      </div>
+      </motion.div>
 
       <p className="mt-4 text-center text-[11px] text-ink-muted">
         {createdCount} of {FIELDS.length} shown here created &middot; 13 ready-made fields in total, no

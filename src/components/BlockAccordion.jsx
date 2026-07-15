@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Layers,
   Tag,
@@ -14,6 +15,7 @@ import {
   FileDown,
   Lock,
 } from "lucide-react";
+import { EASE_OUT } from "../lib/motion.js";
 
 const BLOCKS = [
   {
@@ -115,25 +117,31 @@ export default function BlockAccordion() {
                   All plans
                 </span>
               )}
-              <span
-                className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-slate-300 text-ink-muted transition-transform duration-300 ${
-                  open ? "rotate-45 border-brand-300 text-brand-600" : ""
+              <motion.span
+                animate={{ rotate: open ? 45 : 0 }}
+                transition={{ duration: 0.3, ease: EASE_OUT }}
+                className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border text-ink-muted ${
+                  open ? "border-brand-300 text-brand-600" : "border-slate-300"
                 }`}
               >
                 <Plus className="h-3 w-3" strokeWidth={2} />
-              </span>
+              </motion.span>
             </button>
-            <div
-              className={`grid transition-all duration-300 ease-out ${
-                open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
-              }`}
-            >
-              <div className="overflow-hidden">
-                <p className="px-5 pb-5 pl-14 text-sm leading-relaxed text-ink-secondary">
-                  {b.desc}
-                </p>
-              </div>
-            </div>
+            <AnimatePresence initial={false}>
+              {open ? (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.3, ease: EASE_OUT }}
+                  className="overflow-hidden"
+                >
+                  <p className="px-5 pb-5 pl-14 text-sm leading-relaxed text-ink-secondary">
+                    {b.desc}
+                  </p>
+                </motion.div>
+              ) : null}
+            </AnimatePresence>
           </div>
         );
       })}

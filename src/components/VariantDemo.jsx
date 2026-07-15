@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { popVariant, EASE_OUT } from "../lib/motion.js";
 
 const VARIANTS = [
   {
@@ -51,9 +53,10 @@ export default function VariantDemo({ className = "" }) {
         </span>
       </div>
 
-      <div
-        className="mt-3 h-28 w-full rounded-lg transition-colors duration-500 sm:h-32"
-        style={{ backgroundColor: active.swatch }}
+      <motion.div
+        className="mt-3 h-28 w-full rounded-lg sm:h-32"
+        animate={{ backgroundColor: active.swatch }}
+        transition={{ duration: 0.45, ease: EASE_OUT }}
         aria-hidden="true"
       />
 
@@ -61,16 +64,18 @@ export default function VariantDemo({ className = "" }) {
         <span className="text-sm font-semibold text-ink">Color</span>
         <div className="flex gap-2">
           {VARIANTS.map((v) => (
-            <button
+            <motion.button
               key={v.id}
               type="button"
               onClick={() => setActiveId(v.id)}
               aria-label={`Switch to ${v.name}`}
               aria-pressed={v.id === activeId}
-              className={`h-7 w-7 rounded-full ring-2 ring-offset-2 transition-transform ${
-                v.id === activeId
-                  ? "scale-110 ring-ink"
-                  : "ring-transparent hover:scale-105 hover:ring-slate-300"
+              whileHover={{ scale: v.id === activeId ? 1.1 : 1.08 }}
+              whileTap={{ scale: 0.94 }}
+              animate={{ scale: v.id === activeId ? 1.1 : 1 }}
+              transition={{ duration: 0.2, ease: EASE_OUT }}
+              className={`h-7 w-7 rounded-full ring-2 ring-offset-2 ${
+                v.id === activeId ? "ring-ink" : "ring-transparent hover:ring-slate-300"
               }`}
               style={{ backgroundColor: v.swatch }}
             />
@@ -79,24 +84,32 @@ export default function VariantDemo({ className = "" }) {
         <span className="ml-auto text-xs font-medium text-ink-muted">{active.name}</span>
       </div>
 
-      <div
-        key={active.id}
-        className="mt-4 animate-pop space-y-2.5 rounded-lg border border-dashed border-brand-200 bg-brand-50/50 p-3"
-      >
-        <div className="flex flex-wrap items-center gap-2">
-          <span
-            className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-semibold ${TONE_CLASSES[active.tone]}`}
+      <div className="mt-4">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={active.id}
+            variants={popVariant}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            className="space-y-2.5 rounded-lg border border-dashed border-brand-200 bg-brand-50/50 p-3"
           >
-            {active.badge}
-          </span>
-          <span className="text-[10px] font-semibold uppercase tracking-wide text-brand-600">
-            MetaVariant &middot; Single Line
-          </span>
-        </div>
-        <p className="text-xs leading-relaxed text-ink-secondary">{active.note}</p>
-        <span className="text-[10px] font-semibold uppercase tracking-wide text-brand-600">
-          MetaVariant &middot; Rich Text
-        </span>
+            <div className="flex flex-wrap items-center gap-2">
+              <span
+                className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-semibold ${TONE_CLASSES[active.tone]}`}
+              >
+                {active.badge}
+              </span>
+              <span className="text-[10px] font-semibold uppercase tracking-wide text-brand-600">
+                MetaVariant &middot; Single Line
+              </span>
+            </div>
+            <p className="text-xs leading-relaxed text-ink-secondary">{active.note}</p>
+            <span className="text-[10px] font-semibold uppercase tracking-wide text-brand-600">
+              MetaVariant &middot; Rich Text
+            </span>
+          </motion.div>
+        </AnimatePresence>
       </div>
 
       <p className="mt-3 text-center text-[11px] text-ink-muted">

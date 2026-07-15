@@ -1,4 +1,6 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
+import { motion, useScroll, useTransform } from "framer-motion";
 import {
   Sparkles,
   Check,
@@ -21,6 +23,7 @@ import FeatureShowcase from "../components/FeatureShowcase.jsx";
 import BlockAccordion from "../components/BlockAccordion.jsx";
 import StandardFieldsDemo from "../components/StandardFieldsDemo.jsx";
 import EditorDemo from "../components/EditorDemo.jsx";
+import { staggerContainer, staggerItem, tapHover, EASE_OUT } from "../lib/motion.js";
 
 const STEPS = [
   {
@@ -75,63 +78,91 @@ const PLANS = [
 ];
 
 export default function Home() {
+  const heroRef = useRef(null);
+  const { scrollYProgress: heroProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+  const blobOneY = useTransform(heroProgress, [0, 1], [0, 120]);
+  const blobTwoY = useTransform(heroProgress, [0, 1], [0, -80]);
+
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-grid">
+      <section ref={heroRef} className="relative overflow-hidden bg-grid">
         <div className="hero-glow absolute inset-0" aria-hidden="true" />
-        <div
+        <motion.div
           className="blob h-72 w-72 bg-brand-300 animate-float"
-          style={{ top: "-4rem", left: "-3rem" }}
+          style={{ top: "-4rem", left: "-3rem", y: blobOneY }}
           aria-hidden="true"
         />
-        <div
+        <motion.div
           className="blob h-64 w-64 bg-brand-200 animate-floatSlow"
-          style={{ top: "6rem", right: "-4rem" }}
+          style={{ top: "6rem", right: "-4rem", y: blobTwoY }}
           aria-hidden="true"
         />
         <div className="grain-overlay" aria-hidden="true" />
 
-        <div className="relative mx-auto grid max-w-content items-center gap-12 px-6 pb-20 pt-20 sm:pb-28 sm:pt-28 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
+        <motion.div
+          variants={staggerContainer(0.12, 0.1)}
+          initial="hidden"
+          animate="visible"
+          className="relative mx-auto grid max-w-content items-center gap-12 px-6 pb-20 pt-20 sm:pb-28 sm:pt-28 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8"
+        >
           <div className="text-center lg:text-left">
-            <span className="animate-fadeUp inline-flex items-center gap-1.5 rounded-full border border-brand-100 bg-brand-50 px-3.5 py-1.5 text-xs font-semibold text-brand-700">
+            <motion.span
+              variants={staggerItem}
+              className="inline-flex items-center gap-1.5 rounded-full border border-brand-100 bg-brand-50 px-3.5 py-1.5 text-xs font-semibold text-brand-700"
+            >
               <Sparkles className="h-3.5 w-3.5" strokeWidth={2} />
               Storefront metafields, per variant
-            </span>
-            <h1 className="animate-fadeUp mt-6 font-serif text-4xl leading-[1.08] tracking-tight text-ink sm:text-6xl">
+            </motion.span>
+            <motion.h1
+              variants={staggerItem}
+              className="mt-6 font-serif text-4xl leading-[1.08] tracking-tight text-ink sm:text-6xl"
+            >
               Show the <em className="italic text-brand-600">right</em> content for every
               product variant
-            </h1>
-            <p className="animate-fadeUp mx-auto mt-6 max-w-xl text-lg leading-relaxed text-ink-secondary lg:mx-0">
+            </motion.h1>
+            <motion.p
+              variants={staggerItem}
+              className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-ink-secondary lg:mx-0"
+            >
               MetaVariant connects your product metafields to the exact variant a shopper has
               selected, so descriptions, specs, badges, and media stay accurate with zero extra
               page loads.
-            </p>
-            <div className="animate-fadeUp mt-9 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start">
-              <a
+            </motion.p>
+            <motion.div
+              variants={staggerItem}
+              className="mt-9 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start"
+            >
+              <motion.a
                 href="https://apps.shopify.com"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex h-12 items-center rounded-lg bg-ink px-6 text-sm font-semibold text-white shadow-card transition-transform hover:-translate-y-0.5 hover:bg-brand-700"
+                {...tapHover}
+                className="inline-flex h-12 items-center rounded-lg bg-ink px-6 text-sm font-semibold text-white shadow-card hover:bg-brand-700"
               >
                 Add to Shopify
-              </a>
-              <Link
-                to="/docs"
-                className="inline-flex h-12 items-center rounded-lg border border-slate-300 bg-white px-6 text-sm font-semibold text-ink transition-colors hover:border-slate-400"
-              >
-                Read the docs
-              </Link>
-            </div>
-            <p className="mt-5 text-xs font-medium text-ink-muted">
+              </motion.a>
+              <motion.div {...tapHover}>
+                <Link
+                  to="/docs"
+                  className="inline-flex h-12 items-center rounded-lg border border-slate-300 bg-white px-6 text-sm font-semibold text-ink transition-colors hover:border-slate-400"
+                >
+                  Read the docs
+                </Link>
+              </motion.div>
+            </motion.div>
+            <motion.p variants={staggerItem} className="mt-5 text-xs font-medium text-ink-muted">
               Free plan available &middot; No credit card required to start
-            </p>
+            </motion.p>
           </div>
 
-          <div className="flex justify-center lg:justify-end">
+          <motion.div variants={staggerItem} className="flex justify-center lg:justify-end">
             <VariantDemo />
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
 
       {/* Core features: interactive tabs */}
@@ -434,15 +465,23 @@ export default function Home() {
           <div className="mt-14 grid gap-6 lg:grid-cols-3">
             {PLANS.map((p, i) => (
               <Reveal key={p.tier} delay={i * 100} as="div">
-                <div
-                  className={`glass glass-hover relative flex h-full flex-col rounded-xl2 p-7 ${
+                <motion.div
+                  whileHover={{ y: -6 }}
+                  transition={{ duration: 0.3, ease: EASE_OUT }}
+                  className={`glass relative flex h-full flex-col rounded-xl2 p-7 ${
                     p.highlighted ? "glass-tint shadow-glassLg" : ""
                   }`}
                 >
                 {p.highlighted ? (
-                  <span className="absolute -top-3 left-7 rounded-full bg-brand-500 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
+                  <motion.span
+                    initial={{ opacity: 0, scale: 0.8, y: 4 }}
+                    whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, ease: EASE_OUT, delay: 0.2 }}
+                    className="absolute -top-3 left-7 rounded-full bg-brand-500 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-white"
+                  >
                     Most popular
-                  </span>
+                  </motion.span>
                 ) : null}
                 <h3 className="text-base font-semibold text-ink">{p.tier}</h3>
                 <p className="mt-3 flex items-baseline gap-1">
@@ -458,10 +497,13 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-                <a
+                <motion.a
                   href="https://apps.shopify.com"
                   target="_blank"
                   rel="noreferrer"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={{ duration: 0.15, ease: EASE_OUT }}
                   className={`mt-7 inline-flex h-11 items-center justify-center rounded-lg text-sm font-semibold transition-colors ${
                     p.highlighted
                       ? "bg-ink text-white hover:bg-brand-700"
@@ -469,8 +511,8 @@ export default function Home() {
                   }`}
                 >
                   {p.cta}
-                </a>
-              </div>
+                </motion.a>
+              </motion.div>
             </Reveal>
           ))}
           </div>
@@ -495,14 +537,15 @@ export default function Home() {
             block can be live before your coffee gets cold.
           </p>
           <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <a
+            <motion.a
               href="https://apps.shopify.com"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex h-12 items-center rounded-lg bg-brand-500 px-6 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 hover:bg-brand-400"
+              {...tapHover}
+              className="inline-flex h-12 items-center rounded-lg bg-brand-500 px-6 text-sm font-semibold text-white hover:bg-brand-400"
             >
               Add to Shopify
-            </a>
+            </motion.a>
             <Link
               to="/docs"
               className="inline-flex h-12 items-center rounded-lg border border-slate-600 px-6 text-sm font-semibold text-white transition-colors hover:border-slate-400"

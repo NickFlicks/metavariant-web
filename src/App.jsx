@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
+import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import NavBar from "./components/NavBar.jsx";
 import Footer from "./components/Footer.jsx";
 import Home from "./pages/Home.jsx";
 import Docs from "./pages/Docs.jsx";
+import { pageVariant } from "./lib/motion.js";
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
@@ -26,18 +28,38 @@ function ScrollToTop() {
   return null;
 }
 
-export default function App() {
+function AnimatedRoutes() {
+  const location = useLocation();
+
   return (
-    <div className="flex min-h-screen flex-col bg-white text-ink">
-      <ScrollToTop />
-      <NavBar />
-      <main className="flex-1">
-        <Routes>
+    <AnimatePresence mode="wait" initial={false}>
+      <motion.div
+        key={location.pathname}
+        variants={pageVariant}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+      >
+        <Routes location={location}>
           <Route path="/" element={<Home />} />
           <Route path="/docs" element={<Docs />} />
         </Routes>
-      </main>
-      <Footer />
-    </div>
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
+export default function App() {
+  return (
+    <MotionConfig reducedMotion="user">
+      <div className="flex min-h-screen flex-col bg-white text-ink">
+        <ScrollToTop />
+        <NavBar />
+        <main className="flex-1">
+          <AnimatedRoutes />
+        </main>
+        <Footer />
+      </div>
+    </MotionConfig>
   );
 }

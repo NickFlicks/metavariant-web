@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import CodeBlock from "../components/CodeBlock.jsx";
+import { EASE_OUT } from "../lib/motion.js";
 
 const SECTIONS = [
   { id: "quick-start", label: "Quick start" },
@@ -195,13 +197,18 @@ export default function Docs() {
               <a
                 key={s.id}
                 href={`#${s.id}`}
-                className={`block rounded-lg border-l-2 py-1.5 pl-3 text-sm transition-colors ${
-                  activeId === s.id
-                    ? "border-brand-500 bg-white/70 font-semibold text-brand-700"
-                    : "border-transparent text-ink-muted hover:text-ink"
+                className={`relative block rounded-lg py-1.5 pl-3 text-sm transition-colors ${
+                  activeId === s.id ? "font-semibold text-brand-700" : "text-ink-muted hover:text-ink"
                 }`}
               >
-                {s.label}
+                {activeId === s.id ? (
+                  <motion.span
+                    layoutId="docs-active-section"
+                    className="absolute inset-0 rounded-lg border-l-2 border-brand-500 bg-white/70"
+                    transition={{ duration: 0.3, ease: EASE_OUT }}
+                  />
+                ) : null}
+                <span className="relative">{s.label}</span>
               </a>
             ))}
           </nav>

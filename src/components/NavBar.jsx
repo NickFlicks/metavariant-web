@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { assetUrl } from "../lib/assets.js";
+import { EASE_OUT } from "../lib/motion.js";
 
 const NAV_LINKS = [
   { label: "Features", href: "/#features" },
@@ -31,7 +33,13 @@ export default function NavBar() {
     >
       <div className="mx-auto flex h-16 max-w-content items-center justify-between px-6">
         <Link to="/" className="flex items-center gap-2.5">
-          <img src={assetUrl("/images/logo.png")} alt="MetaVariant logo" className="h-8 w-8 rounded-lg" />
+          <motion.img
+            src={assetUrl("/images/logo.png")}
+            alt="MetaVariant logo"
+            className="h-8 w-8 rounded-lg"
+            whileHover={{ rotate: -6, scale: 1.05 }}
+            transition={{ duration: 0.25, ease: EASE_OUT }}
+          />
           <span className="text-[17px] font-bold tracking-tight text-ink">MetaVariant</span>
         </Link>
 
@@ -42,7 +50,7 @@ export default function NavBar() {
                 key={link.label}
                 to={link.href}
                 className={({ isActive }) =>
-                  `text-sm font-medium transition-colors ${
+                  `relative text-sm font-medium transition-colors ${
                     isActive ? "text-brand-600" : "text-ink-secondary hover:text-ink"
                   }`
                 }
@@ -50,13 +58,15 @@ export default function NavBar() {
                 {link.label}
               </NavLink>
             ) : (
-              <a
+              <motion.a
                 key={link.label}
                 href={link.href}
                 className="text-sm font-medium text-ink-secondary transition-colors hover:text-ink"
+                whileHover={{ y: -1 }}
+                transition={{ duration: 0.15, ease: EASE_OUT }}
               >
                 {link.label}
-              </a>
+              </motion.a>
             ),
           )}
         </nav>
@@ -68,14 +78,17 @@ export default function NavBar() {
           >
             Sign in
           </a>
-          <a
+          <motion.a
             href="https://apps.shopify.com"
             target="_blank"
             rel="noreferrer"
-            className="inline-flex h-10 items-center rounded-lg bg-ink px-4 text-sm font-semibold text-white shadow-soft transition-colors hover:bg-brand-700"
+            className="inline-flex h-10 items-center rounded-lg bg-ink px-4 text-sm font-semibold text-white shadow-soft"
+            whileHover={{ y: -2, backgroundColor: "#376468" }}
+            whileTap={{ scale: 0.96 }}
+            transition={{ duration: 0.2, ease: EASE_OUT }}
           >
             Add to Shopify
-          </a>
+          </motion.a>
         </div>
 
         <button
@@ -85,45 +98,74 @@ export default function NavBar() {
           aria-label="Toggle menu"
           aria-expanded={open}
         >
-          {open ? <X className="h-6 w-6" strokeWidth={2} /> : <Menu className="h-6 w-6" strokeWidth={2} />}
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.span
+              key={open ? "close" : "open"}
+              initial={{ rotate: -90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: 90, opacity: 0 }}
+              transition={{ duration: 0.2, ease: EASE_OUT }}
+              className="flex"
+            >
+              {open ? <X className="h-6 w-6" strokeWidth={2} /> : <Menu className="h-6 w-6" strokeWidth={2} />}
+            </motion.span>
+          </AnimatePresence>
         </button>
       </div>
 
-      {open ? (
-        <div className="border-t border-slate-200 bg-white px-6 py-4 md:hidden">
-          <nav className="flex flex-col gap-4">
-            {NAV_LINKS.map((link) =>
-              link.href.startsWith("/docs") ? (
-                <Link
-                  key={link.label}
-                  to={link.href}
-                  onClick={() => setOpen(false)}
-                  className="text-sm font-medium text-ink-secondary"
-                >
-                  {link.label}
-                </Link>
-              ) : (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="text-sm font-medium text-ink-secondary"
-                >
-                  {link.label}
-                </a>
-              ),
-            )}
-            <a
-              href="https://apps.shopify.com"
-              target="_blank"
-              rel="noreferrer"
-              className="mt-2 inline-flex h-10 items-center justify-center rounded-lg bg-ink px-4 text-sm font-semibold text-white"
-            >
-              Add to Shopify
-            </a>
-          </nav>
-        </div>
-      ) : null}
+      <AnimatePresence initial={false}>
+        {open ? (
+          <motion.div
+            key="mobile-menu"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: EASE_OUT }}
+            className="overflow-hidden border-t border-slate-200 bg-white md:hidden"
+          >
+            <nav className="flex flex-col gap-4 px-6 py-4">
+              {NAV_LINKS.map((link, i) =>
+                link.href.startsWith("/docs") ? (
+                  <motion.div
+                    key={link.label}
+                    initial={{ opacity: 0, x: -12 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.2, delay: i * 0.05, ease: EASE_OUT }}
+                  >
+                    <Link
+                      to={link.href}
+                      onClick={() => setOpen(false)}
+                      className="text-sm font-medium text-ink-secondary"
+                    >
+                      {link.label}
+                    </Link>
+                  </motion.div>
+                ) : (
+                  <motion.a
+                    key={link.label}
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    className="text-sm font-medium text-ink-secondary"
+                    initial={{ opacity: 0, x: -12 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.2, delay: i * 0.05, ease: EASE_OUT }}
+                  >
+                    {link.label}
+                  </motion.a>
+                ),
+              )}
+              <a
+                href="https://apps.shopify.com"
+                target="_blank"
+                rel="noreferrer"
+                className="mt-2 inline-flex h-10 items-center justify-center rounded-lg bg-ink px-4 text-sm font-semibold text-white"
+              >
+                Add to Shopify
+              </a>
+            </nav>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </header>
   );
 }
