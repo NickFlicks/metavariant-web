@@ -16,36 +16,67 @@ const SECTIONS = [
 const BLOCK_REFERENCE = [
   {
     name: "MetaVariant",
+    plan: "All plans",
     description:
       "The flexible, all-in-one block. Pick a Render Type (Plain Text, HTML, Rich Text, JSON, URL, or Image) to match your metafield's data type.",
   },
   {
     name: "MetaVariant Single Line",
+    plan: "All plans",
     description:
       "Renders single line text as a styled label/badge: pill, rounded, price-tag, bubble, or wave shapes, with configurable colors, padding, font size/weight, and alignment. Ideal for things like “New”, “Limited Stock”, or a variant-specific callout.",
   },
   {
     name: "MetaVariant Multiline",
+    plan: "All plans",
     description: "Plain multi-line text, whitespace preserved (line breaks kept as typed).",
   },
   {
     name: "MetaVariant: Rich Text",
+    plan: "All plans",
     description:
       "Renders a Rich Text metafield's formatting (paragraphs, bold/italic, links, lists) as real HTML.",
   },
   {
     name: "MetaVariant: Image/Video",
+    plan: "All plans",
     description:
       "Renders an image or file-reference metafield with a configurable aspect ratio and max width.",
   },
   {
     name: "MetaVariant: URL",
+    plan: "All plans",
     description: "Renders a URL metafield as a clickable link.",
   },
   {
     name: "MetaVariant: JSON",
+    plan: "All plans",
     description:
       "Renders a JSON metafield formatted and monospaced, useful for debugging or structured data.",
+  },
+  {
+    name: "B2B / Case-Pack Pricing",
+    plan: "Unlimited",
+    description:
+      "Shows a wholesale pricing breakdown for the selected variant: pack size, cost per unit, and the computed total. Create the Pack Quantity and Price Per Unit standard fields once, set both on a variant sold by the case, and the block does the math. It hides itself if either field is missing.",
+  },
+  {
+    name: "Specifications Table",
+    plan: "Unlimited",
+    description:
+      "Turns the Variant Specifications field into a technical spec table on the storefront. Add one “Label: Value” line per spec on the Add Content page, for example “Weight: 200g” or “Storage: 256GB”, and each line becomes a row.",
+  },
+  {
+    name: "Material Card",
+    plan: "Unlimited",
+    description:
+      "An expanded material breakdown for the selected variant: a color or pattern swatch, a close-up texture photo, and descriptive details like fabric composition or care instructions. Use the Swatch Image field instead of Material Color for prints and patterns; if both are set, the image wins.",
+  },
+  {
+    name: "Document & Download",
+    plan: "Unlimited",
+    description:
+      "A download button linking to the Download File standard field for the selected variant, for example a manual or a safety certification. The file is selected directly from Shopify Files, no URL to paste, and the button is hidden on variants with nothing set.",
   },
 ];
 
@@ -145,7 +176,7 @@ export default function Docs() {
   return (
     <div className="mx-auto max-w-content px-6 py-12">
       <div className="mb-10">
-        <span className="inline-flex items-center gap-2 rounded-full border border-brand-100 bg-brand-50 px-3.5 py-1.5 text-xs font-semibold text-brand-700">
+        <span className="inline-flex items-center gap-2 rounded-full border border-brand-100 bg-brand-50/80 px-3.5 py-1.5 text-xs font-semibold text-brand-700 backdrop-blur">
           Documentation
         </span>
         <h1 className="mt-4 font-serif text-3xl tracking-tight text-ink sm:text-4xl">
@@ -159,15 +190,15 @@ export default function Docs() {
 
       <div className="grid gap-12 lg:grid-cols-[220px_1fr]">
         <aside className="hidden lg:block">
-          <nav className="sticky top-24 space-y-1 border-l border-slate-200 pl-4">
+          <nav className="glass sticky top-24 space-y-1 rounded-xl2 p-4">
             {SECTIONS.map((s) => (
               <a
                 key={s.id}
                 href={`#${s.id}`}
-                className={`block rounded-r-md py-1.5 pl-3 text-sm transition-colors ${
+                className={`block rounded-lg border-l-2 py-1.5 pl-3 text-sm transition-colors ${
                   activeId === s.id
-                    ? "-ml-4 border-l-2 border-brand-500 bg-brand-50 font-semibold text-brand-700"
-                    : "text-ink-muted hover:text-ink"
+                    ? "border-brand-500 bg-white/70 font-semibold text-brand-700"
+                    : "border-transparent text-ink-muted hover:text-ink"
                 }`}
               >
                 {s.label}
@@ -184,20 +215,33 @@ export default function Docs() {
           >
             <ol className="list-decimal space-y-2.5 pl-5">
               <li>
-                Create a <strong className="text-ink">variant metafield definition</strong> on
-                the Metafields page (or in Shopify Admin under Settings &rarr; Custom data &rarr;
-                Variants).
+                On the <strong className="text-ink">Metafields Configuration</strong> page, click{" "}
+                <strong className="text-ink">Create field</strong> next to a{" "}
+                <strong className="text-ink">Standard Field</strong> that matches what you need,
+                for example Product Label or Shipping &amp; Stock Alert. It&apos;s already wired
+                to a theme block, so there&apos;s no namespace, key, or type to fill in yourself.
               </li>
               <li>
                 Fill in a value per product variant on the <strong className="text-ink">Add
-                Content</strong> page.
+                Content</strong> page. Rich text fields open a real WYSIWYG editor, and image or
+                file fields open a picker you can search or upload straight into.
               </li>
               <li>
-                Open the theme editor, add a <strong className="text-ink">MetaVariant</strong>{" "}
-                block to your product template, and point it at the same namespace/key. See the
-                block reference below for which block matches your metafield type.
+                Open the theme editor and drag the block named on the field&apos;s card into your
+                product template. Standard Fields point themselves at the right namespace and
+                key automatically.
               </li>
             </ol>
+            <div className="mt-5 rounded-lg border border-dashed border-slate-300 bg-slate-50 p-4">
+              <p className="font-semibold text-ink">Advanced: custom field</p>
+              <p className="mt-1">
+                Need something the 13 Standard Fields don&apos;t cover? Create your own
+                definition the same way you always could: on the Metafields page, or in Shopify
+                Admin under Settings &rarr; Custom data &rarr; Variants. See the block reference
+                below for which block matches your metafield type, and use the namespace/key it
+                shows you.
+              </p>
+            </div>
           </DocSection>
 
           <DocSection
@@ -212,12 +256,24 @@ export default function Docs() {
               <code className="rounded bg-slate-100 px-1.5 py-0.5 text-[13px] text-ink">
                 custom.variant_subtitle
               </code>
-              ) is the same namespace.key pair.
+              ) is the same namespace.key pair. If you used a Standard Field, this is already
+              handled for you: just drag in the block named on that field&apos;s card.
             </p>
             <ul className="space-y-3">
               {BLOCK_REFERENCE.map((b) => (
                 <li key={b.name} className="rounded-lg border border-slate-200 bg-white p-4">
-                  <p className="font-semibold text-ink">{b.name}</p>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <p className="font-semibold text-ink">{b.name}</p>
+                    <span
+                      className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ${
+                        b.plan === "Unlimited"
+                          ? "bg-brand-800 text-white"
+                          : "bg-slate-100 text-ink-muted"
+                      }`}
+                    >
+                      {b.plan}
+                    </span>
+                  </div>
                   <p className="mt-1">{b.description}</p>
                 </li>
               ))}
@@ -278,6 +334,13 @@ export default function Docs() {
                 </tbody>
               </table>
             </div>
+            <p className="mt-4">
+              The same limits apply to Standard Fields: Product Label, Variant Description,
+              Shipping &amp; Stock Alert, and Material Details work on every plan since
+              they&apos;re text or rich text underneath. The other 9, including everything behind
+              B2B / Case-Pack Pricing, Specifications Table, Document &amp; Download, and most of
+              Material Card, use types (number, color, file, list) that require Unlimited.
+            </p>
           </DocSection>
 
           <DocSection id="troubleshooting" title="Troubleshooting">
@@ -389,19 +452,53 @@ export default function Docs() {
           </DocSection>
 
           <DocSection id="changelog" title="Changelog">
-            <div className="rounded-lg border border-slate-200 bg-white p-4">
-              <p className="text-xs font-semibold uppercase tracking-wide text-brand-600">
-                v1.0: Initial release
-              </p>
-              <ul className="mt-2 list-disc space-y-1.5 pl-5">
-                <li>Merchant dashboard with per-product connection status</li>
-                <li>
-                  Seven theme blocks plus shortcode support for text, rich text, image/video,
-                  URL, and JSON metafields
-                </li>
-                <li>Free, Lite, and Unlimited plans with per-plan product and type limits</li>
-                <li>Custom CSS and backend URL overrides in Settings</li>
-              </ul>
+            <div className="space-y-4">
+              <div className="rounded-lg border border-slate-200 bg-white p-4">
+                <p className="text-xs font-semibold uppercase tracking-wide text-brand-600">
+                  Latest: Standard Fields, four new blocks, and a rebuilt editor
+                </p>
+                <ul className="mt-2 list-disc space-y-1.5 pl-5">
+                  <li>
+                    13 Standard Fields: ready-made metafield definitions you create with one
+                    click instead of typing a namespace, key, and type by hand
+                  </li>
+                  <li>
+                    Four new Unlimited-only blocks built around those fields: B2B / Case-Pack
+                    Pricing, Specifications Table, Material Card, and Document &amp; Download
+                  </li>
+                  <li>
+                    A self-built file picker on the Add Content page, with search, loading, and
+                    error states, plus direct upload straight into Shopify Files
+                  </li>
+                  <li>
+                    A real WYSIWYG rich text editor that prefills existing content and formatting
+                    when you reopen a variant
+                  </li>
+                  <li>
+                    Inline tooltips next to Namespace, Key, and Type explaining what each one
+                    means
+                  </li>
+                  <li>
+                    Faster storefront loads: the first variant image now renders server-side and
+                    the metafield API response is cached, improving Largest Contentful Paint
+                  </li>
+                  <li>Shipping &amp; Stock Alert and Single Line blocks grew from 9 to 14 shapes</li>
+                </ul>
+              </div>
+              <div className="rounded-lg border border-slate-200 bg-white p-4">
+                <p className="text-xs font-semibold uppercase tracking-wide text-brand-600">
+                  v1.0: Initial release
+                </p>
+                <ul className="mt-2 list-disc space-y-1.5 pl-5">
+                  <li>Merchant dashboard with per-product connection status</li>
+                  <li>
+                    Seven theme blocks plus shortcode support for text, rich text, image/video,
+                    URL, and JSON metafields
+                  </li>
+                  <li>Free, Lite, and Unlimited plans with per-plan product and type limits</li>
+                  <li>Custom CSS and backend URL overrides in Settings</li>
+                </ul>
+              </div>
             </div>
           </DocSection>
 

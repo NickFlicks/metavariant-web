@@ -39,7 +39,7 @@ export default function VariantDemo({ className = "" }) {
 
   return (
     <div
-      className={`w-full max-w-sm rounded-xl2 border border-slate-200 bg-white/90 p-5 text-left shadow-card backdrop-blur ${className}`}
+      className={`glass glass-hover w-full max-w-sm rounded-xl2 p-5 text-left ${className}`}
     >
       <div className="flex items-center justify-between">
         <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">

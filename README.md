@@ -87,8 +87,12 @@ doesn't exist yet; subsequent runs deploy straight to it.
 Copy on this site (feature descriptions, block reference, plan pricing/limits, troubleshooting
 steps, API endpoints) was pulled directly from the MetaVariant Shopify app's own source,
 mainly `app/routes/app.settings.tsx` (in-app documentation), `app/routes/app.billing.tsx`
-(plan tiers) and `app/routes/app._index.tsx` (dashboard). Keep this site in sync when those
-change.
+(plan tiers), `app/routes/app._index.tsx` (dashboard), `app/models/standard-fields.ts` (the 13
+Standard Fields), `app/routes/app.metafields.tsx` (Ready-made fields flow),
+`extensions/variant-metafield-embed/blocks/*.liquid` (theme block schemas, including the four
+Unlimited-only blocks), `app/routes/app.api.upload-file.ts` and `app/routes/app.variant-content.tsx`
+(file picker and rich text editor), and `app/models/plans.server.ts` (plan/type gating). Keep
+this site in sync when those change.
 
 ## Known gaps
 

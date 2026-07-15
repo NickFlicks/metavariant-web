@@ -37,6 +37,9 @@ export default {
         soft: "0 1px 2px rgba(16, 24, 40, 0.06)",
         card: "0 4px 20px rgba(16, 24, 40, 0.08)",
         glow: "0 0 0 1px rgba(77,119,123,0.10), 0 8px 30px rgba(77,119,123,0.20)",
+        glass: "0 8px 32px rgba(8, 40, 52, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.5)",
+        glassLg: "0 20px 60px rgba(8, 40, 52, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.5)",
+        glassDark: "0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08)",
       },
       borderRadius: {
         xl2: "1.25rem",
@@ -67,6 +70,22 @@ export default {
           "0%, 100%": { opacity: "1", transform: "scale(1)" },
           "50%": { opacity: "0.5", transform: "scale(1.3)" },
         },
+        shimmer: {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
+        },
+        gradientPan: {
+          "0%, 100%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+        },
+        tiltIn: {
+          "0%": { opacity: "0", transform: "perspective(800px) rotateX(6deg) translateY(16px)" },
+          "100%": { opacity: "1", transform: "perspective(800px) rotateX(0deg) translateY(0)" },
+        },
+        rise: {
+          "0%": { opacity: "0", transform: "translateY(24px) scale(0.98)" },
+          "100%": { opacity: "1", transform: "translateY(0) scale(1)" },
+        },
       },
       animation: {
         fadeUp: "fadeUp 0.6s ease-out both",
@@ -74,6 +93,10 @@ export default {
         float: "float 9s ease-in-out infinite",
         floatSlow: "floatSlow 14s ease-in-out infinite",
         pulseDot: "pulseDot 1.8s ease-in-out infinite",
+        shimmer: "shimmer 2.8s linear infinite",
+        gradientPan: "gradientPan 8s ease-in-out infinite",
+        tiltIn: "tiltIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) both",
+        rise: "rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both",
       },
     },
   },

@@ -1,5 +1,17 @@
 import { Link } from "react-router-dom";
-import { Sparkles, Check, Tag, CheckCircle2, AlertCircle, Search, MousePointerClick, ListChecks } from "lucide-react";
+import {
+  Sparkles,
+  Check,
+  Tag,
+  CheckCircle2,
+  AlertCircle,
+  Search,
+  MousePointerClick,
+  ListChecks,
+  Wand2,
+  Gauge,
+  ImageUp,
+} from "lucide-react";
 import CodeBlock from "../components/CodeBlock.jsx";
 import Reveal from "../components/Reveal.jsx";
 import CountUp from "../components/CountUp.jsx";
@@ -7,6 +19,8 @@ import WaveDivider from "../components/WaveDivider.jsx";
 import VariantDemo from "../components/VariantDemo.jsx";
 import FeatureShowcase from "../components/FeatureShowcase.jsx";
 import BlockAccordion from "../components/BlockAccordion.jsx";
+import StandardFieldsDemo from "../components/StandardFieldsDemo.jsx";
+import EditorDemo from "../components/EditorDemo.jsx";
 
 const STEPS = [
   {
@@ -140,6 +154,107 @@ export default function Home() {
         </Reveal>
       </section>
 
+      {/* Standard Fields: ready-made metafields, one click */}
+      <section id="standard-fields" className="relative overflow-hidden bg-slate-50">
+        <div
+          className="blob h-64 w-64 bg-brand-200 animate-floatSlow"
+          style={{ top: "-2rem", right: "6%" }}
+          aria-hidden="true"
+        />
+        <div
+          className="blob h-56 w-56 bg-brand-300 animate-float"
+          style={{ bottom: "-3rem", left: "4%" }}
+          aria-hidden="true"
+        />
+        <div className="relative mx-auto grid max-w-content items-center gap-12 px-6 py-20 sm:py-24 lg:grid-cols-2">
+          <Reveal>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-100 bg-white/70 px-3.5 py-1.5 text-xs font-semibold text-brand-700 backdrop-blur">
+              <Wand2 className="h-3.5 w-3.5" strokeWidth={2} />
+              New: Ready-made fields
+            </span>
+            <h2 className="mt-5 font-serif text-3xl tracking-tight text-ink sm:text-4xl">
+              13 fields, <em className="italic text-brand-600">pre-wired</em> to a theme block.
+              No namespace, no key, no guesswork.
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-ink-secondary">
+              Standard Fields are MetaVariant&apos;s own ready-made metafield definitions: things
+              like Product Label, Shipping &amp; Stock Alert, Material Card, and Document &amp;
+              Download. Click Create, add your content, and drag the matching block into your
+              theme. Still need something custom? The Advanced option underneath falls back to a
+              manual namespace and key, the same way it always has.
+            </p>
+            <ul className="mt-6 space-y-3 text-sm text-ink-secondary">
+              <li className="flex items-start gap-2.5">
+                <Check className="mt-0.5 h-4 w-4 shrink-0 text-brand-500" strokeWidth={2.5} />
+                One click to create instead of typing a type, namespace, and key by hand
+              </li>
+              <li className="flex items-start gap-2.5">
+                <Check className="mt-0.5 h-4 w-4 shrink-0 text-brand-500" strokeWidth={2.5} />
+                Each field already knows which theme block it belongs to
+              </li>
+              <li className="flex items-start gap-2.5">
+                <Check className="mt-0.5 h-4 w-4 shrink-0 text-brand-500" strokeWidth={2.5} />
+                Four of the newest fields power the Unlimited-only blocks below
+              </li>
+            </ul>
+          </Reveal>
+
+          <Reveal delay={120}>
+            <StandardFieldsDemo />
+          </Reveal>
+        </div>
+      </section>
+
+      <WaveDivider fillClassName="text-white" />
+
+      {/* Editor upgrades: file upload, rich text, tooltips */}
+      <section id="editor" className="mx-auto max-w-content px-6 pb-20 pt-4 sm:pb-24">
+        <Reveal>
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="font-serif text-3xl tracking-tight text-ink sm:text-4xl">
+              A content editor that got a <em className="italic text-brand-600">real</em> rewrite
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-ink-secondary">
+              The Add Content page now has its own file picker, a proper rich text editor, and
+              inline explanations for anything that isn&apos;t obvious at a glance.
+            </p>
+          </div>
+        </Reveal>
+
+        <Reveal delay={100} className="mt-14">
+          <EditorDemo />
+        </Reveal>
+
+        <div className="mt-10 grid gap-6 sm:grid-cols-3">
+          <Reveal delay={140} className="glass glass-hover rounded-xl2 p-5">
+            <ImageUp className="h-5 w-5 text-brand-500" strokeWidth={1.8} />
+            <h3 className="mt-3 text-sm font-semibold text-ink">Direct file upload</h3>
+            <p className="mt-1.5 text-xs leading-relaxed text-ink-secondary">
+              A self-built picker with search, loading, and error states, plus a straight upload
+              path into your Shopify Files library. No more waiting on an unreliable native
+              picker.
+            </p>
+          </Reveal>
+          <Reveal delay={200} className="glass glass-hover rounded-xl2 p-5">
+            <Wand2 className="h-5 w-5 text-brand-500" strokeWidth={1.8} />
+            <h3 className="mt-3 text-sm font-semibold text-ink">Real rich text editing</h3>
+            <p className="mt-1.5 text-xs leading-relaxed text-ink-secondary">
+              A proper WYSIWYG editor for Rich Text fields, and it prefills existing content and
+              formatting the moment you open a variant that already has some.
+            </p>
+          </Reveal>
+          <Reveal delay={260} className="glass glass-hover rounded-xl2 p-5">
+            <Gauge className="h-5 w-5 text-brand-500" strokeWidth={1.8} />
+            <h3 className="mt-3 text-sm font-semibold text-ink">Faster storefront loads</h3>
+            <p className="mt-1.5 text-xs leading-relaxed text-ink-secondary">
+              The first image for a variant now renders server-side and the metafield API
+              response is cached, so there&apos;s no lazy-load delay hurting your Largest
+              Contentful Paint.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
       <WaveDivider fillClassName="text-slate-50" />
 
       {/* How it works */}
@@ -176,12 +291,13 @@ export default function Home() {
         <Reveal>
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="font-serif text-3xl tracking-tight text-ink sm:text-4xl">
-              Seven theme blocks, <em className="italic text-brand-600">one</em> namespace &amp;
+              Eleven theme blocks, <em className="italic text-brand-600">one</em> namespace &amp;
               key
             </h2>
             <p className="mt-4 text-base leading-relaxed text-ink-secondary">
               Every block targets the product page from the theme editor. Point it at the same
-              namespace and key as your metafield definition and it just works.
+              namespace and key as your metafield definition and it just works. Four are
+              Unlimited-only, built specifically around the newest Standard Fields.
             </p>
           </div>
         </Reveal>
@@ -190,7 +306,7 @@ export default function Home() {
           <BlockAccordion />
         </Reveal>
 
-        <Reveal delay={150} className="mt-8 rounded-xl2 border border-dashed border-slate-300 bg-slate-50 p-6">
+        <Reveal delay={150} className="glass mt-8 rounded-xl2 p-6">
           <p className="text-sm font-semibold text-ink">
             Theme doesn&apos;t support app blocks where you need one?
           </p>
@@ -205,8 +321,13 @@ export default function Home() {
       </section>
 
       {/* Dashboard preview */}
-      <section className="border-y border-slate-200 bg-slate-50">
-        <div className="mx-auto grid max-w-content items-center gap-12 px-6 py-20 sm:py-24 lg:grid-cols-2">
+      <section className="relative overflow-hidden border-y border-slate-200 bg-slate-50">
+        <div
+          className="blob h-72 w-72 bg-brand-200 animate-float"
+          style={{ top: "-3rem", right: "-2rem" }}
+          aria-hidden="true"
+        />
+        <div className="relative mx-auto grid max-w-content items-center gap-12 px-6 py-20 sm:py-24 lg:grid-cols-2">
           <Reveal>
             <h2 className="font-serif text-3xl tracking-tight text-ink sm:text-4xl">
               A dashboard built around <em className="italic text-brand-600">one</em> question
@@ -231,9 +352,9 @@ export default function Home() {
             </ul>
           </Reveal>
 
-          <Reveal delay={120} className="rounded-xl2 border border-slate-200 bg-white p-6 shadow-card">
+          <Reveal delay={120} className="glass glass-hover rounded-xl2 p-6">
             <div className="grid grid-cols-3 gap-3">
-              <div className="rounded-xl border border-slate-200 bg-white p-4">
+              <div className="rounded-xl border border-white/60 bg-white/60 p-4">
                 <Tag className="h-4 w-4 text-brand-500" strokeWidth={1.8} />
                 <p className="mt-2 text-xs font-medium text-ink-muted">Metafield types</p>
                 <p className="mt-1 text-2xl font-bold text-ink">
@@ -241,7 +362,7 @@ export default function Home() {
                 </p>
                 <p className="mt-1 text-[11px] text-ink-muted">Kinds of content you can add</p>
               </div>
-              <div className="rounded-xl border border-slate-200 bg-white p-4">
+              <div className="rounded-xl border border-white/60 bg-white/60 p-4">
                 <CheckCircle2 className="h-4 w-4 text-emerald-600" strokeWidth={1.8} />
                 <p className="mt-2 text-xs font-medium text-ink-muted">With content</p>
                 <p className="mt-1 text-2xl font-bold text-emerald-600">
@@ -249,7 +370,7 @@ export default function Home() {
                 </p>
                 <p className="mt-1 text-[11px] text-ink-muted">Ready on the storefront</p>
               </div>
-              <div className="rounded-xl border border-slate-200 bg-white p-4">
+              <div className="rounded-xl border border-white/60 bg-white/60 p-4">
                 <AlertCircle className="h-4 w-4 text-amber-600" strokeWidth={1.8} />
                 <p className="mt-2 text-xs font-medium text-ink-muted">Need content</p>
                 <p className="mt-1 text-2xl font-bold text-amber-600">
@@ -266,7 +387,7 @@ export default function Home() {
               ].map((row) => (
                 <div
                   key={row.name}
-                  className="flex items-center justify-between rounded-lg border border-slate-100 px-3 py-2.5 transition-colors hover:bg-slate-50"
+                  className="flex items-center justify-between rounded-lg border border-white/40 px-3 py-2.5 transition-colors hover:bg-white/50"
                 >
                   <span className="text-sm font-medium text-ink">{row.name}</span>
                   <span
@@ -286,29 +407,38 @@ export default function Home() {
       </section>
 
       {/* Pricing */}
-      <section id="pricing" className="mx-auto max-w-content px-6 py-20 sm:py-24">
-        <Reveal>
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="font-serif text-3xl tracking-tight text-ink sm:text-4xl">
-              Plan &amp; billing
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-ink-secondary">
-              Choose the plan that fits how many products you&apos;re customizing with variant
-              metafields.
-            </p>
-          </div>
-        </Reveal>
+      <section id="pricing" className="relative overflow-hidden">
+        <div
+          className="blob h-72 w-72 bg-brand-100 animate-floatSlow"
+          style={{ top: "2rem", left: "-4rem" }}
+          aria-hidden="true"
+        />
+        <div
+          className="blob h-56 w-56 bg-brand-200 animate-float"
+          style={{ bottom: "0", right: "-2rem" }}
+          aria-hidden="true"
+        />
+        <div className="relative mx-auto max-w-content px-6 py-20 sm:py-24">
+          <Reveal>
+            <div className="mx-auto max-w-2xl text-center">
+              <h2 className="font-serif text-3xl tracking-tight text-ink sm:text-4xl">
+                Plan &amp; billing
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-ink-secondary">
+                Choose the plan that fits how many products you&apos;re customizing with variant
+                metafields.
+              </p>
+            </div>
+          </Reveal>
 
-        <div className="mt-14 grid gap-6 lg:grid-cols-3">
-          {PLANS.map((p, i) => (
-            <Reveal key={p.tier} delay={i * 100} as="div">
-              <div
-                className={`relative flex h-full flex-col rounded-xl2 border p-7 transition-transform duration-300 hover:-translate-y-1 ${
-                  p.highlighted
-                    ? "border-brand-500 bg-white shadow-glow"
-                    : "border-slate-200 bg-white shadow-soft"
-                }`}
-              >
+          <div className="mt-14 grid gap-6 lg:grid-cols-3">
+            {PLANS.map((p, i) => (
+              <Reveal key={p.tier} delay={i * 100} as="div">
+                <div
+                  className={`glass glass-hover relative flex h-full flex-col rounded-xl2 p-7 ${
+                    p.highlighted ? "glass-tint shadow-glassLg" : ""
+                  }`}
+                >
                 {p.highlighted ? (
                   <span className="absolute -top-3 left-7 rounded-full bg-brand-500 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
                     Most popular
@@ -343,6 +473,7 @@ export default function Home() {
               </div>
             </Reveal>
           ))}
+          </div>
         </div>
       </section>
 

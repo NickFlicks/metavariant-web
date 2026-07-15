@@ -58,6 +58,51 @@ pre {
   pointer-events: none;
 }
 
+/* Glassmorphism: frosted, translucent panels layered over the blob backgrounds. */
+.glass {
+  position: relative;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.28));
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 8px 32px rgba(8, 40, 52, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.glass-tint {
+  background: linear-gradient(135deg, rgba(189, 217, 215, 0.5), rgba(255, 255, 255, 0.22));
+}
+
+.glass-dark {
+  position: relative;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.glass-hover {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.glass-hover:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 20px 60px rgba(8, 40, 52, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* Animated sheen sweeping across a glass surface, used sparingly on hero-level panels. */
+.glass-sheen {
+  background-image: linear-gradient(
+    100deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.55) 45%,
+    rgba(255, 255, 255, 0.55) 55%,
+    transparent 70%
+  );
+  background-size: 200% 100%;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

@@ -144,7 +144,7 @@ export default function FeatureShowcase() {
 
       <div
         key={active.id}
-        className="animate-pop rounded-xl2 border border-slate-200 bg-slate-50/60 p-6"
+        className="glass animate-pop rounded-xl2 p-6"
       >
         <h3 className="text-lg font-semibold text-ink">{active.title}</h3>
         <p className="mt-2 text-sm leading-relaxed text-ink-secondary">{active.body}</p>
