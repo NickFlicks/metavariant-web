@@ -23,6 +23,7 @@ import FeatureShowcase from "../components/FeatureShowcase.jsx";
 import BlockAccordion from "../components/BlockAccordion.jsx";
 import StandardFieldsDemo from "../components/StandardFieldsDemo.jsx";
 import EditorDemo from "../components/EditorDemo.jsx";
+import BlockShowcase from "../components/BlockShowcase.jsx";
 import { staggerContainer, staggerItem, tapHover, EASE_OUT } from "../lib/motion.js";
 
 const STEPS = [
@@ -225,7 +226,7 @@ export default function Home() {
               </li>
               <li className="flex items-start gap-2.5">
                 <Check className="mt-0.5 h-4 w-4 shrink-0 text-brand-500" strokeWidth={2.5} />
-                Four of the newest fields power the Unlimited-only blocks below
+                Six of the nine dedicated blocks below require the Unlimited plan
               </li>
             </ul>
           </Reveal>
@@ -234,6 +235,28 @@ export default function Home() {
             <StandardFieldsDemo />
           </Reveal>
         </div>
+      </section>
+
+      <WaveDivider fillClassName="text-white" />
+
+      {/* Live block preview: the demo the whole site is really about */}
+      <section id="block-showcase" className="mx-auto max-w-content px-6 py-20 sm:py-24">
+        <Reveal>
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="font-serif text-3xl tracking-tight text-ink sm:text-4xl">
+              Nine blocks, <em className="italic text-brand-600">live</em>, plus an Advanced
+              fallback
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-ink-secondary">
+              Click through the current block lineup below. Each one is a real theme block, not a
+              mockup: what you see here is what shows up on the product page.
+            </p>
+          </div>
+        </Reveal>
+
+        <Reveal delay={100} className="mt-14">
+          <BlockShowcase />
+        </Reveal>
       </section>
 
       <WaveDivider fillClassName="text-white" />
@@ -322,13 +345,13 @@ export default function Home() {
         <Reveal>
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="font-serif text-3xl tracking-tight text-ink sm:text-4xl">
-              Eleven theme blocks, <em className="italic text-brand-600">one</em> namespace &amp;
-              key
+              Nine dedicated blocks, <em className="italic text-brand-600">plus</em> Advanced
             </h2>
             <p className="mt-4 text-base leading-relaxed text-ink-secondary">
-              Every block targets the product page from the theme editor. Point it at the same
-              namespace and key as your metafield definition and it just works. Four are
-              Unlimited-only, built specifically around the newest Standard Fields.
+              Every Standard Field has its own theme block already wired to it: drag it in and
+              you&apos;re done. Six require the Unlimited plan. Anything outside the standard set
+              falls back to the Advanced block, with a namespace, key, and render type you set
+              yourself.
             </p>
           </div>
         </Reveal>

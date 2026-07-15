@@ -1,6 +1,18 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Tag, AlertTriangle, PackageSearch, ListChecks, Palette, FileDown, Check, Lock } from "lucide-react";
+import {
+  Tag,
+  PenLine,
+  ImageIcon,
+  Link2,
+  AlertTriangle,
+  PackageSearch,
+  ListChecks,
+  Palette,
+  FileDown,
+  Check,
+  Lock,
+} from "lucide-react";
 import { staggerContainer, staggerItem, EASE_OUT } from "../lib/motion.js";
 
 const FIELDS = [
@@ -13,12 +25,36 @@ const FIELDS = [
     freePlan: true,
   },
   {
+    key: "variant_description",
+    name: "Variant Description",
+    icon: PenLine,
+    blockName: "Variant Description",
+    useCase: "Rich text story",
+    freePlan: true,
+  },
+  {
     key: "shipping_alert",
     name: "Shipping & Stock Alert",
     icon: AlertTriangle,
     blockName: "Shipping / Stock Alert",
     useCase: "Heads-up banner",
     freePlan: true,
+  },
+  {
+    key: "variant_image",
+    name: "Variant Image or File",
+    icon: ImageIcon,
+    blockName: "Image or File",
+    useCase: "Photo or file link",
+    freePlan: false,
+  },
+  {
+    key: "variant_link",
+    name: "Variant Link",
+    icon: Link2,
+    blockName: "Link",
+    useCase: "Clickable link",
+    freePlan: false,
   },
   {
     key: "case_pack",
@@ -102,7 +138,7 @@ export default function StandardFieldsDemo({ className = "" }) {
 
       <motion.div
         key={plan}
-        className="mt-5 grid gap-3 sm:grid-cols-2"
+        className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3"
         variants={staggerContainer(0.05)}
         initial="hidden"
         animate="visible"
@@ -185,8 +221,8 @@ export default function StandardFieldsDemo({ className = "" }) {
       </motion.div>
 
       <p className="mt-4 text-center text-[11px] text-ink-muted">
-        {createdCount} of {FIELDS.length} shown here created &middot; 13 ready-made fields in total, no
-        namespace or key to type.
+        {createdCount} of {FIELDS.length} created &middot; 13 ready-made fields across these 9
+        dedicated blocks, no namespace or key to type.
       </p>
     </div>
   );

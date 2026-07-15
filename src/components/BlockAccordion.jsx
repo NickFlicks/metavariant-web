@@ -1,64 +1,54 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Layers,
   Tag,
-  AlignLeft,
   PenLine,
-  Image as ImageIcon,
+  ImageIcon,
   Link2,
-  Braces,
-  Plus,
+  AlertTriangle,
   PackageSearch,
   ListChecks,
   Palette,
   FileDown,
+  Settings2,
+  Plus,
   Lock,
 } from "lucide-react";
 import { EASE_OUT } from "../lib/motion.js";
 
+// Matches the real {% schema %} "name" in each block's .liquid file, in
+// extensions/variant-metafield-embed/blocks/. One block per Standard Field,
+// plus Advanced for anything outside the standard set.
 const BLOCKS = [
   {
-    name: "MetaVariant",
-    icon: Layers,
-    plan: "All plans",
-    desc: "The flexible, all-in-one block. Pick a render type (Plain Text, HTML, Rich Text, JSON, URL, or Image) to match your metafield's data type.",
-  },
-  {
-    name: "Single Line",
+    name: "Product Label",
     icon: Tag,
     plan: "All plans",
-    desc: "Renders text as a styled label: pill, rounded, price-tag, bubble, or wave shapes, with configurable colors, padding, and alignment. Great for a “New” or “Limited Stock” callout.",
+    desc: "Shows a short badge for the selected variant, like “New” or “Limited Stock”, from the Product Label field.",
   },
   {
-    name: "Multiline",
-    icon: AlignLeft,
-    plan: "All plans",
-    desc: "Plain multi-line text with whitespace preserved, so line breaks render exactly as typed.",
-  },
-  {
-    name: "Rich Text",
+    name: "Variant Description",
     icon: PenLine,
     plan: "All plans",
-    desc: "Renders a Rich Text metafield's formatting, including paragraphs, bold and italic text, links, and lists, as real HTML.",
+    desc: "Renders the Variant Description field's rich text formatting (paragraphs, bold/italic, links, lists) for the selected variant.",
   },
   {
-    name: "Image / Video",
+    name: "Image or File",
     icon: ImageIcon,
-    plan: "All plans",
-    desc: "Renders an image or file-reference metafield with a configurable aspect ratio and max width.",
+    plan: "Unlimited",
+    desc: "Shows an image or file for the selected variant from the Variant Image or File field. The first image renders server-side for a faster Largest Contentful Paint.",
   },
   {
-    name: "URL",
+    name: "Link",
     icon: Link2,
-    plan: "All plans",
-    desc: "Renders a URL metafield as a clickable link.",
+    plan: "Unlimited",
+    desc: "Shows a clickable link for the selected variant, like a size guide or spec sheet, from the Variant Link field.",
   },
   {
-    name: "JSON",
-    icon: Braces,
+    name: "Shipping/Stock Alert",
+    icon: AlertTriangle,
     plan: "All plans",
-    desc: "Renders a JSON metafield formatted and monospaced, handy for debugging or structured data.",
+    desc: "Shows a warning badge for the selected variant from the Shipping & Stock Alert field, e.g. “Made to Order, 3 Week Lead Time”. Hidden on variants left blank.",
   },
   {
     name: "B2B / Case-Pack Pricing",
@@ -84,6 +74,12 @@ const BLOCKS = [
     plan: "Unlimited",
     desc: "A download button linking to a file for the selected variant, like a manual or safety certification. Hidden on variants with no file set.",
   },
+  {
+    name: "Advanced (Custom Field)",
+    icon: Settings2,
+    plan: "All plans",
+    desc: "For your own custom variant metafields, outside the 9 dedicated blocks above. Type a namespace, key, and render type; Free and Lite plans are limited to text and rich text.",
+  },
 ];
 
 export default function BlockAccordion() {
@@ -104,9 +100,7 @@ export default function BlockAccordion() {
               className="flex w-full items-center gap-4 px-5 py-4 text-left transition-colors hover:bg-white/40"
             >
               <Icon className="h-5 w-5 shrink-0 text-brand-500" strokeWidth={1.8} />
-              <span className="flex-1 text-sm font-semibold text-ink">
-                MetaVariant &middot; {b.name}
-              </span>
+              <span className="flex-1 text-sm font-semibold text-ink">{b.name}</span>
               {isUnlimited ? (
                 <span className="hidden shrink-0 items-center gap-1 rounded-full bg-brand-800/90 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white sm:inline-flex">
                   <Lock className="h-2.5 w-2.5" strokeWidth={2.5} />

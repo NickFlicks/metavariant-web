@@ -15,46 +15,42 @@ const SECTIONS = [
   { id: "privacy", label: "Privacy & terms" },
 ];
 
+// One block per Standard Field, matching the real {% schema %} "name" in
+// each block's .liquid file, plus Advanced for anything outside the
+// standard set. (Three older blocks, Multiline, JSON, and Star Rating,
+// still exist in the extension but are being retired before launch since
+// Advanced already covers plain text and JSON, and Star Rating isn't a
+// MetaVariant feature. They're intentionally left off this list.)
 const BLOCK_REFERENCE = [
   {
-    name: "MetaVariant",
+    name: "Product Label",
     plan: "All plans",
     description:
-      "The flexible, all-in-one block. Pick a Render Type (Plain Text, HTML, Rich Text, JSON, URL, or Image) to match your metafield's data type.",
+      "Shows a short badge for the selected variant, like “New” or “Limited Stock”, from the Product Label field. 14 badge shapes to choose from, with configurable colors, padding, and alignment.",
   },
   {
-    name: "MetaVariant Single Line",
+    name: "Variant Description",
     plan: "All plans",
     description:
-      "Renders single line text as a styled label/badge: pill, rounded, price-tag, bubble, or wave shapes, with configurable colors, padding, font size/weight, and alignment. Ideal for things like “New”, “Limited Stock”, or a variant-specific callout.",
+      "Renders the Variant Description field's rich text formatting (paragraphs, bold/italic, links, lists) as real HTML for the selected variant.",
   },
   {
-    name: "MetaVariant Multiline",
-    plan: "All plans",
-    description: "Plain multi-line text, whitespace preserved (line breaks kept as typed).",
+    name: "Image or File",
+    plan: "Unlimited",
+    description:
+      "Shows an image or file for the selected variant from the Variant Image or File field. The first image now renders server-side and the metafield response is cached, for a faster Largest Contentful Paint.",
   },
   {
-    name: "MetaVariant: Rich Text",
+    name: "Link",
+    plan: "Unlimited",
+    description:
+      "Shows a clickable link for the selected variant, for example a size guide or spec sheet, from the Variant Link field.",
+  },
+  {
+    name: "Shipping/Stock Alert",
     plan: "All plans",
     description:
-      "Renders a Rich Text metafield's formatting (paragraphs, bold/italic, links, lists) as real HTML.",
-  },
-  {
-    name: "MetaVariant: Image/Video",
-    plan: "All plans",
-    description:
-      "Renders an image or file-reference metafield with a configurable aspect ratio and max width.",
-  },
-  {
-    name: "MetaVariant: URL",
-    plan: "All plans",
-    description: "Renders a URL metafield as a clickable link.",
-  },
-  {
-    name: "MetaVariant: JSON",
-    plan: "All plans",
-    description:
-      "Renders a JSON metafield formatted and monospaced, useful for debugging or structured data.",
+      "Shows a warning badge for the selected variant from the Shipping & Stock Alert field, for example “Made to Order, 3 Week Lead Time”. Nothing shows on variants left blank.",
   },
   {
     name: "B2B / Case-Pack Pricing",
@@ -79,6 +75,12 @@ const BLOCK_REFERENCE = [
     plan: "Unlimited",
     description:
       "A download button linking to the Download File standard field for the selected variant, for example a manual or a safety certification. The file is selected directly from Shopify Files, no URL to paste, and the button is hidden on variants with nothing set.",
+  },
+  {
+    name: "Advanced (Custom Field)",
+    plan: "All plans",
+    description:
+      "For your own custom variant metafields, outside the 9 dedicated blocks above. Pick a Render Type (Plain Text, HTML, Rich Text, JSON, URL, or Image) and type the namespace and key yourself. Free and Lite plans are limited to Single line text and Rich text.",
   },
 ];
 
@@ -489,7 +491,7 @@ export default function Docs() {
                     Faster storefront loads: the first variant image now renders server-side and
                     the metafield API response is cached, improving Largest Contentful Paint
                   </li>
-                  <li>Shipping &amp; Stock Alert and Single Line blocks grew from 9 to 14 shapes</li>
+                  <li>Product Label and Shipping/Stock Alert blocks grew from 9 to 14 badge shapes</li>
                 </ul>
               </div>
               <div className="rounded-lg border border-slate-200 bg-white p-4">
