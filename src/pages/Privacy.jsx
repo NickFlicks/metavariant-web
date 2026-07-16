@@ -54,8 +54,8 @@ export default function Privacy() {
             MetaVariant is a Shopify app that lets merchants attach content, like a badge,
             description, image, or spec sheet, to individual product variants, and display that
             content on the storefront. It's built and operated by{" "}
-            <span className="font-semibold text-ink">[Legal entity or developer name, fill in]</span>,
-            based in <span className="font-semibold text-ink">[Country/region, fill in]</span>.
+            <span className="font-semibold text-ink">MetaVariant</span>, based in{" "}
+            <span className="font-semibold text-ink">Kenya</span>.
           </p>
         </Section>
 
@@ -231,8 +231,8 @@ export default function Privacy() {
               or terminate access for accounts that violate these terms.
             </li>
             <li>
-              <span className="font-semibold text-ink">Governing law.</span>{" "}
-              <span className="font-semibold text-ink">[Fill in governing law/jurisdiction]</span>.
+              <span className="font-semibold text-ink">Governing law.</span> These terms are
+              governed by the laws of Kenya, without regard to conflict-of-law principles.
             </li>
           </ul>
         </Section>
