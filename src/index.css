@@ -17,6 +17,25 @@ pre {
   font-family: "SF Mono", ui-monospace, "Menlo", "Consolas", monospace;
 }
 
+/* Cursor + focus affordances for every interactive element, glass surfaces included. */
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]),
+a[href],
+summary {
+  cursor: pointer;
+}
+
+button:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+:focus-visible {
+  outline: 2px solid #4d777b;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 .bg-grid {
   background-image:
     linear-gradient(to right, rgba(15, 23, 42, 0.04) 1px, transparent 1px),

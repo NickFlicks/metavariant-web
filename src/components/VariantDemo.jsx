@@ -64,21 +64,25 @@ export default function VariantDemo({ className = "" }) {
         <span className="text-sm font-semibold text-ink">Color</span>
         <div className="flex gap-2">
           {VARIANTS.map((v) => (
-            <motion.button
+            <button
               key={v.id}
               type="button"
               onClick={() => setActiveId(v.id)}
               aria-label={`Switch to ${v.name}`}
               aria-pressed={v.id === activeId}
-              whileHover={{ scale: v.id === activeId ? 1.1 : 1.08 }}
-              whileTap={{ scale: 0.94 }}
-              animate={{ scale: v.id === activeId ? 1.1 : 1 }}
-              transition={{ duration: 0.2, ease: EASE_OUT }}
-              className={`h-7 w-7 rounded-full ring-2 ring-offset-2 ${
-                v.id === activeId ? "ring-ink" : "ring-transparent hover:ring-slate-300"
-              }`}
-              style={{ backgroundColor: v.swatch }}
-            />
+              className="flex h-11 w-11 items-center justify-center rounded-full"
+            >
+              <motion.span
+                whileHover={{ scale: v.id === activeId ? 1.1 : 1.08 }}
+                whileTap={{ scale: 0.94 }}
+                animate={{ scale: v.id === activeId ? 1.1 : 1 }}
+                transition={{ duration: 0.2, ease: EASE_OUT }}
+                className={`block h-7 w-7 rounded-full ring-2 ring-offset-2 ${
+                  v.id === activeId ? "ring-ink" : "ring-transparent hover:ring-slate-300"
+                }`}
+                style={{ backgroundColor: v.swatch }}
+              />
+            </button>
           ))}
         </div>
         <span className="ml-auto text-xs font-medium text-ink-muted">{active.name}</span>

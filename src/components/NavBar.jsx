@@ -93,7 +93,7 @@ export default function NavBar() {
 
         <button
           type="button"
-          className="flex h-10 w-10 items-center justify-center rounded-lg text-ink md:hidden"
+          className="flex h-11 w-11 items-center justify-center rounded-lg text-ink md:hidden"
           onClick={() => setOpen((v) => !v)}
           aria-label="Toggle menu"
           aria-expanded={open}
