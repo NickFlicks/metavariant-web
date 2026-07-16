@@ -41,14 +41,14 @@ export default function VariantDemo({ className = "" }) {
 
   return (
     <div
-      className={`glass glass-hover w-full max-w-sm rounded-xl2 p-5 text-left ${className}`}
+      className={`glass-dark glass-hover w-full max-w-sm rounded-xl2 p-5 text-left ${className}`}
     >
       <div className="flex items-center justify-between">
-        <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">
+        <p className="text-xs font-semibold uppercase tracking-wide text-night-muted">
           Ridgeline Backpack
         </p>
-        <span className="flex items-center gap-1.5 text-[11px] font-semibold text-emerald-600">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulseDot" />
+        <span className="flex items-center gap-1.5 text-[11px] font-semibold text-emerald-400">
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulseDot" />
           Live
         </span>
       </div>
@@ -61,7 +61,7 @@ export default function VariantDemo({ className = "" }) {
       />
 
       <div className="mt-4 flex items-center gap-3">
-        <span className="text-sm font-semibold text-ink">Color</span>
+        <span className="text-sm font-semibold text-night-text">Color</span>
         <div className="flex gap-2">
           {VARIANTS.map((v) => (
             <button
@@ -77,15 +77,15 @@ export default function VariantDemo({ className = "" }) {
                 whileTap={{ scale: 0.94 }}
                 animate={{ scale: v.id === activeId ? 1.1 : 1 }}
                 transition={{ duration: 0.2, ease: EASE_OUT }}
-                className={`block h-7 w-7 rounded-full ring-2 ring-offset-2 ${
-                  v.id === activeId ? "ring-ink" : "ring-transparent hover:ring-slate-300"
+                className={`block h-7 w-7 rounded-full ring-2 ring-offset-2 ring-offset-night-900 ${
+                  v.id === activeId ? "ring-white" : "ring-transparent hover:ring-night-muted"
                 }`}
                 style={{ backgroundColor: v.swatch }}
               />
             </button>
           ))}
         </div>
-        <span className="ml-auto text-xs font-medium text-ink-muted">{active.name}</span>
+        <span className="ml-auto text-xs font-medium text-night-muted">{active.name}</span>
       </div>
 
       <div className="mt-4">
@@ -116,8 +116,8 @@ export default function VariantDemo({ className = "" }) {
         </AnimatePresence>
       </div>
 
-      <p className="mt-3 text-center text-[11px] text-ink-muted">
-        No page reload. Try another color.
+      <p className="mt-3 text-center text-[11px] text-night-muted">
+        Updates instantly. No page reload, try another color.
       </p>
     </div>
   );

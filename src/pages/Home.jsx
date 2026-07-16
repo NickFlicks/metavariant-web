@@ -1,13 +1,12 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
-  Terminal,
+  Sparkles,
+  Code2,
   Check,
   Minus,
   ArrowRight,
-  BookOpen,
   Store,
-  Code2,
   LayoutTemplate,
   Webhook,
   Puzzle,
@@ -25,6 +24,7 @@ import {
 import Reveal from "../components/Reveal.jsx";
 import DevCodeBlock from "../components/DevCodeBlock.jsx";
 import BlockShowcase from "../components/BlockShowcase.jsx";
+import VariantDemo from "../components/VariantDemo.jsx";
 import { staggerContainer, staggerItem, tapHover } from "../lib/motion.js";
 
 const CODE_TABS = [
@@ -201,23 +201,23 @@ export default function Home() {
               variants={staggerItem}
               className="inline-flex items-center gap-1.5 rounded-full border border-night-border bg-night-900 px-3.5 py-1.5 text-xs font-semibold text-brand-200"
             >
-              <Terminal className="h-3.5 w-3.5" strokeWidth={2} />
-              Built for developers shipping Shopify themes
+              <Sparkles className="h-3.5 w-3.5" strokeWidth={2} />
+              Built for everyday Shopify store owners
             </motion.span>
             <motion.h1
               variants={staggerItem}
               className="mt-6 text-4xl font-bold leading-[1.1] tracking-tight text-night-text sm:text-5xl"
             >
-              Variant metafields, without the{" "}
-              <span className="text-brand-200">namespace and key</span> busywork
+              Show shoppers the right details for{" "}
+              <span className="text-brand-200">every color, size, and style</span>
             </motion.h1>
             <motion.p
               variants={staggerItem}
               className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-night-secondary lg:mx-0"
             >
-              MetaVariant ships 9 pre-wired theme blocks, a shortcode for anywhere blocks
-              don&apos;t reach, and a JSON API behind it. Swap in the right description, image,
-              badge, or spec sheet the instant a shopper changes variant, no page reload.
+              MetaVariant updates your product page the instant a shopper picks a different
+              variant: a new badge, description, image, or spec sheet, with no page reload. No
+              developer needed, just drag a block into the theme editor you already use.
             </motion.p>
             <motion.div
               variants={staggerItem}
@@ -233,13 +233,12 @@ export default function Home() {
                 Add to Shopify
               </motion.a>
               <motion.div {...tapHover}>
-                <Link
-                  to="/docs"
+                <a
+                  href="#live-preview"
                   className="inline-flex h-12 items-center gap-1.5 rounded-lg border border-night-border bg-night-900 px-6 text-sm font-semibold text-night-text transition-colors hover:border-brand-700"
                 >
-                  <BookOpen className="h-4 w-4" strokeWidth={2} />
-                  Read the docs
-                </Link>
+                  See it in action
+                </a>
               </motion.div>
             </motion.div>
             <motion.p variants={staggerItem} className="mt-5 text-xs font-medium text-night-muted">
@@ -247,8 +246,8 @@ export default function Home() {
             </motion.p>
           </div>
 
-          <motion.div variants={staggerItem}>
-            <DevCodeBlock tabs={CODE_TABS} />
+          <motion.div variants={staggerItem} className="flex justify-center lg:justify-end">
+            <VariantDemo />
           </motion.div>
         </motion.div>
       </section>
@@ -271,7 +270,7 @@ export default function Home() {
       </section>
 
       {/* Live preview */}
-      <section className="bg-night-950 py-20 sm:py-24">
+      <section id="live-preview" className="bg-night-950 py-20 sm:py-24">
         <div className="mx-auto max-w-content px-6">
           <Reveal>
             <div className="mx-auto max-w-2xl text-center">
@@ -413,6 +412,31 @@ export default function Home() {
                 ))}
               </tbody>
             </table>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* For developers: optional, secondary to the merchant-facing content above */}
+      <section className="border-t border-night-border bg-night-900 py-20 sm:py-24">
+        <div className="mx-auto max-w-content px-6">
+          <Reveal>
+            <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+              <div>
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-night-border bg-night-950 px-3.5 py-1.5 text-xs font-semibold text-brand-200">
+                  <Code2 className="h-3.5 w-3.5" strokeWidth={2} />
+                  Have a developer? Even better.
+                </span>
+                <h2 className="mt-5 text-2xl font-bold tracking-tight text-night-text sm:text-3xl">
+                  A shortcode and a JSON API sit underneath every block
+                </h2>
+                <p className="mt-4 text-sm leading-relaxed text-night-secondary">
+                  Nobody needs to touch these to use MetaVariant. If your theme doesn&apos;t
+                  support blocks somewhere, or someone on your team wants to build something
+                  custom, the shortcode and the underlying request are right here.
+                </p>
+              </div>
+              <DevCodeBlock tabs={CODE_TABS} />
+            </div>
           </Reveal>
         </div>
       </section>

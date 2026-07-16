@@ -4,18 +4,30 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Matches the real logo exactly: the icon's rounded-square background
+        // is #4F46E5 (this scale's 600/DEFAULT), sampled directly from the
+        // logo file rather than picked separately.
         brand: {
-          DEFAULT: "#4D777B",
-          50: "#EDF4F4",
-          100: "#BDD9D7",
-          200: "#A3C2C1",
-          300: "#85A8A9",
-          400: "#678E90",
-          500: "#4D777B",
-          600: "#376468",
-          700: "#235257",
-          800: "#124349",
-          900: "#03363D",
+          DEFAULT: "#4F46E5",
+          50: "#EEF2FF",
+          100: "#E0E7FF",
+          200: "#C7D2FE",
+          300: "#A5B4FC",
+          400: "#818CF8",
+          500: "#6366F1",
+          600: "#4F46E5",
+          700: "#4338CA",
+          800: "#3730A3",
+          900: "#312E81",
+        },
+        // The logo's third (center) circle, used sparingly as a secondary
+        // accent so the variety-of-variants motif shows up off the icon too.
+        accent: {
+          DEFAULT: "#F97316",
+          100: "#FFEDD5",
+          300: "#FDBA74",
+          500: "#F97316",
+          600: "#EA580C",
         },
         ink: {
           DEFAULT: "#082834",

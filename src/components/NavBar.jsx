@@ -83,7 +83,7 @@ export default function NavBar() {
             target="_blank"
             rel="noreferrer"
             className="inline-flex h-10 items-center rounded-lg bg-brand-100 px-4 text-sm font-semibold text-ink shadow-soft"
-            whileHover={{ y: -2, backgroundColor: "#A3C2C1" }}
+            whileHover={{ y: -2, backgroundColor: "#C7D2FE" }}
             whileTap={{ scale: 0.96 }}
             transition={{ duration: 0.2, ease: EASE_OUT }}
           >
