@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ShieldCheck, AlertTriangle, Mail } from "lucide-react";
+import { ShieldCheck, Mail } from "lucide-react";
 
 const LAST_UPDATED = "July 16, 2026";
 
@@ -38,16 +38,7 @@ export default function Privacy() {
         .
       </p>
 
-      <div className="mt-8 flex gap-3 rounded-xl2 border border-amber-200 bg-amber-50 p-4">
-        <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" strokeWidth={2} />
-        <p className="text-xs leading-relaxed text-amber-800">
-          This policy describes MetaVariant's actual data practices as implemented in the app's
-          source code, but it isn't legal advice. Privacy laws vary by jurisdiction and change
-          over time, so have a lawyer review this before relying on it.
-        </p>
-      </div>
-
-      <div className="mt-4">
+      <div className="mt-8">
         <Section id="overview" title="1. Overview">
           <p>
             MetaVariant is a Shopify app that lets merchants attach content, like a badge,
