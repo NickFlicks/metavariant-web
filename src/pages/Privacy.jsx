@@ -43,8 +43,7 @@ export default function Privacy() {
         <p className="text-xs leading-relaxed text-amber-800">
           This policy describes MetaVariant's actual data practices as implemented in the app's
           source code, but it isn't legal advice. Privacy laws vary by jurisdiction and change
-          over time, so have a lawyer review this before relying on it, especially the sections
-          marked <code className="rounded bg-amber-100 px-1 py-0.5">[fill in]</code> below.
+          over time, so have a lawyer review this before relying on it.
         </p>
       </div>
 
@@ -134,10 +133,10 @@ export default function Privacy() {
 
         <Section id="storage-transfers" title="6. Data Storage & International Transfers">
           <p>
-            MetaVariant's database and application servers run on cloud hosting infrastructure.
-            <span className="font-semibold text-ink"> [Confirm hosting region(s) and add any
-            cross-border transfer safeguards that apply, e.g. Standard Contractual Clauses, if you
-            store EU/UK data outside the EEA/UK, fill in]</span>.
+            MetaVariant's application and database run on Render's cloud infrastructure, with the
+            database hosted in Render's Oregon (US West) region. If you and your customers are
+            located outside the United States, your shop's configuration data (described in
+            Section 2) is transferred to and stored in the United States as a result.
           </p>
         </Section>
 
@@ -182,9 +181,6 @@ export default function Privacy() {
             <Mail className="h-4 w-4" strokeWidth={2} />
             support@metavariant.net
           </a>
-          <p className="text-xs text-ink-muted">
-            [Some jurisdictions require a physical mailing address here, fill in]
-          </p>
         </Section>
 
         <Section id="terms" title="11. Terms of Use">
