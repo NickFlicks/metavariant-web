@@ -7,7 +7,7 @@ const SECTIONS = [
   { id: "quick-start", label: "Quick start" },
   { id: "blocks", label: "Theme block reference" },
   { id: "shortcodes", label: "Shortcodes" },
-  { id: "plans", label: "Metafield types & plan limits" },
+  { id: "plans", label: "Plans & block access" },
   { id: "troubleshooting", label: "Troubleshooting" },
   { id: "css", label: "CSS reference" },
   { id: "api", label: "Developer & API reference" },
@@ -24,45 +24,45 @@ const SECTIONS = [
 const BLOCK_REFERENCE = [
   {
     name: "Product Label",
-    plan: "All plans",
+    plan: "Free",
     description:
       "Shows a short badge for the selected variant, like “New” or “Limited Stock”, from the Product Label field. 14 badge shapes to choose from, with configurable colors, padding, and alignment.",
   },
   {
     name: "Variant Description",
-    plan: "All plans",
+    plan: "Free",
     description:
       "Renders the Variant Description field's rich text formatting (paragraphs, bold/italic, links, lists) as real HTML for the selected variant.",
   },
   {
+    name: "Shipping/Stock Alert",
+    plan: "Advanced",
+    description:
+      "Shows a warning badge for the selected variant from the Shipping & Stock Alert field, for example “Made to Order, 3 Week Lead Time”. Nothing shows on variants left blank.",
+  },
+  {
+    name: "Specifications Table",
+    plan: "Advanced",
+    description:
+      "Turns the Variant Specifications field into a technical spec table on the storefront. Add one “Label: Value” line per spec on the Add Content page, for example “Weight: 200g” or “Storage: 256GB”, and each line becomes a row.",
+  },
+  {
     name: "Image or File",
-    plan: "Unlimited",
+    plan: "Advanced",
     description:
       "Shows an image or file for the selected variant from the Variant Image or File field. The first image now renders server-side and the metafield response is cached, for a faster Largest Contentful Paint.",
   },
   {
     name: "Link",
-    plan: "Unlimited",
+    plan: "Advanced",
     description:
       "Shows a clickable link for the selected variant, for example a size guide or spec sheet, from the Variant Link field.",
   },
   {
-    name: "Shipping/Stock Alert",
-    plan: "All plans",
-    description:
-      "Shows a warning badge for the selected variant from the Shipping & Stock Alert field, for example “Made to Order, 3 Week Lead Time”. Nothing shows on variants left blank.",
-  },
-  {
     name: "B2B / Case-Pack Pricing",
-    plan: "Unlimited",
+    plan: "Advanced",
     description:
       "Shows a wholesale pricing breakdown for the selected variant: pack size, cost per unit, and the computed total. Create the Pack Quantity and Price Per Unit standard fields once, set both on a variant sold by the case, and the block does the math. It hides itself if either field is missing.",
-  },
-  {
-    name: "Specifications Table",
-    plan: "Unlimited",
-    description:
-      "Turns the Variant Specifications field into a technical spec table on the storefront. Add one “Label: Value” line per spec on the Add Content page, for example “Weight: 200g” or “Storage: 256GB”, and each line becomes a row.",
   },
   {
     name: "Material Card",
@@ -78,9 +78,9 @@ const BLOCK_REFERENCE = [
   },
   {
     name: "Advanced (Custom Field)",
-    plan: "All plans",
+    plan: "Unlimited",
     description:
-      "For your own custom variant metafields, outside the 9 dedicated blocks above. Pick a Render Type (Plain Text, HTML, Rich Text, JSON, URL, or Image) and type the namespace and key yourself. Free and Lite plans are limited to Single line text and Rich text.",
+      "For your own custom variant metafields, outside the 9 dedicated blocks above. Pick a Render Type (Plain Text, HTML, Rich Text, JSON, URL, or Image) and type the namespace and key yourself.",
   },
 ];
 
@@ -277,7 +277,9 @@ export default function Docs() {
                       className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ${
                         b.plan === "Unlimited"
                           ? "bg-brand-800 text-white"
-                          : "bg-slate-100 text-ink-muted"
+                          : b.plan === "Advanced"
+                            ? "bg-brand-500 text-white"
+                            : "bg-slate-100 text-ink-muted"
                       }`}
                     >
                       {b.plan}
@@ -303,13 +305,16 @@ export default function Docs() {
             </p>
           </DocSection>
 
-          <DocSection id="plans" title="Metafield types & plan limits">
+          <DocSection id="plans" title="Plans &amp; block access">
             <p>
-              <strong className="text-ink">Free</strong> and <strong className="text-ink">Lite</strong>{" "}
-              plans can create Single line text and Rich text definitions.{" "}
-              <strong className="text-ink">Unlimited</strong> unlocks every type: multi-line
-              text, URL, number (integer), and boolean, in addition to single line and rich text.
-              Free is capped at 10 products, Lite at 50, Unlimited has no product cap.
+              Every plan includes <strong className="text-ink">Product Label</strong> and{" "}
+              <strong className="text-ink">Variant Description</strong>.{" "}
+              <strong className="text-ink">Advanced</strong> adds Shipping/Stock Alert,
+              Specifications Table, Image or File, Link, and B2B / Case-Pack Pricing.{" "}
+              <strong className="text-ink">Unlimited</strong> adds Material Card, Document &amp;
+              Download, and the Advanced (Custom Field) fallback for anything outside the
+              standard set. Product limits scale with plan: 10 on Free, 20 on Lite, 50 on
+              Advanced, no cap on Unlimited.
             </p>
             <div className="overflow-hidden rounded-lg border border-slate-200">
               <table className="w-full text-left text-sm">
@@ -318,7 +323,7 @@ export default function Docs() {
                     <th className="px-4 py-3 font-semibold">Plan</th>
                     <th className="px-4 py-3 font-semibold">Price</th>
                     <th className="px-4 py-3 font-semibold">Product limit</th>
-                    <th className="px-4 py-3 font-semibold">Metafield types</th>
+                    <th className="px-4 py-3 font-semibold">Blocks unlocked</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-200">
@@ -326,30 +331,34 @@ export default function Docs() {
                     <td className="px-4 py-3 font-medium text-ink">Free</td>
                     <td className="px-4 py-3">$0/mo</td>
                     <td className="px-4 py-3">10 products</td>
-                    <td className="px-4 py-3">Single line text + Rich text</td>
+                    <td className="px-4 py-3">Product Label, Variant Description</td>
                   </tr>
                   <tr>
                     <td className="px-4 py-3 font-medium text-ink">Lite</td>
-                    <td className="px-4 py-3">$4.99/mo</td>
+                    <td className="px-4 py-3">$7.90/mo</td>
+                    <td className="px-4 py-3">20 products</td>
+                    <td className="px-4 py-3">Same as Free, more product headroom</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 font-medium text-ink">Advanced</td>
+                    <td className="px-4 py-3">$16.90/mo</td>
                     <td className="px-4 py-3">50 products</td>
-                    <td className="px-4 py-3">Single line text + Rich text</td>
+                    <td className="px-4 py-3">
+                      + Shipping/Stock Alert, Specifications Table, Image or File, Link, B2B /
+                      Case-Pack Pricing
+                    </td>
                   </tr>
                   <tr>
                     <td className="px-4 py-3 font-medium text-ink">Unlimited</td>
-                    <td className="px-4 py-3">$14.99/mo</td>
+                    <td className="px-4 py-3">$29.90/mo</td>
                     <td className="px-4 py-3">No product limit</td>
-                    <td className="px-4 py-3">All metafield types</td>
+                    <td className="px-4 py-3">
+                      + Material Card, Document &amp; Download, Advanced (Custom Field)
+                    </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <p className="mt-4">
-              The same limits apply to Standard Fields: Product Label, Variant Description,
-              Shipping &amp; Stock Alert, and Material Details work on every plan since
-              they&apos;re text or rich text underneath. The other 9, including everything behind
-              B2B / Case-Pack Pricing, Specifications Table, Document &amp; Download, and most of
-              Material Card, use types (number, color, file, list) that require Unlimited.
-            </p>
           </DocSection>
 
           <DocSection id="troubleshooting" title="Troubleshooting">

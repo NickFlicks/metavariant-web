@@ -22,7 +22,7 @@ const BLOCKS = [
     id: "label",
     name: "Product Label",
     icon: Tag,
-    plan: "All plans",
+    plan: "Free",
     render: () => (
       <div className="relative flex h-full items-end rounded-lg bg-gradient-to-br from-brand-100 to-brand-200 p-3">
         <span className="rounded-full bg-ink px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
@@ -35,7 +35,7 @@ const BLOCKS = [
     id: "description",
     name: "Variant Description",
     icon: PenLine,
-    plan: "All plans",
+    plan: "Free",
     render: () => (
       <div className="space-y-1.5 text-xs leading-relaxed text-ink-secondary">
         <p>
@@ -53,7 +53,7 @@ const BLOCKS = [
     id: "image",
     name: "Image or File",
     icon: ImageIcon,
-    plan: "Unlimited",
+    plan: "Advanced",
     render: () => (
       <div className="relative h-full overflow-hidden rounded-lg bg-gradient-to-br from-slate-700 to-ink">
         <span className="absolute right-2 top-2 inline-flex items-center gap-1 rounded-full bg-emerald-400/20 px-2 py-0.5 text-[10px] font-semibold text-emerald-300">
@@ -70,7 +70,7 @@ const BLOCKS = [
     id: "link",
     name: "Link",
     icon: Link2,
-    plan: "Unlimited",
+    plan: "Advanced",
     render: () => (
       <div className="flex h-full items-center justify-center">
         <span className="inline-flex items-center gap-1.5 rounded-lg border border-brand-200 bg-white px-3 py-2 text-xs font-semibold text-brand-700">
@@ -84,7 +84,7 @@ const BLOCKS = [
     id: "shipping",
     name: "Shipping/Stock Alert",
     icon: AlertTriangle,
-    plan: "All plans",
+    plan: "Advanced",
     render: () => (
       <div className="flex h-full items-center justify-center">
         <span className="inline-flex items-center gap-1.5 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-semibold text-amber-800">
@@ -98,7 +98,7 @@ const BLOCKS = [
     id: "b2b",
     name: "B2B / Case-Pack Pricing",
     icon: PackageSearch,
-    plan: "Unlimited",
+    plan: "Advanced",
     render: () => (
       <div className="space-y-1 rounded-lg border border-slate-200 bg-white p-3 text-xs">
         <div className="flex justify-between text-ink-secondary">
@@ -116,7 +116,7 @@ const BLOCKS = [
     id: "specs",
     name: "Specifications Table",
     icon: ListChecks,
-    plan: "Unlimited",
+    plan: "Advanced",
     render: () => (
       <div className="overflow-hidden rounded-lg border border-slate-200 bg-white text-[11px]">
         {[
@@ -168,7 +168,7 @@ const BLOCKS = [
     id: "advanced",
     name: "Advanced (Custom Field)",
     icon: Settings2,
-    plan: "All plans",
+    plan: "Unlimited",
     render: () => (
       <div className="space-y-1.5 rounded-lg border border-dashed border-slate-300 bg-white p-3 text-[11px]">
         <div className="flex justify-between">
@@ -230,7 +230,7 @@ export default function BlockShowcase({ className = "" }) {
                 <span className={`relative truncate font-medium ${isActive ? "text-brand-700" : "text-ink-secondary"}`}>
                   {b.name}
                 </span>
-                {b.plan === "Unlimited" ? (
+                {b.plan !== "Free" ? (
                   <Lock className="relative ml-auto h-3 w-3 shrink-0 text-ink-muted" strokeWidth={2} />
                 ) : null}
               </button>
@@ -257,7 +257,11 @@ export default function BlockShowcase({ className = "" }) {
             <p className="text-[11px] font-medium text-ink-muted">{active.name}</p>
             <span
               className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ${
-                active.plan === "Unlimited" ? "bg-brand-800 text-white" : "bg-slate-100 text-ink-muted"
+                active.plan === "Unlimited"
+                  ? "bg-brand-800 text-white"
+                  : active.plan === "Advanced"
+                    ? "bg-brand-500 text-white"
+                    : "bg-slate-100 text-ink-muted"
               }`}
             >
               {active.plan}

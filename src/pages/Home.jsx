@@ -50,28 +50,41 @@ const PLANS = [
     price: "$0",
     period: "/mo",
     blurb: "Try MetaVariant on a small catalog.",
-    features: ["Up to 10 products", "Single line text + Rich text", "Theme blocks & shortcodes"],
+    features: ["Up to 10 products", "Product Label + Variant Description", "Community support"],
     cta: "Start free",
     highlighted: false,
   },
   {
     tier: "Lite",
-    price: "$4.99",
+    price: "$7.90",
     period: "/mo",
-    blurb: "For growing catalogs that need more room.",
-    features: ["Up to 50 products", "Single line text + Rich text", "Theme blocks & shortcodes"],
+    blurb: "More room for a growing catalog.",
+    features: ["Up to 20 products", "Product Label + Variant Description", "Email support"],
     cta: "Upgrade to Lite",
+    highlighted: false,
+  },
+  {
+    tier: "Advanced",
+    price: "$16.90",
+    period: "/mo",
+    blurb: "Alerts, specs, and richer storefront blocks.",
+    features: [
+      "Up to 50 products",
+      "Adds Shipping/Stock Alert, Specifications Table, Image or File, Link, B2B/Case-Pack Pricing",
+      "Priority support",
+    ],
+    cta: "Upgrade to Advanced",
     highlighted: true,
   },
   {
     tier: "Unlimited",
-    price: "$14.99",
+    price: "$29.90",
     period: "/mo",
-    blurb: "Every metafield type, no product cap.",
+    blurb: "Every block, no product cap.",
     features: [
       "No product limit",
-      "All metafield types (text, rich text, multi-line, URL, number, boolean)",
-      "Theme blocks & shortcodes",
+      "Adds Material Card, Document & Download, and the Advanced/Custom Field fallback",
+      "Priority support",
     ],
     cta: "Upgrade to Unlimited",
     highlighted: false,
@@ -226,7 +239,7 @@ export default function Home() {
               </li>
               <li className="flex items-start gap-2.5">
                 <Check className="mt-0.5 h-4 w-4 shrink-0 text-brand-500" strokeWidth={2.5} />
-                Six of the nine dedicated blocks below require the Unlimited plan
+Five more unlock on Advanced, two more on Unlimited: see the plan breakdown below
               </li>
             </ul>
           </Reveal>
@@ -349,9 +362,9 @@ export default function Home() {
             </h2>
             <p className="mt-4 text-base leading-relaxed text-ink-secondary">
               Every Standard Field has its own theme block already wired to it: drag it in and
-              you&apos;re done. Six require the Unlimited plan. Anything outside the standard set
-              falls back to the Advanced block, with a namespace, key, and render type you set
-              yourself.
+              you&apos;re done. Two are free, five unlock on Advanced, two more on Unlimited.
+              Anything outside the standard set falls back to the Advanced block, with a
+              namespace, key, and render type you set yourself.
             </p>
           </div>
         </Reveal>
@@ -485,13 +498,13 @@ export default function Home() {
             </div>
           </Reveal>
 
-          <div className="mt-14 grid gap-6 lg:grid-cols-3">
+          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {PLANS.map((p, i) => (
-              <Reveal key={p.tier} delay={i * 100} as="div">
+              <Reveal key={p.tier} delay={i * 90} as="div">
                 <motion.div
                   whileHover={{ y: -6 }}
                   transition={{ duration: 0.3, ease: EASE_OUT }}
-                  className={`glass relative flex h-full flex-col rounded-xl2 p-7 ${
+                  className={`glass relative flex h-full flex-col rounded-xl2 p-6 ${
                     p.highlighted ? "glass-tint shadow-glassLg" : ""
                   }`}
                 >
@@ -501,14 +514,14 @@ export default function Home() {
                     whileInView={{ opacity: 1, scale: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.4, ease: EASE_OUT, delay: 0.2 }}
-                    className="absolute -top-3 left-7 rounded-full bg-brand-500 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-white"
+                    className="absolute -top-3 left-6 rounded-full bg-brand-500 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-white"
                   >
                     Most popular
                   </motion.span>
                 ) : null}
                 <h3 className="text-base font-semibold text-ink">{p.tier}</h3>
                 <p className="mt-3 flex items-baseline gap-1">
-                  <span className="text-3xl font-extrabold text-ink">{p.price}</span>
+                  <span className="text-2xl font-extrabold text-ink">{p.price}</span>
                   <span className="text-sm font-medium text-ink-muted">{p.period}</span>
                 </p>
                 <p className="mt-2 text-sm text-ink-secondary">{p.blurb}</p>

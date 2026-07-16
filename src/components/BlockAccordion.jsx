@@ -23,44 +23,44 @@ const BLOCKS = [
   {
     name: "Product Label",
     icon: Tag,
-    plan: "All plans",
+    plan: "Free",
     desc: "Shows a short badge for the selected variant, like “New” or “Limited Stock”, from the Product Label field.",
   },
   {
     name: "Variant Description",
     icon: PenLine,
-    plan: "All plans",
+    plan: "Free",
     desc: "Renders the Variant Description field's rich text formatting (paragraphs, bold/italic, links, lists) for the selected variant.",
+  },
+  {
+    name: "Shipping/Stock Alert",
+    icon: AlertTriangle,
+    plan: "Advanced",
+    desc: "Shows a warning badge for the selected variant from the Shipping & Stock Alert field, e.g. “Made to Order, 3 Week Lead Time”. Hidden on variants left blank.",
+  },
+  {
+    name: "Specifications Table",
+    icon: ListChecks,
+    plan: "Advanced",
+    desc: "Turns a “Label: Value” list into a technical spec table on the storefront, one row per line, for things like Weight, Dimensions, or Storage.",
   },
   {
     name: "Image or File",
     icon: ImageIcon,
-    plan: "Unlimited",
+    plan: "Advanced",
     desc: "Shows an image or file for the selected variant from the Variant Image or File field. The first image renders server-side for a faster Largest Contentful Paint.",
   },
   {
     name: "Link",
     icon: Link2,
-    plan: "Unlimited",
+    plan: "Advanced",
     desc: "Shows a clickable link for the selected variant, like a size guide or spec sheet, from the Variant Link field.",
-  },
-  {
-    name: "Shipping/Stock Alert",
-    icon: AlertTriangle,
-    plan: "All plans",
-    desc: "Shows a warning badge for the selected variant from the Shipping & Stock Alert field, e.g. “Made to Order, 3 Week Lead Time”. Hidden on variants left blank.",
   },
   {
     name: "B2B / Case-Pack Pricing",
     icon: PackageSearch,
-    plan: "Unlimited",
+    plan: "Advanced",
     desc: "Shows a wholesale pricing breakdown for the selected variant: pack size, cost per unit, and the computed total. Set Pack Quantity and Price Per Unit once, and the block hides itself on variants that don't sell by the case.",
-  },
-  {
-    name: "Specifications Table",
-    icon: ListChecks,
-    plan: "Unlimited",
-    desc: "Turns a “Label: Value” list into a technical spec table on the storefront, one row per line, for things like Weight, Dimensions, or Storage.",
   },
   {
     name: "Material Card",
@@ -77,10 +77,16 @@ const BLOCKS = [
   {
     name: "Advanced (Custom Field)",
     icon: Settings2,
-    plan: "All plans",
-    desc: "For your own custom variant metafields, outside the 9 dedicated blocks above. Type a namespace, key, and render type; Free and Lite plans are limited to text and rich text.",
+    plan: "Unlimited",
+    desc: "For your own custom variant metafields, outside the 9 dedicated blocks above. Type a namespace, key, and render type yourself.",
   },
 ];
+
+const PLAN_BADGE_CLASSES = {
+  Free: "bg-white/70 text-ink-muted",
+  Advanced: "bg-brand-500 text-white",
+  Unlimited: "bg-brand-800/90 text-white",
+};
 
 export default function BlockAccordion() {
   const [openIndex, setOpenIndex] = useState(0);
@@ -90,7 +96,6 @@ export default function BlockAccordion() {
       {BLOCKS.map((b, i) => {
         const open = openIndex === i;
         const Icon = b.icon;
-        const isUnlimited = b.plan === "Unlimited";
         return (
           <div key={b.name}>
             <button
@@ -101,16 +106,12 @@ export default function BlockAccordion() {
             >
               <Icon className="h-5 w-5 shrink-0 text-brand-500" strokeWidth={1.8} />
               <span className="flex-1 text-sm font-semibold text-ink">{b.name}</span>
-              {isUnlimited ? (
-                <span className="hidden shrink-0 items-center gap-1 rounded-full bg-brand-800/90 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white sm:inline-flex">
-                  <Lock className="h-2.5 w-2.5" strokeWidth={2.5} />
-                  Unlimited
-                </span>
-              ) : (
-                <span className="hidden shrink-0 rounded-full bg-white/70 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-ink-muted sm:inline-flex">
-                  All plans
-                </span>
-              )}
+              <span
+                className={`hidden shrink-0 items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide sm:inline-flex ${PLAN_BADGE_CLASSES[b.plan]}`}
+              >
+                {b.plan !== "Free" ? <Lock className="h-2.5 w-2.5" strokeWidth={2.5} /> : null}
+                {b.plan}
+              </span>
               <motion.span
                 animate={{ rotate: open ? 45 : 0 }}
                 transition={{ duration: 0.3, ease: EASE_OUT }}

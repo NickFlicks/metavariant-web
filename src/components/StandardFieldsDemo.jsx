@@ -15,6 +15,9 @@ import {
 } from "lucide-react";
 import { staggerContainer, staggerItem, EASE_OUT } from "../lib/motion.js";
 
+const TIER_RANK = { free: 0, advanced: 1, unlimited: 2 };
+const TIER_LABEL = { free: "Free", advanced: "Advanced", unlimited: "Unlimited" };
+
 const FIELDS = [
   {
     key: "product_label",
@@ -22,7 +25,7 @@ const FIELDS = [
     icon: Tag,
     blockName: "Product Label",
     useCase: "Eye-catching badge",
-    freePlan: true,
+    minTier: "free",
   },
   {
     key: "variant_description",
@@ -30,7 +33,7 @@ const FIELDS = [
     icon: PenLine,
     blockName: "Variant Description",
     useCase: "Rich text story",
-    freePlan: true,
+    minTier: "free",
   },
   {
     key: "shipping_alert",
@@ -38,7 +41,7 @@ const FIELDS = [
     icon: AlertTriangle,
     blockName: "Shipping / Stock Alert",
     useCase: "Heads-up banner",
-    freePlan: true,
+    minTier: "advanced",
   },
   {
     key: "variant_image",
@@ -46,7 +49,7 @@ const FIELDS = [
     icon: ImageIcon,
     blockName: "Image or File",
     useCase: "Photo or file link",
-    freePlan: false,
+    minTier: "advanced",
   },
   {
     key: "variant_link",
@@ -54,7 +57,7 @@ const FIELDS = [
     icon: Link2,
     blockName: "Link",
     useCase: "Clickable link",
-    freePlan: false,
+    minTier: "advanced",
   },
   {
     key: "case_pack",
@@ -62,7 +65,7 @@ const FIELDS = [
     icon: PackageSearch,
     blockName: "B2B / Case-Pack Pricing",
     useCase: "Wholesale pricing",
-    freePlan: false,
+    minTier: "advanced",
   },
   {
     key: "variant_specs",
@@ -70,7 +73,7 @@ const FIELDS = [
     icon: ListChecks,
     blockName: "Specifications Table",
     useCase: "Spec comparison table",
-    freePlan: false,
+    minTier: "advanced",
   },
   {
     key: "material",
@@ -78,7 +81,7 @@ const FIELDS = [
     icon: Palette,
     blockName: "Material Card",
     useCase: "Material & swatch card",
-    freePlan: false,
+    minTier: "unlimited",
   },
   {
     key: "document_file",
@@ -86,7 +89,7 @@ const FIELDS = [
     icon: FileDown,
     blockName: "Document & Download",
     useCase: "Downloadable document",
-    freePlan: false,
+    minTier: "unlimited",
   },
 ];
 
@@ -94,7 +97,7 @@ export default function StandardFieldsDemo({ className = "" }) {
   const [plan, setPlan] = useState("free");
   const [created, setCreated] = useState(() => new Set());
 
-  const isAllowed = (field) => plan === "unlimited" || field.freePlan;
+  const isAllowed = (field) => TIER_RANK[plan] >= TIER_RANK[field.minTier];
   const createdCount = created.size;
 
   function toggle(field) {
@@ -114,12 +117,12 @@ export default function StandardFieldsDemo({ className = "" }) {
           </p>
         </div>
         <div className="relative inline-flex items-center rounded-full border border-white/60 bg-white/50 p-0.5 text-xs font-semibold backdrop-blur">
-          {["free", "unlimited"].map((p) => (
+          {["free", "advanced", "unlimited"].map((p) => (
             <button
               key={p}
               type="button"
               onClick={() => setPlan(p)}
-              className={`relative rounded-full px-3 py-1.5 capitalize transition-colors ${
+              className={`relative rounded-full px-3 py-1.5 transition-colors ${
                 plan === p ? "text-white" : "text-ink-muted"
               }`}
             >
@@ -130,7 +133,7 @@ export default function StandardFieldsDemo({ className = "" }) {
                   transition={{ duration: 0.3, ease: EASE_OUT }}
                 />
               ) : null}
-              <span className="relative">{p}</span>
+              <span className="relative">{TIER_LABEL[p]}</span>
             </button>
           ))}
         </div>
@@ -211,7 +214,7 @@ export default function StandardFieldsDemo({ className = "" }) {
                     className="inline-flex w-fit items-center gap-1 rounded-lg border border-slate-300/70 px-3 py-1.5 text-[11px] font-semibold text-ink-muted"
                   >
                     <Lock className="h-3 w-3" strokeWidth={2} />
-                    Requires Unlimited
+                    Requires {TIER_LABEL[field.minTier]}
                   </motion.span>
                 )}
               </AnimatePresence>
