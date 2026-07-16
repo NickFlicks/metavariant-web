@@ -5,28 +5,41 @@ import { EASE_OUT } from "../lib/motion.js";
 /**
  * Minimal hand-rolled syntax highlighter. No external highlighting library is
  * installed, so each snippet gets its own small rule set instead of pulling
- * in a generic language grammar. Rules are tried in order at every position;
- * the first one that matches wins, so more specific patterns (e.g. a JSON
- * key, which is a string followed by a colon) are listed before the generic
- * fallback (any string).
+ * in a generic language grammar. Each rule is tried, in order, anchored at
+ * the current position via the sticky flag; the first one that matches wins.
+ * This is a real lexer loop rather than one combined regex with numbered
+ * capture groups, so a rule's own internal parentheses (like the optional
+ * decimal in a number pattern) can't throw off the bookkeeping.
  */
 function tokenize(code, rules) {
-  const combined = new RegExp(rules.map(([re]) => `(${re.source})`).join("|"), "g");
+  const stickyRules = rules.map(([re, cls]) => [
+    new RegExp(re.source, re.flags.replace(/[gy]/g, "") + "y"),
+    cls,
+  ]);
   const tokens = [];
-  let lastIndex = 0;
-  let match;
+  let i = 0;
 
-  while ((match = combined.exec(code)) !== null) {
-    if (match.index > lastIndex) {
-      tokens.push({ text: code.slice(lastIndex, match.index), cls: "" });
+  while (i < code.length) {
+    let matched = false;
+    for (const [re, cls] of stickyRules) {
+      re.lastIndex = i;
+      const m = re.exec(code);
+      if (m && m[0].length > 0) {
+        tokens.push({ text: m[0], cls });
+        i += m[0].length;
+        matched = true;
+        break;
+      }
     }
-    const groupIndex = match.slice(1).findIndex((g) => g !== undefined);
-    tokens.push({ text: match[0], cls: rules[groupIndex][1] });
-    lastIndex = combined.lastIndex;
-    if (match[0] === "") combined.lastIndex += 1;
-  }
-  if (lastIndex < code.length) {
-    tokens.push({ text: code.slice(lastIndex), cls: "" });
+    if (!matched) {
+      const last = tokens[tokens.length - 1];
+      if (last && last.cls === "") {
+        last.text += code[i];
+      } else {
+        tokens.push({ text: code[i], cls: "" });
+      }
+      i += 1;
+    }
   }
   return tokens;
 }
