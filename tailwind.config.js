@@ -22,6 +22,17 @@ export default {
           secondary: "#284755",
           muted: "#425E70",
         },
+        night: {
+          950: "#020D10",
+          900: "#071A1E",
+          800: "#0B2429",
+          700: "#123339",
+          600: "#1B4750",
+          border: "rgba(163,194,193,0.14)",
+          text: "#EDF6F5",
+          secondary: "#B9D4D2",
+          muted: "#6E9A98",
+        },
       },
       fontFamily: {
         sans: [

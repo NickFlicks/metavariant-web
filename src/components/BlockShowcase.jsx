@@ -193,13 +193,13 @@ export default function BlockShowcase({ className = "" }) {
   const active = BLOCKS.find((b) => b.id === activeId) ?? BLOCKS[0];
 
   return (
-    <div className={`glass glass-hover rounded-xl2 p-5 sm:p-6 ${className}`}>
+    <div className={`glass-dark glass-hover rounded-xl2 p-5 sm:p-6 ${className}`}>
       <div className="flex items-center justify-between gap-3">
-        <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">
+        <p className="text-xs font-semibold uppercase tracking-wide text-night-muted">
           Ridgeline Backpack &middot; Black
         </p>
-        <span className="flex items-center gap-1.5 text-[11px] font-semibold text-emerald-600">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulseDot" />
+        <span className="flex items-center gap-1.5 text-[11px] font-semibold text-emerald-400">
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulseDot" />
           Live preview
         </span>
       </div>
@@ -219,19 +219,19 @@ export default function BlockShowcase({ className = "" }) {
                 {isActive ? (
                   <motion.span
                     layoutId="block-showcase-active"
-                    className="absolute inset-0 rounded-lg bg-brand-50/80 ring-1 ring-inset ring-brand-200"
+                    className="absolute inset-0 rounded-lg bg-brand-900/60 ring-1 ring-inset ring-brand-700"
                     transition={{ duration: 0.3, ease: EASE_OUT }}
                   />
                 ) : null}
                 <Icon
-                  className={`relative h-3.5 w-3.5 shrink-0 ${isActive ? "text-brand-600" : "text-ink-muted"}`}
+                  className={`relative h-3.5 w-3.5 shrink-0 ${isActive ? "text-brand-200" : "text-night-muted"}`}
                   strokeWidth={1.8}
                 />
-                <span className={`relative truncate font-medium ${isActive ? "text-brand-700" : "text-ink-secondary"}`}>
+                <span className={`relative truncate font-medium ${isActive ? "text-brand-100" : "text-night-secondary"}`}>
                   {b.name}
                 </span>
                 {b.plan !== "Free" ? (
-                  <Lock className="relative ml-auto h-3 w-3 shrink-0 text-ink-muted" strokeWidth={2} />
+                  <Lock className="relative ml-auto h-3 w-3 shrink-0 text-night-muted" strokeWidth={2} />
                 ) : null}
               </button>
             );
@@ -239,7 +239,7 @@ export default function BlockShowcase({ className = "" }) {
         </div>
 
         <div>
-          <div className="h-28 rounded-lg border border-white/60 bg-white/50 p-2 sm:h-32">
+          <div className="h-28 rounded-lg border border-night-border bg-white/95 p-2 sm:h-32">
             <AnimatePresence mode="wait">
               <motion.div
                 key={active.id}
@@ -254,14 +254,14 @@ export default function BlockShowcase({ className = "" }) {
             </AnimatePresence>
           </div>
           <div className="mt-2 flex items-center justify-between">
-            <p className="text-[11px] font-medium text-ink-muted">{active.name}</p>
+            <p className="text-[11px] font-medium text-night-muted">{active.name}</p>
             <span
               className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ${
                 active.plan === "Unlimited"
-                  ? "bg-brand-800 text-white"
+                  ? "bg-brand-100 text-ink"
                   : active.plan === "Advanced"
-                    ? "bg-brand-500 text-white"
-                    : "bg-slate-100 text-ink-muted"
+                    ? "bg-brand-300 text-ink"
+                    : "bg-night-700 text-night-secondary"
               }`}
             >
               {active.plan}

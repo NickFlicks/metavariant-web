@@ -1,149 +1,223 @@
-import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import {
-  Sparkles,
+  Terminal,
   Check,
+  Minus,
+  ArrowRight,
+  BookOpen,
+  Store,
+  Code2,
+  LayoutTemplate,
+  Webhook,
+  Puzzle,
   Tag,
-  CheckCircle2,
-  AlertCircle,
-  Search,
-  MousePointerClick,
+  PenLine,
+  AlertTriangle,
   ListChecks,
-  Wand2,
-  Gauge,
-  ImageUp,
+  ImageIcon,
+  Link2,
+  PackageSearch,
+  Palette,
+  FileDown,
+  Settings2,
 } from "lucide-react";
-import CodeBlock from "../components/CodeBlock.jsx";
 import Reveal from "../components/Reveal.jsx";
-import CountUp from "../components/CountUp.jsx";
-import WaveDivider from "../components/WaveDivider.jsx";
-import VariantDemo from "../components/VariantDemo.jsx";
-import FeatureShowcase from "../components/FeatureShowcase.jsx";
-import BlockAccordion from "../components/BlockAccordion.jsx";
-import StandardFieldsDemo from "../components/StandardFieldsDemo.jsx";
-import EditorDemo from "../components/EditorDemo.jsx";
+import DevCodeBlock from "../components/DevCodeBlock.jsx";
 import BlockShowcase from "../components/BlockShowcase.jsx";
-import { staggerContainer, staggerItem, tapHover, EASE_OUT } from "../lib/motion.js";
+import { staggerContainer, staggerItem, tapHover } from "../lib/motion.js";
 
-const STEPS = [
+const CODE_TABS = [
   {
-    n: "01",
-    title: "Create a metafield definition",
-    body: "Add a variant metafield definition, like “Variant subtitle” or “Care instructions”, from the Metafields page, or in Shopify Admin under Settings → Custom data → Variants.",
+    label: "Request",
+    lang: "http",
+    code: `GET /apps/metavariant/api/variant-metafield-values
+    ?variantId=44987654321
+    &shop=your-store.myshopify.com`,
   },
   {
-    n: "02",
-    title: "Add content per variant",
-    body: "Fill in a value for each product variant from the Add Content page, with support for rich text, images, and every metafield type your plan unlocks.",
+    label: "Response",
+    lang: "json",
+    code: `{
+  "variantId": "44987654321",
+  "values": [
+    {
+      "namespace": "custom",
+      "key": "variant_subtitle",
+      "type": "single_line_text_field",
+      "value": "Hand-poured, Moss canvas"
+    },
+    {
+      "namespace": "custom",
+      "key": "shipping_alert",
+      "type": "single_line_text_field",
+      "value": "Made to order, 3 week lead time"
+    }
+  ]
+}`,
   },
   {
-    n: "03",
-    title: "Add the block to your theme",
-    body: "Open the theme editor, add the matching MetaVariant block to your product template, and point it at the same namespace and key. Prefer freeform text? Paste the shortcode instead.",
+    label: "Shortcode",
+    lang: "shortcode",
+    code: `[variant_metafield namespace="custom" key="variant_subtitle"]`,
   },
 ];
+
+const WORKS_WITH = [
+  { label: "Shopify", icon: Store },
+  { label: "Online Store 2.0", icon: LayoutTemplate },
+  { label: "Liquid", icon: Code2 },
+  { label: "Metafields API", icon: Webhook },
+  { label: "Theme app extensions", icon: Puzzle },
+];
+
+// Matches the real {% schema %} "name" in each block's .liquid file: 9
+// dedicated Standard Field blocks, plus Advanced for anything outside the
+// standard set.
+const FEATURES = [
+  {
+    key: "product_label",
+    name: "Product Label",
+    icon: Tag,
+    plan: "Free",
+    description:
+      "A short badge for the selected variant, like New or Limited Stock. 14 shapes, configurable color, padding, and alignment.",
+  },
+  {
+    key: "variant_description",
+    name: "Variant Description",
+    icon: PenLine,
+    plan: "Free",
+    description:
+      "Renders rich text (paragraphs, bold, italic, links, lists) for the selected variant as real HTML, not a plain string.",
+  },
+  {
+    key: "shipping_alert",
+    name: "Shipping / Stock Alert",
+    icon: AlertTriangle,
+    plan: "Advanced",
+    description:
+      "A warning badge for the selected variant, like Made to Order, 3 Week Lead Time. Stays hidden on variants left blank.",
+  },
+  {
+    key: "specs_table",
+    name: "Specifications Table",
+    icon: ListChecks,
+    plan: "Advanced",
+    description:
+      "One Label: Value line per spec, entered on the Add Content page, becomes one row in a technical spec table on the storefront.",
+  },
+  {
+    key: "image_file",
+    name: "Image or File",
+    icon: ImageIcon,
+    plan: "Advanced",
+    description:
+      "An image or file for the selected variant. The first image renders server-side and the response is cached for a faster LCP.",
+  },
+  {
+    key: "link",
+    name: "Link",
+    icon: Link2,
+    plan: "Advanced",
+    description:
+      "A clickable link for the selected variant, for a size guide, spec sheet, or anywhere else you'd point a shopper.",
+  },
+  {
+    key: "b2b_pricing",
+    name: "B2B / Case-Pack Pricing",
+    icon: PackageSearch,
+    plan: "Advanced",
+    description:
+      "Pack size, cost per unit, and the computed total for variants sold by the case. Hides itself if either field is missing.",
+  },
+  {
+    key: "material_card",
+    name: "Material Card",
+    icon: Palette,
+    plan: "Unlimited",
+    description:
+      "A color or pattern swatch, a texture photo, and care details for the selected variant, in one expanded card.",
+  },
+  {
+    key: "document_download",
+    name: "Document & Download",
+    icon: FileDown,
+    plan: "Unlimited",
+    description:
+      "A download button for the selected variant's file, picked straight from Shopify Files. Hidden when nothing is set.",
+  },
+  {
+    key: "advanced_custom",
+    name: "Advanced (Custom Field)",
+    icon: Settings2,
+    plan: "Unlimited",
+    description:
+      "For metafields outside the 9 dedicated blocks. Pick a render type (Plain Text, HTML, Rich Text, JSON, URL, Image) and set your own namespace and key.",
+  },
+];
+
+const TIER_ORDER = ["Free", "Lite", "Advanced", "Unlimited"];
+const PLAN_RANK = { Free: 0, Advanced: 1, Unlimited: 2 };
 
 const PLANS = [
-  {
-    tier: "Free",
-    price: "$0",
-    period: "/mo",
-    blurb: "Try MetaVariant on a small catalog.",
-    features: ["Up to 10 products", "Product Label + Variant Description", "Community support"],
-    cta: "Start free",
-    highlighted: false,
-  },
-  {
-    tier: "Lite",
-    price: "$7.90",
-    period: "/mo",
-    blurb: "More room for a growing catalog.",
-    features: ["Up to 20 products", "Product Label + Variant Description", "Email support"],
-    cta: "Upgrade to Lite",
-    highlighted: false,
-  },
-  {
-    tier: "Advanced",
-    price: "$16.90",
-    period: "/mo",
-    blurb: "Alerts, specs, and richer storefront blocks.",
-    features: [
-      "Up to 50 products",
-      "Adds Shipping/Stock Alert, Specifications Table, Image or File, Link, B2B/Case-Pack Pricing",
-      "Priority support",
-    ],
-    cta: "Upgrade to Advanced",
-    highlighted: true,
-  },
-  {
-    tier: "Unlimited",
-    price: "$29.90",
-    period: "/mo",
-    blurb: "Every block, no product cap.",
-    features: [
-      "No product limit",
-      "Adds Material Card, Document & Download, and the Advanced/Custom Field fallback",
-      "Priority support",
-    ],
-    cta: "Upgrade to Unlimited",
-    highlighted: false,
-  },
+  { tier: "Free", price: "$0", cap: "10 products", support: "Community support" },
+  { tier: "Lite", price: "$7.90", cap: "20 products", support: "Email support" },
+  { tier: "Advanced", price: "$16.90", cap: "50 products", support: "Priority support" },
+  { tier: "Unlimited", price: "$29.90", cap: "No product limit", support: "Priority support" },
 ];
 
-export default function Home() {
-  const heroRef = useRef(null);
-  const { scrollYProgress: heroProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
-  const blobOneY = useTransform(heroProgress, [0, 1], [0, 120]);
-  const blobTwoY = useTransform(heroProgress, [0, 1], [0, -80]);
+function unlockedAt(tier, minPlan) {
+  // Lite unlocks nothing new over Free: it only raises the product cap.
+  const rank = tier === "Lite" ? PLAN_RANK.Free : PLAN_RANK[tier];
+  return rank >= PLAN_RANK[minPlan];
+}
 
+export default function Home() {
   return (
     <>
       {/* Hero */}
-      <section ref={heroRef} className="relative overflow-hidden bg-grid">
+      <section className="relative overflow-hidden bg-night-950 bg-grid-dark">
         <div className="hero-glow absolute inset-0" aria-hidden="true" />
-        <motion.div
-          className="blob h-72 w-72 bg-brand-300 animate-float"
-          style={{ top: "-4rem", left: "-3rem", y: blobOneY }}
+        <div
+          className="blob h-72 w-72 bg-brand-700"
+          style={{ top: "-6rem", left: "-3rem", opacity: 0.35 }}
           aria-hidden="true"
         />
-        <motion.div
-          className="blob h-64 w-64 bg-brand-200 animate-floatSlow"
-          style={{ top: "6rem", right: "-4rem", y: blobTwoY }}
+        <div
+          className="blob h-64 w-64 bg-brand-600"
+          style={{ top: "8rem", right: "-4rem", opacity: 0.25 }}
           aria-hidden="true"
         />
-        <div className="grain-overlay" aria-hidden="true" />
 
         <motion.div
-          variants={staggerContainer(0.12, 0.1)}
+          variants={staggerContainer(0.12, 0.05)}
           initial="hidden"
           animate="visible"
-          className="relative mx-auto grid max-w-content items-center gap-12 px-6 pb-20 pt-20 sm:pb-28 sm:pt-28 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8"
+          className="relative mx-auto grid max-w-content items-center gap-12 px-6 pb-20 pt-24 sm:pb-28 sm:pt-28 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10"
         >
           <div className="text-center lg:text-left">
             <motion.span
               variants={staggerItem}
-              className="inline-flex items-center gap-1.5 rounded-full border border-brand-100 bg-brand-50 px-3.5 py-1.5 text-xs font-semibold text-brand-700"
+              className="inline-flex items-center gap-1.5 rounded-full border border-night-border bg-night-900 px-3.5 py-1.5 text-xs font-semibold text-brand-200"
             >
-              <Sparkles className="h-3.5 w-3.5" strokeWidth={2} />
-              Storefront metafields, per variant
+              <Terminal className="h-3.5 w-3.5" strokeWidth={2} />
+              Built for developers shipping Shopify themes
             </motion.span>
             <motion.h1
               variants={staggerItem}
-              className="mt-6 font-serif text-4xl leading-[1.08] tracking-tight text-ink sm:text-6xl"
+              className="mt-6 text-4xl font-bold leading-[1.1] tracking-tight text-night-text sm:text-5xl"
             >
-              Content that updates the <em className="italic text-brand-600">instant</em> they
-              pick a variant
+              Variant metafields, without the{" "}
+              <span className="text-brand-200">namespace and key</span> busywork
             </motion.h1>
             <motion.p
               variants={staggerItem}
-              className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-ink-secondary lg:mx-0"
+              className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-night-secondary lg:mx-0"
             >
-              MetaVariant swaps in the right description, image, badge, or spec sheet for the
-              exact variant a shopper selects, with no page reload and no extra work on your end.
+              MetaVariant ships 9 pre-wired theme blocks, a shortcode for anywhere blocks
+              don&apos;t reach, and a JSON API behind it. Swap in the right description, image,
+              badge, or spec sheet the instant a shopper changes variant, no page reload.
             </motion.p>
             <motion.div
               variants={staggerItem}
@@ -154,442 +228,243 @@ export default function Home() {
                 target="_blank"
                 rel="noreferrer"
                 {...tapHover}
-                className="inline-flex h-12 items-center rounded-lg bg-ink px-6 text-sm font-semibold text-white shadow-card hover:bg-brand-700"
+                className="inline-flex h-12 items-center rounded-lg bg-brand-100 px-6 text-sm font-semibold text-ink shadow-card"
               >
                 Add to Shopify
               </motion.a>
               <motion.div {...tapHover}>
                 <Link
                   to="/docs"
-                  className="inline-flex h-12 items-center rounded-lg border border-slate-300 bg-white px-6 text-sm font-semibold text-ink transition-colors hover:border-slate-400"
+                  className="inline-flex h-12 items-center gap-1.5 rounded-lg border border-night-border bg-night-900 px-6 text-sm font-semibold text-night-text transition-colors hover:border-brand-700"
                 >
+                  <BookOpen className="h-4 w-4" strokeWidth={2} />
                   Read the docs
                 </Link>
               </motion.div>
             </motion.div>
-            <motion.p variants={staggerItem} className="mt-5 text-xs font-medium text-ink-muted">
+            <motion.p variants={staggerItem} className="mt-5 text-xs font-medium text-night-muted">
               Free plan available &middot; No credit card required to start
             </motion.p>
           </div>
 
-          <motion.div variants={staggerItem} className="flex justify-center lg:justify-end">
-            <VariantDemo />
+          <motion.div variants={staggerItem}>
+            <DevCodeBlock tabs={CODE_TABS} />
           </motion.div>
         </motion.div>
       </section>
 
-      {/* Core features: interactive tabs */}
-      <section id="features" className="mx-auto max-w-content px-6 py-20 sm:py-24">
-        <Reveal>
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="font-serif text-3xl tracking-tight text-ink sm:text-4xl">
-              Works inside the theme editor <em className="italic text-brand-600">you already use</em>
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-ink-secondary">
-              Everything routes through variant metafields you already control. MetaVariant just
-              makes them show up in the right place, at the right moment. Click a feature to see
-              it in action.
-            </p>
-          </div>
-        </Reveal>
-
-        <Reveal delay={100} className="mt-14">
-          <FeatureShowcase />
-        </Reveal>
-      </section>
-
-      {/* Standard Fields: ready-made metafields, one click */}
-      <section id="standard-fields" className="relative overflow-hidden bg-slate-50">
-        <div
-          className="blob h-64 w-64 bg-brand-200 animate-floatSlow"
-          style={{ top: "-2rem", right: "6%" }}
-          aria-hidden="true"
-        />
-        <div
-          className="blob h-56 w-56 bg-brand-300 animate-float"
-          style={{ bottom: "-3rem", left: "4%" }}
-          aria-hidden="true"
-        />
-        <div className="relative mx-auto grid max-w-content items-center gap-12 px-6 py-20 sm:py-24 lg:grid-cols-2">
-          <Reveal>
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-100 bg-white/70 px-3.5 py-1.5 text-xs font-semibold text-brand-700 backdrop-blur">
-              <Wand2 className="h-3.5 w-3.5" strokeWidth={2} />
-              New: Ready-made fields
-            </span>
-            <h2 className="mt-5 font-serif text-3xl tracking-tight text-ink sm:text-4xl">
-              13 fields, <em className="italic text-brand-600">pre-wired</em> to a theme block.
-              No namespace, no key, no guesswork.
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-ink-secondary">
-              Standard Fields are MetaVariant&apos;s own ready-made metafield definitions: things
-              like Product Label, Shipping &amp; Stock Alert, Material Card, and Document &amp;
-              Download. Click Create, add your content, and drag the matching block into your
-              theme. Still need something custom? The Advanced option underneath falls back to a
-              manual namespace and key, the same way it always has.
-            </p>
-            <ul className="mt-6 space-y-3 text-sm text-ink-secondary">
-              <li className="flex items-start gap-2.5">
-                <Check className="mt-0.5 h-4 w-4 shrink-0 text-brand-500" strokeWidth={2.5} />
-                One click to create instead of typing a type, namespace, and key by hand
-              </li>
-              <li className="flex items-start gap-2.5">
-                <Check className="mt-0.5 h-4 w-4 shrink-0 text-brand-500" strokeWidth={2.5} />
-                Each field already knows which theme block it belongs to
-              </li>
-              <li className="flex items-start gap-2.5">
-                <Check className="mt-0.5 h-4 w-4 shrink-0 text-brand-500" strokeWidth={2.5} />
-Five more unlock on Advanced, two more on Unlimited: see the plan breakdown below
-              </li>
-            </ul>
-          </Reveal>
-
-          <Reveal delay={120}>
-            <StandardFieldsDemo />
-          </Reveal>
-        </div>
-      </section>
-
-      <WaveDivider fillClassName="text-white" />
-
-      {/* Live block preview: the demo the whole site is really about */}
-      <section id="block-showcase" className="mx-auto max-w-content px-6 py-20 sm:py-24">
-        <Reveal>
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="font-serif text-3xl tracking-tight text-ink sm:text-4xl">
-              Nine blocks, <em className="italic text-brand-600">live</em>, plus an Advanced
-              fallback
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-ink-secondary">
-              Click through the current block lineup below. Each one is a real theme block, not a
-              mockup: what you see here is what shows up on the product page.
-            </p>
-          </div>
-        </Reveal>
-
-        <Reveal delay={100} className="mt-14">
-          <BlockShowcase />
-        </Reveal>
-      </section>
-
-      <WaveDivider fillClassName="text-white" />
-
-      {/* Editor upgrades: file upload, rich text, tooltips */}
-      <section id="editor" className="mx-auto max-w-content px-6 pb-20 pt-4 sm:pb-24">
-        <Reveal>
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="font-serif text-3xl tracking-tight text-ink sm:text-4xl">
-              A content editor that got a <em className="italic text-brand-600">real</em> rewrite
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-ink-secondary">
-              The Add Content page now has its own file picker, a proper rich text editor, and
-              inline explanations for anything that isn&apos;t obvious at a glance.
-            </p>
-          </div>
-        </Reveal>
-
-        <Reveal delay={100} className="mt-14">
-          <EditorDemo />
-        </Reveal>
-
-        <div className="mt-10 grid gap-6 sm:grid-cols-3">
-          <Reveal delay={140} className="glass glass-hover rounded-xl2 p-5">
-            <ImageUp className="h-5 w-5 text-brand-500" strokeWidth={1.8} />
-            <h3 className="mt-3 text-sm font-semibold text-ink">Direct file upload</h3>
-            <p className="mt-1.5 text-xs leading-relaxed text-ink-secondary">
-              A self-built picker with search, loading, and error states, plus a straight upload
-              path into your Shopify Files library. No more waiting on an unreliable native
-              picker.
-            </p>
-          </Reveal>
-          <Reveal delay={200} className="glass glass-hover rounded-xl2 p-5">
-            <Wand2 className="h-5 w-5 text-brand-500" strokeWidth={1.8} />
-            <h3 className="mt-3 text-sm font-semibold text-ink">Real rich text editing</h3>
-            <p className="mt-1.5 text-xs leading-relaxed text-ink-secondary">
-              A proper WYSIWYG editor for Rich Text fields, and it prefills existing content and
-              formatting the moment you open a variant that already has some.
-            </p>
-          </Reveal>
-          <Reveal delay={260} className="glass glass-hover rounded-xl2 p-5">
-            <Gauge className="h-5 w-5 text-brand-500" strokeWidth={1.8} />
-            <h3 className="mt-3 text-sm font-semibold text-ink">Faster storefront loads</h3>
-            <p className="mt-1.5 text-xs leading-relaxed text-ink-secondary">
-              The first image for a variant now renders server-side and the metafield API
-              response is cached, so there&apos;s no lazy-load delay hurting your Largest
-              Contentful Paint.
-            </p>
-          </Reveal>
-        </div>
-      </section>
-
-      <WaveDivider fillClassName="text-slate-50" />
-
-      {/* How it works */}
-      <section id="how-it-works" className="border-b border-slate-200 bg-slate-50">
-        <div className="mx-auto max-w-content px-6 pb-20 pt-4 sm:pb-24">
-          <Reveal>
-            <div className="mx-auto max-w-2xl text-center">
-              <h2 className="font-serif text-3xl tracking-tight text-ink sm:text-4xl">
-                Live on the storefront in three steps
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-ink-secondary">
-                The same flow every merchant walks through from a fresh install to their first
-                variant-aware product page.
-              </p>
-            </div>
-          </Reveal>
-
-          <div className="mt-14 grid gap-8 md:grid-cols-3">
-            {STEPS.map((s, i) => (
-              <Reveal key={s.n} delay={i * 120} as="div" className="relative">
-                <span className="font-serif text-5xl text-brand-200">{s.n}</span>
-                <h3 className="mt-2 text-lg font-semibold text-ink">{s.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-ink-secondary">{s.body}</p>
-              </Reveal>
+      {/* Works with */}
+      <section className="border-y border-night-border bg-night-900">
+        <div className="mx-auto max-w-content px-6 py-8">
+          <p className="text-center text-xs font-semibold uppercase tracking-wide text-night-muted">
+            Works with
+          </p>
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
+            {WORKS_WITH.map((w) => (
+              <span key={w.label} className="flex items-center gap-2 text-sm font-medium text-night-secondary">
+                <w.icon className="h-4 w-4" strokeWidth={1.8} />
+                {w.label}
+              </span>
             ))}
           </div>
         </div>
       </section>
 
-      <WaveDivider fillClassName="text-white" flip />
-
-      {/* Block reference: accordion */}
-      <section id="blocks" className="mx-auto max-w-content px-6 pb-20 pt-4 sm:pb-24">
-        <Reveal>
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="font-serif text-3xl tracking-tight text-ink sm:text-4xl">
-              Nine dedicated blocks, <em className="italic text-brand-600">plus</em> Advanced
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-ink-secondary">
-              Every Standard Field has its own theme block already wired to it: drag it in and
-              you&apos;re done. Two are free, five unlock on Advanced, two more on Unlimited.
-              Anything outside the standard set falls back to the Advanced block, with a
-              namespace, key, and render type you set yourself.
-            </p>
-          </div>
-        </Reveal>
-
-        <Reveal delay={100} className="mt-14">
-          <BlockAccordion />
-        </Reveal>
-
-        <Reveal delay={150} className="glass mt-8 rounded-xl2 p-6">
-          <p className="text-sm font-semibold text-ink">
-            Theme doesn&apos;t support app blocks where you need one?
-          </p>
-          <p className="mt-1 text-sm text-ink-secondary">
-            Paste a shortcode directly into any text field instead. It&apos;s detected and
-            swapped for the live value the same way a block would be.
-          </p>
-          <CodeBlock className="mt-4">
-            {'[variant_metafield namespace="custom" key="variant_subtitle"]'}
-          </CodeBlock>
-        </Reveal>
-      </section>
-
-      {/* Dashboard preview */}
-      <section className="relative overflow-hidden border-y border-slate-200 bg-slate-50">
-        <div
-          className="blob h-72 w-72 bg-brand-200 animate-float"
-          style={{ top: "-3rem", right: "-2rem" }}
-          aria-hidden="true"
-        />
-        <div className="relative mx-auto grid max-w-content items-center gap-12 px-6 py-20 sm:py-24 lg:grid-cols-2">
+      {/* Live preview */}
+      <section className="bg-night-950 py-20 sm:py-24">
+        <div className="mx-auto max-w-content px-6">
           <Reveal>
-            <h2 className="font-serif text-3xl tracking-tight text-ink sm:text-4xl">
-              A dashboard built around <em className="italic text-brand-600">one</em> question
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-ink-secondary">
-              Which products still need variant content? MetaVariant scans your catalog and
-              tells you exactly where you stand, so nothing ships half-configured.
-            </p>
-            <ul className="mt-6 space-y-3 text-sm text-ink-secondary">
-              <li className="flex items-start gap-2.5">
-                <Search className="mt-0.5 h-4 w-4 shrink-0 text-brand-500" strokeWidth={1.8} />
-                Search and filter every product with its connection status
-              </li>
-              <li className="flex items-start gap-2.5">
-                <MousePointerClick className="mt-0.5 h-4 w-4 shrink-0 text-brand-500" strokeWidth={1.8} />
-                Jump straight from a row to the Add Content editor for that product
-              </li>
-              <li className="flex items-start gap-2.5">
-                <ListChecks className="mt-0.5 h-4 w-4 shrink-0 text-brand-500" strokeWidth={1.8} />
-                Guided 3-step onboarding the first time your shop has no definitions yet
-              </li>
-            </ul>
+            <div className="mx-auto max-w-2xl text-center">
+              <h2 className="text-3xl font-bold tracking-tight text-night-text sm:text-4xl">
+                One block, wired to one field
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-night-secondary">
+                No namespace or key to type. Pick a block, drag it into the theme editor, and it
+                already knows which Standard Field it renders.
+              </p>
+            </div>
           </Reveal>
-
-          <Reveal delay={120} className="glass glass-hover rounded-xl2 p-6">
-            <div className="grid grid-cols-3 gap-3">
-              <div className="rounded-xl border border-white/60 bg-white/60 p-4">
-                <Tag className="h-4 w-4 text-brand-500" strokeWidth={1.8} />
-                <p className="mt-2 text-xs font-medium text-ink-muted">Metafield types</p>
-                <p className="mt-1 text-2xl font-bold text-ink">
-                  <CountUp value={4} />
-                </p>
-                <p className="mt-1 text-[11px] text-ink-muted">Kinds of content you can add</p>
-              </div>
-              <div className="rounded-xl border border-white/60 bg-white/60 p-4">
-                <CheckCircle2 className="h-4 w-4 text-emerald-600" strokeWidth={1.8} />
-                <p className="mt-2 text-xs font-medium text-ink-muted">With content</p>
-                <p className="mt-1 text-2xl font-bold text-emerald-600">
-                  <CountUp value={128} />
-                </p>
-                <p className="mt-1 text-[11px] text-ink-muted">Ready on the storefront</p>
-              </div>
-              <div className="rounded-xl border border-white/60 bg-white/60 p-4">
-                <AlertCircle className="h-4 w-4 text-amber-600" strokeWidth={1.8} />
-                <p className="mt-2 text-xs font-medium text-ink-muted">Need content</p>
-                <p className="mt-1 text-2xl font-bold text-amber-600">
-                  <CountUp value={17} />
-                </p>
-                <p className="mt-1 text-[11px] text-ink-muted">Quick win</p>
-              </div>
-            </div>
-            <div className="mt-4 space-y-2">
-              {[
-                { name: "Classic Canvas Sneaker", status: "Connected" },
-                { name: "Ridgeline Backpack", status: "Connected" },
-                { name: "Alpine Wool Beanie", status: "Needs setup" },
-              ].map((row) => (
-                <div
-                  key={row.name}
-                  className="flex items-center justify-between rounded-lg border border-white/40 px-3 py-2.5 transition-colors hover:bg-white/50"
-                >
-                  <span className="text-sm font-medium text-ink">{row.name}</span>
-                  <span
-                    className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${
-                      row.status === "Connected"
-                        ? "bg-emerald-50 text-emerald-700"
-                        : "bg-amber-50 text-amber-700"
-                    }`}
-                  >
-                    {row.status}
-                  </span>
-                </div>
-              ))}
-            </div>
+          <Reveal delay={100} className="mx-auto mt-12 max-w-2xl">
+            <BlockShowcase />
           </Reveal>
         </div>
       </section>
 
-      {/* Pricing */}
-      <section id="pricing" className="relative overflow-hidden">
-        <div
-          className="blob h-72 w-72 bg-brand-100 animate-floatSlow"
-          style={{ top: "2rem", left: "-4rem" }}
-          aria-hidden="true"
-        />
-        <div
-          className="blob h-56 w-56 bg-brand-200 animate-float"
-          style={{ bottom: "0", right: "-2rem" }}
-          aria-hidden="true"
-        />
-        <div className="relative mx-auto max-w-content px-6 py-20 sm:py-24">
+      {/* Features: all predefined blocks */}
+      <section id="features" className="border-t border-night-border bg-night-900 py-20 sm:py-24">
+        <div className="mx-auto max-w-content px-6">
           <Reveal>
             <div className="mx-auto max-w-2xl text-center">
-              <h2 className="font-serif text-3xl tracking-tight text-ink sm:text-4xl">
-                Pricing that <em className="italic text-brand-600">scales</em> with your catalog
+              <h2 className="text-3xl font-bold tracking-tight text-night-text sm:text-4xl">
+                Every predefined field
               </h2>
-              <p className="mt-4 text-base leading-relaxed text-ink-secondary">
-                Choose the plan that fits how many products you&apos;re customizing with variant
-                metafields.
+              <p className="mt-4 text-base leading-relaxed text-night-secondary">
+                9 Standard Fields cover the common cases. Anything outside them falls back to
+                Advanced: your own namespace, key, and render type.
               </p>
             </div>
           </Reveal>
 
-          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {PLANS.map((p, i) => (
-              <Reveal key={p.tier} delay={i * 90} as="div">
-                <motion.div
-                  whileHover={{ y: -6 }}
-                  transition={{ duration: 0.3, ease: EASE_OUT }}
-                  className={`glass relative flex h-full flex-col rounded-xl2 p-6 ${
-                    p.highlighted ? "glass-tint shadow-glassLg" : ""
-                  }`}
-                >
-                {p.highlighted ? (
-                  <motion.span
-                    initial={{ opacity: 0, scale: 0.8, y: 4 }}
-                    whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, ease: EASE_OUT, delay: 0.2 }}
-                    className="absolute -top-3 left-6 rounded-full bg-brand-500 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-white"
+          <motion.div
+            variants={staggerContainer(0.05)}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px 0px" }}
+            className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+          >
+            {FEATURES.map((f) => (
+              <motion.div
+                key={f.key}
+                variants={staggerItem}
+                className="glass-dark glass-hover rounded-xl2 p-5"
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-900/60 text-brand-200">
+                    <f.icon className="h-4 w-4" strokeWidth={1.8} />
+                  </span>
+                  <span
+                    className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ${
+                      f.plan === "Unlimited"
+                        ? "bg-brand-100 text-ink"
+                        : f.plan === "Advanced"
+                          ? "bg-brand-300 text-ink"
+                          : "bg-night-700 text-night-secondary"
+                    }`}
                   >
-                    Most popular
-                  </motion.span>
-                ) : null}
-                <h3 className="text-base font-semibold text-ink">{p.tier}</h3>
-                <p className="mt-3 flex items-baseline gap-1">
-                  <span className="text-2xl font-extrabold text-ink">{p.price}</span>
-                  <span className="text-sm font-medium text-ink-muted">{p.period}</span>
+                    {f.plan}
+                  </span>
+                </div>
+                <p className="mt-3 text-sm font-semibold text-night-text">{f.name}</p>
+                <p className="mt-1.5 text-[13px] leading-relaxed text-night-muted">
+                  {f.description}
                 </p>
-                <p className="mt-2 text-sm text-ink-secondary">{p.blurb}</p>
-                <ul className="mt-6 flex-1 space-y-3 text-sm text-ink-secondary">
-                  {p.features.map((feat) => (
-                    <li key={feat} className="flex items-start gap-2.5">
-                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-brand-500" strokeWidth={2.5} />
-                      {feat}
-                    </li>
-                  ))}
-                </ul>
-                <motion.a
-                  href="https://apps.shopify.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.97 }}
-                  transition={{ duration: 0.15, ease: EASE_OUT }}
-                  className={`mt-7 inline-flex h-11 items-center justify-center rounded-lg text-sm font-semibold transition-colors ${
-                    p.highlighted
-                      ? "bg-ink text-white hover:bg-brand-700"
-                      : "border border-slate-300 text-ink hover:border-slate-400"
-                  }`}
-                >
-                  {p.cta}
-                </motion.a>
               </motion.div>
-            </Reveal>
-          ))}
-          </div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Pricing / feature comparison */}
+      <section id="pricing" className="bg-night-950 py-20 sm:py-24">
+        <div className="mx-auto max-w-content px-6">
+          <Reveal>
+            <div className="mx-auto max-w-2xl text-center">
+              <h2 className="text-3xl font-bold tracking-tight text-night-text sm:text-4xl">
+                Every block, by plan
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-night-secondary">
+                Blocks unlock cumulatively. Upgrading never removes what you already had.
+              </p>
+            </div>
+          </Reveal>
+
+          <Reveal delay={100} className="mt-12 overflow-x-auto">
+            <table className="w-full min-w-[640px] border-separate border-spacing-0 text-left text-sm">
+              <thead>
+                <tr>
+                  <th className="sticky left-0 bg-night-950 pb-4 pr-4 text-xs font-semibold uppercase tracking-wide text-night-muted">
+                    &nbsp;
+                  </th>
+                  {PLANS.map((p) => (
+                    <th key={p.tier} className="px-4 pb-4 text-center">
+                      <p className="text-sm font-semibold text-night-text">{p.tier}</p>
+                      <p className="mt-0.5 text-lg font-bold text-brand-200">{p.price}</p>
+                      <p className="text-[11px] text-night-muted">/mo</p>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-t border-night-border">
+                  <td className="sticky left-0 bg-night-950 py-3 pr-4 font-medium text-night-secondary">
+                    Product limit
+                  </td>
+                  {PLANS.map((p) => (
+                    <td key={p.tier} className="px-4 py-3 text-center text-night-text">
+                      {p.cap}
+                    </td>
+                  ))}
+                </tr>
+                <tr className="border-t border-night-border">
+                  <td className="sticky left-0 bg-night-950 py-3 pr-4 font-medium text-night-secondary">
+                    Support
+                  </td>
+                  {PLANS.map((p) => (
+                    <td key={p.tier} className="px-4 py-3 text-center text-night-text">
+                      {p.support}
+                    </td>
+                  ))}
+                </tr>
+                {FEATURES.map((f) => (
+                  <tr key={f.key} className="border-t border-night-border">
+                    <td className="sticky left-0 bg-night-950 py-3 pr-4 font-medium text-night-secondary">
+                      {f.name}
+                    </td>
+                    {TIER_ORDER.map((tier) => (
+                      <td key={tier} className="px-4 py-3 text-center">
+                        {unlockedAt(tier, f.plan) ? (
+                          <Check className="mx-auto h-4 w-4 text-brand-200" strokeWidth={2.5} />
+                        ) : (
+                          <Minus className="mx-auto h-4 w-4 text-night-700" strokeWidth={2} />
+                        )}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Documentation CTA */}
+      <section className="border-t border-night-border bg-night-900 py-16">
+        <div className="mx-auto max-w-content px-6">
+          <Reveal>
+            <div className="glass-dark flex flex-col items-center gap-6 rounded-xl2 p-8 text-center sm:flex-row sm:justify-between sm:text-left">
+              <div>
+                <p className="text-lg font-semibold text-night-text">
+                  Quick start, block reference, shortcodes, and the API
+                </p>
+                <p className="mt-1.5 text-sm text-night-muted">
+                  Everything for setting up MetaVariant and customizing the storefront script
+                  lives in one page.
+                </p>
+              </div>
+              <Link
+                to="/docs"
+                className="inline-flex h-11 shrink-0 items-center gap-1.5 rounded-lg bg-brand-100 px-5 text-sm font-semibold text-ink"
+              >
+                Open documentation
+                <ArrowRight className="h-4 w-4" strokeWidth={2} />
+              </Link>
+            </div>
+          </Reveal>
         </div>
       </section>
 
       {/* Final CTA */}
-      <section className="relative overflow-hidden border-t border-slate-200 bg-ink">
-        <div
-          className="blob h-80 w-80 bg-brand-700 animate-floatSlow"
-          style={{ bottom: "-6rem", left: "10%" }}
-          aria-hidden="true"
-        />
-        <div className="grain-overlay" aria-hidden="true" />
-        <Reveal className="relative mx-auto max-w-content px-6 py-20 text-center sm:py-24">
-          <h2 className="font-serif text-3xl tracking-tight text-white sm:text-4xl">
-            Your product pages are ready to be{" "}
-            <em className="italic text-brand-300">variant-aware</em>
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-slate-300">
-            Install MetaVariant, create a metafield definition, and your first variant-aware
-            block can be live before your coffee gets cold.
-          </p>
-          <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+      <section className="bg-night-950 py-20 sm:py-24">
+        <div className="mx-auto max-w-content px-6 text-center">
+          <Reveal>
+            <h2 className="text-3xl font-bold tracking-tight text-night-text sm:text-4xl">
+              Free to install, ready in three steps
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-night-secondary">
+              Create a Standard Field, fill in a value per variant, drag the matching block into
+              your theme.
+            </p>
             <motion.a
               href="https://apps.shopify.com"
               target="_blank"
               rel="noreferrer"
               {...tapHover}
-              className="inline-flex h-12 items-center rounded-lg bg-brand-500 px-6 text-sm font-semibold text-white hover:bg-brand-400"
+              className="mt-8 inline-flex h-12 items-center rounded-lg bg-brand-100 px-7 text-sm font-semibold text-ink shadow-card"
             >
               Add to Shopify
             </motion.a>
-            <Link
-              to="/docs"
-              className="inline-flex h-12 items-center rounded-lg border border-slate-600 px-6 text-sm font-semibold text-white transition-colors hover:border-slate-400"
-            >
-              Read the docs
-            </Link>
-          </div>
-        </Reveal>
-        <WaveDivider fillClassName="text-slate-50" />
+          </Reveal>
+        </div>
       </section>
     </>
   );

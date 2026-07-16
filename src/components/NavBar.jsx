@@ -27,8 +27,8 @@ export default function NavBar() {
     <header
       className={`sticky top-0 z-50 border-b transition-all duration-300 ${
         scrolled
-          ? "border-white/50 bg-white/70 shadow-glass backdrop-blur-xl backdrop-saturate-150"
-          : "border-transparent bg-white/40 backdrop-blur-md"
+          ? "border-night-border bg-night-950/80 shadow-glassDark backdrop-blur-xl backdrop-saturate-150"
+          : "border-transparent bg-night-950/50 backdrop-blur-md"
       }`}
     >
       <div className="mx-auto flex h-16 max-w-content items-center justify-between px-6">
@@ -40,7 +40,7 @@ export default function NavBar() {
             whileHover={{ rotate: -6, scale: 1.05 }}
             transition={{ duration: 0.25, ease: EASE_OUT }}
           />
-          <span className="text-[17px] font-bold tracking-tight text-ink">MetaVariant</span>
+          <span className="text-[17px] font-bold tracking-tight text-night-text">MetaVariant</span>
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
@@ -51,7 +51,7 @@ export default function NavBar() {
                 to={link.href}
                 className={({ isActive }) =>
                   `relative text-sm font-medium transition-colors ${
-                    isActive ? "text-brand-600" : "text-ink-secondary hover:text-ink"
+                    isActive ? "text-brand-200" : "text-night-secondary hover:text-night-text"
                   }`
                 }
               >
@@ -61,7 +61,7 @@ export default function NavBar() {
               <motion.a
                 key={link.label}
                 href={link.href}
-                className="text-sm font-medium text-ink-secondary transition-colors hover:text-ink"
+                className="text-sm font-medium text-night-secondary transition-colors hover:text-night-text"
                 whileHover={{ y: -1 }}
                 transition={{ duration: 0.15, ease: EASE_OUT }}
               >
@@ -72,18 +72,18 @@ export default function NavBar() {
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
-          <a
-            href="#pricing"
-            className="text-sm font-medium text-ink-secondary transition-colors hover:text-ink"
+          <Link
+            to="/docs"
+            className="text-sm font-medium text-night-secondary transition-colors hover:text-night-text"
           >
-            Sign in
-          </a>
+            Documentation
+          </Link>
           <motion.a
             href="https://apps.shopify.com"
             target="_blank"
             rel="noreferrer"
-            className="inline-flex h-10 items-center rounded-lg bg-ink px-4 text-sm font-semibold text-white shadow-soft"
-            whileHover={{ y: -2, backgroundColor: "#376468" }}
+            className="inline-flex h-10 items-center rounded-lg bg-brand-100 px-4 text-sm font-semibold text-ink shadow-soft"
+            whileHover={{ y: -2, backgroundColor: "#A3C2C1" }}
             whileTap={{ scale: 0.96 }}
             transition={{ duration: 0.2, ease: EASE_OUT }}
           >
@@ -93,7 +93,7 @@ export default function NavBar() {
 
         <button
           type="button"
-          className="flex h-11 w-11 items-center justify-center rounded-lg text-ink md:hidden"
+          className="flex h-11 w-11 items-center justify-center rounded-lg text-night-text md:hidden"
           onClick={() => setOpen((v) => !v)}
           aria-label="Toggle menu"
           aria-expanded={open}
@@ -121,7 +121,7 @@ export default function NavBar() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: EASE_OUT }}
-            className="overflow-hidden border-t border-slate-200 bg-white md:hidden"
+            className="overflow-hidden border-t border-night-border bg-night-950 md:hidden"
           >
             <nav className="flex flex-col gap-4 px-6 py-4">
               {NAV_LINKS.map((link, i) =>
@@ -135,7 +135,7 @@ export default function NavBar() {
                     <Link
                       to={link.href}
                       onClick={() => setOpen(false)}
-                      className="text-sm font-medium text-ink-secondary"
+                      className="text-sm font-medium text-night-secondary"
                     >
                       {link.label}
                     </Link>
@@ -145,7 +145,7 @@ export default function NavBar() {
                     key={link.label}
                     href={link.href}
                     onClick={() => setOpen(false)}
-                    className="text-sm font-medium text-ink-secondary"
+                    className="text-sm font-medium text-night-secondary"
                     initial={{ opacity: 0, x: -12 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.2, delay: i * 0.05, ease: EASE_OUT }}
@@ -158,7 +158,7 @@ export default function NavBar() {
                 href="https://apps.shopify.com"
                 target="_blank"
                 rel="noreferrer"
-                className="mt-2 inline-flex h-10 items-center justify-center rounded-lg bg-ink px-4 text-sm font-semibold text-white"
+                className="mt-2 inline-flex h-10 items-center justify-center rounded-lg bg-brand-100 px-4 text-sm font-semibold text-ink"
               >
                 Add to Shopify
               </a>
