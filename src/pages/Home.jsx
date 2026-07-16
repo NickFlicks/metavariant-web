@@ -135,16 +135,15 @@ export default function Home() {
               variants={staggerItem}
               className="mt-6 font-serif text-4xl leading-[1.08] tracking-tight text-ink sm:text-6xl"
             >
-              Show the <em className="italic text-brand-600">right</em> content for every
-              product variant
+              Content that updates the <em className="italic text-brand-600">instant</em> they
+              pick a variant
             </motion.h1>
             <motion.p
               variants={staggerItem}
               className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-ink-secondary lg:mx-0"
             >
-              MetaVariant connects your product metafields to the exact variant a shopper has
-              selected, so descriptions, specs, badges, and media stay accurate with zero extra
-              page loads.
+              MetaVariant swaps in the right description, image, badge, or spec sheet for the
+              exact variant a shopper selects, with no page reload and no extra work on your end.
             </motion.p>
             <motion.div
               variants={staggerItem}
@@ -184,7 +183,7 @@ export default function Home() {
         <Reveal>
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="font-serif text-3xl tracking-tight text-ink sm:text-4xl">
-              Built for <em className="italic text-brand-600">modern</em> Shopify themes
+              Works inside the theme editor <em className="italic text-brand-600">you already use</em>
             </h2>
             <p className="mt-4 text-base leading-relaxed text-ink-secondary">
               Everything routes through variant metafields you already control. MetaVariant just
@@ -489,7 +488,7 @@ Five more unlock on Advanced, two more on Unlimited: see the plan breakdown belo
           <Reveal>
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="font-serif text-3xl tracking-tight text-ink sm:text-4xl">
-                Plan &amp; billing
+                Pricing that <em className="italic text-brand-600">scales</em> with your catalog
               </h2>
               <p className="mt-4 text-base leading-relaxed text-ink-secondary">
                 Choose the plan that fits how many products you&apos;re customizing with variant
@@ -565,8 +564,8 @@ Five more unlock on Advanced, two more on Unlimited: see the plan breakdown belo
         <div className="grain-overlay" aria-hidden="true" />
         <Reveal className="relative mx-auto max-w-content px-6 py-20 text-center sm:py-24">
           <h2 className="font-serif text-3xl tracking-tight text-white sm:text-4xl">
-            Start showing the <em className="italic text-brand-300">right</em> content,
-            automatically
+            Your product pages are ready to be{" "}
+            <em className="italic text-brand-300">variant-aware</em>
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-slate-300">
             Install MetaVariant, create a metafield definition, and your first variant-aware
