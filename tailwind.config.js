@@ -34,16 +34,19 @@ export default {
           secondary: "#284755",
           muted: "#425E70",
         },
+        // Neutral cool slate, deliberately un-tinted, so the indigo/orange
+        // brand colors are the only color doing work on the dark pages
+        // instead of competing with a second (previously teal) hue.
         night: {
-          950: "#020D10",
-          900: "#071A1E",
-          800: "#0B2429",
-          700: "#123339",
-          600: "#1B4750",
-          border: "rgba(163,194,193,0.14)",
-          text: "#EDF6F5",
-          secondary: "#B9D4D2",
-          muted: "#6E9A98",
+          950: "#020617",
+          900: "#0F172A",
+          800: "#1E293B",
+          700: "#334155",
+          600: "#475569",
+          border: "rgba(148,163,184,0.16)",
+          text: "#F8FAFC",
+          secondary: "#CBD5E1",
+          muted: "#94A3B8",
         },
       },
       fontFamily: {
@@ -59,7 +62,7 @@ export default {
       boxShadow: {
         soft: "0 1px 2px rgba(16, 24, 40, 0.06)",
         card: "0 4px 20px rgba(16, 24, 40, 0.08)",
-        glow: "0 0 0 1px rgba(77,119,123,0.10), 0 8px 30px rgba(77,119,123,0.20)",
+        glow: "0 0 0 1px rgba(79,70,229,0.12), 0 8px 30px rgba(79,70,229,0.22)",
         glass: "0 8px 32px rgba(8, 40, 52, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.5)",
         glassLg: "0 20px 60px rgba(8, 40, 52, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.5)",
         glassDark: "0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08)",
