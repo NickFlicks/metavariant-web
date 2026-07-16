@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import CodeBlock from "../components/CodeBlock.jsx";
 import { EASE_OUT } from "../lib/motion.js";
@@ -522,14 +523,16 @@ export default function Docs() {
 
           <DocSection id="privacy" title="Privacy & terms">
             <p>
-              A published Shopify app listing requires a publicly accessible privacy policy, and
-              Shopify recommends terms of service covering usage. Replace this placeholder with
-              your finalized policy text. It should explain what data MetaVariant collects
-              (shop domain, session data for authentication, and the metafield values you
-              choose to expose on the storefront) and how it&apos;s used.
+              What MetaVariant collects (shop domain, session data for authentication, your plan
+              and settings) and doesn&apos;t collect (no customer or order data, ever) is covered
+              in full on the{" "}
+              <Link to="/privacy" className="font-semibold text-brand-600 hover:text-brand-700">
+                Privacy Policy &amp; Terms of Use
+              </Link>{" "}
+              page.
             </p>
             <p>
-              Until that's published, direct support questions to{" "}
+              Questions about data handling or anything else can go to{" "}
               <a href="mailto:support@metavariantapp.com" className="font-semibold text-brand-600 hover:text-brand-700">
                 support@metavariantapp.com
               </a>
