@@ -533,8 +533,8 @@ export default function Docs() {
             </p>
             <p>
               Questions about data handling or anything else can go to{" "}
-              <a href="mailto:support@metavariantapp.com" className="font-semibold text-brand-600 hover:text-brand-700">
-                support@metavariantapp.com
+              <a href="mailto:support@metavariant.net" className="font-semibold text-brand-600 hover:text-brand-700">
+                support@metavariant.net
               </a>
               .
             </p>

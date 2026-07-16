@@ -24,7 +24,7 @@ const FOOTER_LINKS = [
   {
     heading: "Company",
     links: [
-      { label: "Support", href: "mailto:support@metavariantapp.com" },
+      { label: "Support", href: "mailto:support@metavariant.net" },
       { label: "Privacy policy", href: "/privacy" },
       { label: "Terms of service", href: "/privacy#terms" },
     ],

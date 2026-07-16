@@ -176,11 +176,11 @@ export default function Privacy() {
             Questions about this policy or how MetaVariant handles your data can go to:
           </p>
           <a
-            href="mailto:support@metavariantapp.com"
+            href="mailto:support@metavariant.net"
             className="inline-flex items-center gap-1.5 font-semibold text-brand-600 hover:text-brand-700"
           >
             <Mail className="h-4 w-4" strokeWidth={2} />
-            support@metavariantapp.com
+            support@metavariant.net
           </a>
           <p className="text-xs text-ink-muted">
             [Some jurisdictions require a physical mailing address here, fill in]
