@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import CodeBlock from "../components/CodeBlock.jsx";
+import BlockShowcase from "../components/BlockShowcase.jsx";
 import { EASE_OUT } from "../lib/motion.js";
 
 const SECTIONS = [
   { id: "quick-start", label: "Quick start" },
+  { id: "live-preview", label: "Live preview" },
   { id: "blocks", label: "Theme block reference" },
   { id: "shortcodes", label: "Shortcodes" },
   { id: "plans", label: "Plans & block access" },
@@ -341,6 +343,16 @@ export default function Docs() {
                 below for which block matches your metafield type, and use the namespace/key it
                 shows you.
               </p>
+            </div>
+          </DocSection>
+
+          <DocSection
+            id="live-preview"
+            title="Live preview"
+            subtitle="Switch between all 10 blocks to see how each one renders before you build anything."
+          >
+            <div className="rounded-xl2 bg-night-950 p-5 sm:p-8">
+              <BlockShowcase />
             </div>
           </DocSection>
 
