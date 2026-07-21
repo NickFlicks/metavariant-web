@@ -28,60 +28,150 @@ const BLOCK_REFERENCE = [
     plan: "Free",
     description:
       "Shows a short badge for the selected variant, like “New” or “Limited Stock”, from the Product Label field. 14 badge shapes to choose from, with configurable colors, padding, and alignment.",
+    steps: [
+      "On Metafields Configuration, click Create field next to the Product Label Standard Field.",
+      "On Add Content, type the badge text for each variant that needs one, for example “New” or “Limited Stock”, and pick a shape and color.",
+      "Open the theme editor, open your product template, and drag the Product Label block into any section.",
+    ],
+    useCases: [
+      "Flag one variant as “Bestseller” or “Almost Gone” without touching the others.",
+      "Mark a new colorway or size as “New This Month” right on the product page.",
+    ],
   },
   {
     name: "Variant Description",
     plan: "Free",
     description:
       "Renders the Variant Description field's rich text formatting (paragraphs, bold/italic, links, lists) as real HTML for the selected variant.",
+    steps: [
+      "Click Create field next to the Variant Description Standard Field.",
+      "Write the description for each variant in the rich text editor, with bold, links, and lists as needed.",
+      "Drag the Variant Description block into your product template.",
+    ],
+    useCases: [
+      "Give each fabric or finish its own care notes instead of one generic paragraph for the whole product.",
+      "Call out why a specific size or bundle fits differently, right where shoppers are already comparing options.",
+    ],
   },
   {
     name: "Shipping/Stock Alert",
     plan: "Advanced",
     description:
       "Shows a warning badge for the selected variant from the Shipping & Stock Alert field, for example “Made to Order, 3 Week Lead Time”. Nothing shows on variants left blank.",
+    steps: [
+      "Click Create field next to the Shipping & Stock Alert Standard Field.",
+      "Add alert text only on the variants that need it, for example “Made to Order, 3 Week Lead Time”; leave the rest blank.",
+      "Drag the Shipping/Stock Alert block into your product template.",
+    ],
+    useCases: [
+      "Warn shoppers that a custom color takes longer to produce, without adding a notice to every variant.",
+      "Flag a low-stock size so shoppers know to act before it sells out.",
+    ],
   },
   {
     name: "Specifications Table",
     plan: "Advanced",
     description:
       "Turns the Variant Specifications field into a technical spec table on the storefront. Add one “Label: Value” line per spec on the Add Content page, for example “Weight: 200g” or “Storage: 256GB”, and each line becomes a row.",
+    steps: [
+      "Click Create field next to the Variant Specifications Standard Field.",
+      "On Add Content, add one “Label: Value” line per spec, for example “Weight: 200g”; each line becomes a table row.",
+      "Drag the Specifications Table block into your product template.",
+    ],
+    useCases: [
+      "Show exact dimensions or weight for a furniture variant that changes size by option.",
+      "List storage capacity, RAM, or battery life for each electronics configuration.",
+    ],
   },
   {
     name: "Image or File",
     plan: "Advanced",
     description:
       "Shows an image or file for the selected variant from the Variant Image or File field. The first image now renders server-side and the metafield response is cached, for a faster Largest Contentful Paint.",
+    steps: [
+      "Click Create field next to the Variant Image or File Standard Field.",
+      "Upload or pick a file from Shopify Files for each variant that needs one.",
+      "Drag the Image or File block into your product template.",
+    ],
+    useCases: [
+      "Show a lifestyle photo specific to a colorway that the default product gallery doesn't cover.",
+      "Attach a size chart image that only appears on apparel variants where it's relevant.",
+    ],
   },
   {
     name: "Link",
     plan: "Advanced",
     description:
       "Shows a clickable link for the selected variant, for example a size guide or spec sheet, from the Variant Link field.",
+    steps: [
+      "Click Create field next to the Variant Link Standard Field.",
+      "Paste the destination URL for each variant that needs one.",
+      "Drag the Link block into your product template.",
+    ],
+    useCases: [
+      "Point shoppers to a downloadable size guide for a specific apparel variant.",
+      "Link out to a spec sheet or comparison page for a technical product.",
+    ],
   },
   {
     name: "B2B / Case-Pack Pricing",
     plan: "Advanced",
     description:
       "Shows a wholesale pricing breakdown for the selected variant: pack size, cost per unit, and the computed total. Create the Pack Quantity and Price Per Unit standard fields once, set both on a variant sold by the case, and the block does the math. It hides itself if either field is missing.",
+    steps: [
+      "Click Create field next to both the Pack Quantity and Price Per Unit Standard Fields.",
+      "Set both values on any variant that's sold by the case or pack.",
+      "Drag the B2B / Case-Pack Pricing block into your product template; it computes the total automatically and stays hidden on variants missing either field.",
+    ],
+    useCases: [
+      "Show wholesale buyers a per-unit cost breakdown on a case-pack variant, without a separate wholesale page.",
+      "Offer a bulk variant next to a single-unit variant, each with its own pricing math.",
+    ],
   },
   {
     name: "Material Card",
     plan: "Unlimited",
     description:
       "An expanded material breakdown for the selected variant: a color or pattern swatch, a close-up texture photo, and descriptive details like fabric composition or care instructions. Use the Swatch Image field instead of Material Color for prints and patterns; if both are set, the image wins.",
+    steps: [
+      "Click Create field next to the Material Color (or Swatch Image) and Material Details Standard Fields.",
+      "Add a swatch color or image, a texture photo, and composition or care details for each variant.",
+      "Drag the Material Card block into your product template.",
+    ],
+    useCases: [
+      "Give apparel shoppers a close-up texture photo and fabric composition for each print option.",
+      "Show furniture buyers a wood grain or upholstery swatch specific to the variant they're viewing.",
+    ],
   },
   {
     name: "Document & Download",
     plan: "Unlimited",
     description:
       "A download button linking to the Download File standard field for the selected variant, for example a manual or a safety certification. The file is selected directly from Shopify Files, no URL to paste, and the button is hidden on variants with nothing set.",
+    steps: [
+      "Click Create field next to the Download File Standard Field.",
+      "Pick the file directly from Shopify Files for any variant that needs one.",
+      "Drag the Document & Download block into your product template; it stays hidden on variants with nothing attached.",
+    ],
+    useCases: [
+      "Attach a safety certification PDF to a specific electrical variant.",
+      "Offer an assembly manual only on the variant that actually needs one.",
+    ],
   },
   {
     name: "Advanced (Custom Field)",
     plan: "Unlimited",
     description:
       "For your own custom variant metafields, outside the 9 dedicated blocks above. Pick a Render Type (Plain Text, HTML, Rich Text, JSON, URL, or Image) and type the namespace and key yourself.",
+    steps: [
+      "Create your own metafield definition on the Metafields page, or in Shopify Admin under Settings → Custom data → Variants.",
+      "Choose a Render Type (Plain Text, HTML, Rich Text, JSON, URL, or Image) and note the namespace and key it's given.",
+      "Drag the Advanced block into your product template and enter that same namespace and key.",
+    ],
+    useCases: [
+      "Cover a one-off field the 9 dedicated blocks don't fit, like a certification code or internal SKU note.",
+      "Try out a new variant field before deciding whether it deserves its own dedicated block later.",
+    ],
   },
 ];
 
@@ -257,7 +347,7 @@ export default function Docs() {
           <DocSection
             id="blocks"
             title="Theme block reference"
-            subtitle="Every block targets the product page (theme editor → your product template → Add block)."
+            subtitle="Every block targets the product page (theme editor → your product template → Add block), and drops into any section, not just a fixed spot."
           >
             <p>
               Each block needs a <strong className="text-ink">Namespace</strong> and{" "}
@@ -269,11 +359,11 @@ export default function Docs() {
               ) is the same namespace.key pair. If you used a Standard Field, this is already
               handled for you: just drag in the block named on that field&apos;s card.
             </p>
-            <ul className="space-y-3">
+            <div className="space-y-5">
               {BLOCK_REFERENCE.map((b) => (
-                <li key={b.name} className="rounded-lg border border-slate-200 bg-white p-4">
+                <div key={b.name} className="rounded-xl2 border border-slate-200 bg-white p-5">
                   <div className="flex flex-wrap items-center gap-2">
-                    <p className="font-semibold text-ink">{b.name}</p>
+                    <p className="text-base font-semibold text-ink">{b.name}</p>
                     <span
                       className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ${
                         b.plan === "Unlimited"
@@ -286,10 +376,33 @@ export default function Docs() {
                       {b.plan}
                     </span>
                   </div>
-                  <p className="mt-1">{b.description}</p>
-                </li>
+                  <p className="mt-2">{b.description}</p>
+
+                  <div className="mt-4 grid gap-5 border-t border-slate-100 pt-4 sm:grid-cols-2">
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">
+                        How to use it
+                      </p>
+                      <ol className="mt-2 list-decimal space-y-1.5 pl-5">
+                        {b.steps.map((step, i) => (
+                          <li key={i}>{step}</li>
+                        ))}
+                      </ol>
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">
+                        Use it for
+                      </p>
+                      <ul className="mt-2 list-disc space-y-1.5 pl-5">
+                        {b.useCases.map((useCase, i) => (
+                          <li key={i}>{useCase}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
               ))}
-            </ul>
+            </div>
           </DocSection>
 
           <DocSection

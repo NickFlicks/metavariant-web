@@ -254,11 +254,16 @@ export default function Home() {
 
       {/* Works with */}
       <section className="border-y border-night-border bg-night-900">
-        <div className="mx-auto max-w-content px-6 py-8">
-          <p className="text-center text-xs font-semibold uppercase tracking-wide text-night-muted">
-            Works with
+        <div className="mx-auto max-w-content px-6 py-10">
+          <p className="text-center text-lg font-semibold text-night-text sm:text-xl">
+            Embeds cleanly into any Online Store 2.0 theme, free or premium
           </p>
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
+          <p className="mx-auto mt-2 max-w-xl text-center text-sm leading-relaxed text-night-secondary">
+            MetaVariant ships as native Shopify app blocks, so there&apos;s no theme code to edit
+            and no fixed placement to work around. Drag a block into any section of your product
+            page and it fits right in.
+          </p>
+          <div className="mt-7 flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
             {WORKS_WITH.map((w) => (
               <span key={w.label} className="flex items-center gap-2 text-sm font-medium text-night-secondary">
                 <w.icon className="h-4 w-4" strokeWidth={1.8} />
