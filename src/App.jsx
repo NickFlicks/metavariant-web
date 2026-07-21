@@ -6,6 +6,7 @@ import Footer from "./components/Footer.jsx";
 import Home from "./pages/Home.jsx";
 import Docs from "./pages/Docs.jsx";
 import Privacy from "./pages/Privacy.jsx";
+import Contact from "./pages/Contact.jsx";
 import { pageVariant } from "./lib/motion.js";
 
 function ScrollToTop() {
@@ -58,6 +59,7 @@ function AnimatedRoutes() {
           <Route path="/" element={<Home />} />
           <Route path="/docs" element={<Docs />} />
           <Route path="/privacy" element={<Privacy />} />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
       </motion.div>
     </AnimatePresence>
